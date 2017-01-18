@@ -15,7 +15,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/1/18.
  */
 
-public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView {
+public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.rv_discover)
     RecyclerView rvDiscover;
@@ -45,22 +45,19 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
         discoverAdapter = new DiscoverAdapter();
         rvDiscover.setLayoutManager(new LinearLayoutManager(mContext));
         rvDiscover.setAdapter(discoverAdapter);
-        discoverAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mPresenter.getDiscoverData(offset, limit);
-            }
-        });
+        discoverAdapter.setOnLoadMoreListener(this);
         mPresenter.getDiscoverData(offset, limit);
     }
 
     @Override
     public void addDiscoverData(List<DiscoverBean.DataBean.FeedsBean> feeds) {
         if (feeds.size() > 0) {
-            discoverAdapter.addData(feeds);
             offset += 10;
-        } else {
+            discoverAdapter.addData(feeds);
             discoverAdapter.loadMoreComplete();
+        } else {
+            discoverAdapter.loadMoreEnd();
+
         }
     }
 
@@ -77,5 +74,10 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
     @Override
     public void showError(String errorMsg) {
 
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        mPresenter.getDiscoverData(offset, limit);
     }
 }

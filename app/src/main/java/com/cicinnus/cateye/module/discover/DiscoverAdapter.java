@@ -2,9 +2,10 @@ package com.cicinnus.cateye.module.discover;
 
 import android.widget.ImageView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.TimeUtils;
 
@@ -12,19 +13,33 @@ import com.cicinnus.cateye.tools.TimeUtils;
  * Created by Administrator on 2017/1/18.
  */
 
-public class DiscoverAdapter extends BaseQuickAdapter<DiscoverBean.DataBean.FeedsBean, BaseViewHolder> {
+public class DiscoverAdapter extends BaseMultiItemQuickAdapter<DiscoverBean.DataBean.FeedsBean, BaseViewHolder> {
     public DiscoverAdapter() {
-        super(R.layout.item_discover, null);
+        super(null);
+        addItemType(BaseConstant.TYPE_ONE_IMG, R.layout.item_discover_one_img);
+        addItemType(BaseConstant.TYPE_MULTI_IMG, R.layout.item_discover_muilt_img);
+        addItemType(BaseConstant.TYPE_BIG_IMG,R.layout.item_discover_big_img);
+
     }
 
     @Override
     protected void convert(BaseViewHolder helper, DiscoverBean.DataBean.FeedsBean item) {
         helper.setText(R.id.tv_disc_title, item.getTitle())
-                .setText(R.id.tv_nickName, item.getUser().getNickName())
+                .setText(R.id.tv_viewCount,String.format("%s",item.getViewCount()))
+                .setText(R.id.tv_comment,String.format("%s",item.getCommentCount()))
+                .setText(R.id.tv_nickName, String.format("%s",item.getUser().getNickName()))
                 .setText(R.id.tv_time, TimeUtils.dateYMDHM(item.getTime()));
+        switch (helper.getItemViewType()) {
+            case BaseConstant.TYPE_ONE_IMG:
+                GlideManager.loadImage(mContext, item.getImages().get(0).getUrl(), (ImageView) helper.getView(R.id.iv_img));
+                break;
+            case BaseConstant.TYPE_MULTI_IMG:
+                GlideManager.loadImage(mContext, item.getImages().get(0).getUrl(), (ImageView) helper.getView(R.id.iv_img1));
+                GlideManager.loadImage(mContext, item.getImages().get(1).getUrl(), (ImageView) helper.getView(R.id.iv_img2));
+                GlideManager.loadImage(mContext, item.getImages().get(2).getUrl(), (ImageView) helper.getView(R.id.iv_img3));
+                break;
+        }
 
-        ImageView iv_img = helper.getView(R.id.iv_img);
-        GlideManager.loadImage(mContext, item.getImages().get(0).getUrl(), iv_img);
 
     }
 }

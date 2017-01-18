@@ -15,6 +15,6 @@ public interface Api {
 
     //发现的内容列表
     @GET("/sns/v5/feed.json")
-    Observable<DiscoverBean> getDiscover(@Query("offest") int offset,
+    Observable<DiscoverBean> getDiscover(@Query("offset") int offset,
                                          @Query("limit") int limit);
 }

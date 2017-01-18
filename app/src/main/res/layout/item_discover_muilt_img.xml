@@ -6,25 +6,42 @@
     android:orientation="vertical"
     android:padding="@dimen/dp_14">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_disc_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_16"
+        tools:text="标题" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:layout_marginTop="@dimen/dp_14">
 
         <ImageView
-            android:id="@+id/iv_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp" />
+            android:id="@+id/iv_img1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/tv_disc_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:textColor="@color/text_primary"
-            tools:text="标题啊啊啊啊啊啊啊啊啊" />
+        <ImageView
+            android:id="@+id/iv_img2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_4"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_img3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,11 +55,11 @@
             tools:text="猫眼资讯" />
 
         <TextView
-            android:layout_marginLeft="@dimen/dp_14"
             android:id="@+id/tv_time"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_weight="1"
             tools:text="46分钟前" />
 
         <TextView
@@ -52,6 +69,7 @@
             tools:text="1308" />
 
         <TextView
+            android:drawablePadding="@dimen/dp_10"
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,10 +80,9 @@
     </LinearLayout>
 
     <View
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/divider_normal"
         android:layout_width="match_parent"
-        android:layout_height="1px"/>
-
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/divider_normal" />
 
 </LinearLayout>
