@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#852623</color>
+    <color name="colorAccent">#d43e37</color>
+
+    <color name="tv_normal_gray">#2c2c2c</color>
+
+    <color name="text_primary">#333333</color>
+
+    <color name="divider_normal">#d0d0d0</color>
+
+
+</resources>

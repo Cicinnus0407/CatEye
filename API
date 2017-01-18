@@ -1,0 +1,7 @@
+
+
+主机地址：http://api.maoyan.com
+
+首页热映：/mmdb/movie/v3/list/hot.json?ci=20&limit=12
+
+

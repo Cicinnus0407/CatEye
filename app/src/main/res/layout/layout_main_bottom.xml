@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rg_main"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal">
+
+    <RadioButton
+        android:checked="true"
+        android:id="@+id/rb_movie"
+        style="@style/rb_bottom"
+        android:drawableTop="@drawable/bg_home"
+        android:text="电影" />
+
+    <RadioButton
+        android:id="@+id/rb_cinema"
+        style="@style/rb_bottom"
+        android:drawableTop="@drawable/bg_cinema"
+        android:text="影院" />
+
+    <RadioButton
+        android:id="@+id/rb_discover"
+        style="@style/rb_bottom"
+        android:drawableTop="@drawable/bg_discover"
+        android:text="发现" />
+
+    <RadioButton
+        android:id="@+id/rb_mine"
+        style="@style/rb_bottom"
+        android:drawableTop="@drawable/bg_mine"
+        android:text="我的" />
+
+
+</RadioGroup>

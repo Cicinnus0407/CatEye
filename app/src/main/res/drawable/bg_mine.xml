@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/colorAccent" android:drawable="@drawable/mine_pre" android:state_checked="true"/>
+    <item android:color="@color/tv_normal_gray" android:drawable="@drawable/mine" android:state_checked="false"/>
+
+
+
+</selector>
