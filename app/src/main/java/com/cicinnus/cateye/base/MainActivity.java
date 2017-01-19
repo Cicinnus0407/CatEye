@@ -100,6 +100,10 @@ public class MainActivity extends BaseActivity {
                         .hide(cinemaFragment)
                         .hide(discoverFragment)
                         .hide(mineFragment);
+                movieMainFragment.setUserVisibleHint(true);
+                cinemaFragment.setUserVisibleHint(false);
+                discoverFragment.setUserVisibleHint(false);
+                mineFragment.setUserVisibleHint(false);
                 break;
             case BaseConstant.RB_CINEMA:
                 transaction
@@ -107,6 +111,10 @@ public class MainActivity extends BaseActivity {
                         .hide(movieMainFragment)
                         .hide(discoverFragment)
                         .hide(mineFragment);
+                cinemaFragment.setUserVisibleHint(true);
+                movieMainFragment.setUserVisibleHint(false);
+                discoverFragment.setUserVisibleHint(false);
+                mineFragment.setUserVisibleHint(false);
                 break;
             case BaseConstant.RB_DISCOVER:
                 transaction
@@ -114,6 +122,10 @@ public class MainActivity extends BaseActivity {
                         .hide(cinemaFragment)
                         .hide(movieMainFragment)
                         .hide(mineFragment);
+                discoverFragment.setUserVisibleHint(true);
+                cinemaFragment.setUserVisibleHint(false);
+                movieMainFragment.setUserVisibleHint(false);
+                mineFragment.setUserVisibleHint(false);
                 break;
             case BaseConstant.RB_MINE:
                 transaction
@@ -121,6 +133,10 @@ public class MainActivity extends BaseActivity {
                         .hide(cinemaFragment)
                         .hide(discoverFragment)
                         .hide(movieMainFragment);
+                mineFragment.setUserVisibleHint(true);
+                cinemaFragment.setUserVisibleHint(false);
+                discoverFragment.setUserVisibleHint(false);
+                movieMainFragment.setUserVisibleHint(false);
                 break;
         }
         transaction.commit();

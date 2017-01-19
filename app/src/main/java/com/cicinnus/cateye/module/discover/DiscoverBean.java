@@ -112,6 +112,7 @@ public class DiscoverBean {
             private int groupId;
             private String groupName;
             private List<ImagesBean> images;
+            private int imageCount;
 
 
             public int getCommentCount() {
@@ -238,6 +239,14 @@ public class DiscoverBean {
                     default:
                         return BaseConstant.TYPE_ONE_IMG;
                 }
+            }
+
+            public int getImageCount() {
+                return imageCount;
+            }
+
+            public void setImageCount(int imageCount) {
+                this.imageCount = imageCount;
             }
 
             public static class UserBean {

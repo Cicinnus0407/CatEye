@@ -1,12 +1,21 @@
 package com.cicinnus.cateye.module.discover;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
+import com.cicinnus.cateye.base.BaseWebViewActivity;
+import com.cicinnus.cateye.tools.GlideManager;
+import com.cicinnus.cateye.view.ProgressLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -15,10 +24,17 @@ import butterknife.BindView;
  * Created by Administrator on 2017/1/18.
  */
 
-public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView, BaseQuickAdapter.RequestLoadMoreListener {
+public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView {
 
+
+    @BindView(R.id.progressLayout)
+    ProgressLayout progressLayout;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
     @BindView(R.id.rv_discover)
     RecyclerView rvDiscover;
+    private View headerView;
+    private boolean isFirst = true;
 
 
     public static DiscoverFragment newInstance() {
@@ -37,7 +53,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
 
     @Override
     protected DiscoverPresenter getPresenter() {
-        return new DiscoverPresenter(mContext,this);
+        return new DiscoverPresenter(mContext, this);
     }
 
     @Override
@@ -45,8 +61,39 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
         discoverAdapter = new DiscoverAdapter();
         rvDiscover.setLayoutManager(new LinearLayoutManager(mContext));
         rvDiscover.setAdapter(discoverAdapter);
-        discoverAdapter.setOnLoadMoreListener(this);
-        mPresenter.getDiscoverData(offset, limit);
+        //RV头部栏目
+        headerView = mContext.getLayoutInflater().inflate(R.layout.item_discover_header, (ViewGroup) rvDiscover.getParent(), false);
+        discoverAdapter.addHeaderView(headerView);
+        //下拉刷新
+        swipe.setColorSchemeResources(R.color.colorAccent);
+        //从小变大的swipe
+        swipe.setProgressViewOffset(true, 50, 200);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(true);
+                offset = 0;
+                discoverAdapter.setNewData(new ArrayList<DiscoverBean.DataBean.FeedsBean>());
+                mPresenter.getDiscoverData(offset, limit);
+            }
+        });
+
+        discoverAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.getDiscoverData(offset, limit);
+            }
+        });
+
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if (isFirst) {
+            mPresenter.getDiscoverData(offset, limit);
+            mPresenter.getDiscoverHeader("7.8.0");
+            isFirst = false;
+        }
     }
 
     @Override
@@ -57,27 +104,61 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
             discoverAdapter.loadMoreComplete();
         } else {
             discoverAdapter.loadMoreEnd();
+        }
+    }
 
+    @Override
+    public void addDiscoverHeaderData(final List<DiscoverHeaderBean.DataBean> data) {
+        ImageView[] imageViews = new ImageView[]{((ImageView) headerView.findViewById(R.id.iv_header1)),
+                ((ImageView) headerView.findViewById(R.id.iv_header2)),
+                ((ImageView) headerView.findViewById(R.id.iv_header3)),
+                ((ImageView) headerView.findViewById(R.id.iv_header4))};
+        TextView[] tv_content = new TextView[]{((TextView) headerView.findViewById(R.id.tv_header1)),
+                ((TextView) headerView.findViewById(R.id.tv_header2)),
+                ((TextView) headerView.findViewById(R.id.tv_header3)),
+                ((TextView) headerView.findViewById(R.id.tv_header4))};
+        for (int i = 0; i < data.size(); i++) {
+            GlideManager.loadImage(mContext, data.get(i).getImage().getUrl(), imageViews[i]);
+            tv_content[i].setText(data.get(i).getTitle());
+            final int finalI = i;
+            imageViews[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BaseWebViewActivity.start(mContext,data.get(finalI).getUrl());
+                }
+            });
         }
     }
 
     @Override
     public void showLoading() {
-
+        if (!progressLayout.isContent()) {
+            progressLayout.showLoading();
+        }
     }
 
     @Override
     public void showContent() {
-
+        swipe.setRefreshing(false);
+        if (!progressLayout.isContent()) {
+            progressLayout.showContent();
+        }
     }
 
     @Override
     public void showError(String errorMsg) {
-
+        discoverAdapter.loadMoreEnd();
+        progressLayout.showError(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset = 0;
+                mPresenter.getDiscoverData(offset, limit);
+                mPresenter.getDiscoverHeader("7.8.0");
+                if (isFirst) {
+                    isFirst = false;
+                }
+            }
+        });
     }
 
-    @Override
-    public void onLoadMoreRequested() {
-        mPresenter.getDiscoverData(offset, limit);
-    }
 }

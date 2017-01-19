@@ -2,7 +2,10 @@
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#e5f0f0f0"
     android:id="@+id/rg_main"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
     android:layout_gravity="bottom"
     android:orientation="horizontal">
 

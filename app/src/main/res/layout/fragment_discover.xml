@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:gravity="center"
+    <include layout="@layout/layout_discover_search" />
+
+
+    <com.cicinnus.cateye.view.ProgressLayout
+        android:id="@+id/progressLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="这里是搜索框" />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_discover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_discover"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </com.cicinnus.cateye.view.ProgressLayout>
+
 
 </LinearLayout>

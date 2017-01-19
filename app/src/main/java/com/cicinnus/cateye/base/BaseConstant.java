@@ -12,8 +12,8 @@ public interface BaseConstant {
     int RB_MINE = 3;
 
     //发现列表2种类型的item
-    int TYPE_ONE_IMG = 1;
-    int TYPE_MULTI_IMG =2;
-    int TYPE_BIG_IMG =3;
+    int TYPE_ONE_IMG = 0;
+    int TYPE_MULTI_IMG =1;
+    int TYPE_BIG_IMG =2;
 }
 

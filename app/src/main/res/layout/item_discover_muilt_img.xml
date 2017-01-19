@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@android:color/white"
     android:padding="@dimen/dp_14">
 
     <TextView
@@ -20,12 +21,14 @@
         android:layout_marginTop="@dimen/dp_14">
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/iv_img1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/iv_img2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -34,6 +37,7 @@
             android:layout_weight="1" />
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/iv_img3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -49,12 +53,14 @@
         android:layout_marginTop="@dimen/dp_10">
 
         <TextView
+            android:textSize="@dimen/sp_12"
             android:id="@+id/tv_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="猫眼资讯" />
 
         <TextView
+            android:textSize="@dimen/sp_12"
             android:id="@+id/tv_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -63,13 +69,17 @@
             tools:text="46分钟前" />
 
         <TextView
+            android:drawableLeft="@drawable/ic_viewcount"
+            android:drawablePadding="@dimen/dp_6"
+            android:textSize="@dimen/sp_12"
             android:id="@+id/tv_viewCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="1308" />
 
         <TextView
-            android:drawablePadding="@dimen/dp_10"
+            android:textSize="@dimen/sp_12"
+            android:drawablePadding="@dimen/dp_6"
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

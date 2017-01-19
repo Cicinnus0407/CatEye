@@ -11,9 +11,14 @@ import java.util.List;
 public class DiscoverContract {
     interface IDiscoverView extends ILoadingView {
         void addDiscoverData(List<DiscoverBean.DataBean.FeedsBean> feeds);
+
+        void addDiscoverHeaderData(List<DiscoverHeaderBean.DataBean> data);
     }
 
     interface IDiscoverPresenter {
         void getDiscoverData(int offset, int limit);
+
+        void getDiscoverHeader(String utm_term);
+
     }
 }

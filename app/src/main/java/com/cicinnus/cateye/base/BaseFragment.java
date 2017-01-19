@@ -19,6 +19,8 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
 
     protected Activity mContext;
     protected T mPresenter;
+    private boolean isInit;
+    private boolean isLoad;
 
     @Override
     public void onAttach(Context context) {
@@ -31,6 +33,7 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
+        isInit = true;
         return rootView;
     }
 
@@ -42,6 +45,47 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
         initEventAndData(savedInstanceState);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        loadData();
+    }
+
+    private void loadData() {
+        if (!isInit) {
+            return;
+        }
+
+        if (getUserVisibleHint()) {
+            lazyLoad();
+            isLoad = true;
+        } else {
+            if (isLoad) {
+                stopLoad();
+            }
+        }
+    }
+
+    /**
+     * 懒加载实现该方法
+     */
+    protected void lazyLoad() {
+
+    }
+
+    /**
+     * 取消加载
+     */
+    protected void stopLoad(){
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        isInit = false;
+        isLoad = false;
+    }
 
     @Override
     public void onDestroy() {

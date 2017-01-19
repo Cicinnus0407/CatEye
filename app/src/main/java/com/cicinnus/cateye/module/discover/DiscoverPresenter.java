@@ -40,4 +40,25 @@ public class DiscoverPresenter extends BasePresenter<DiscoverContract.IDiscoverV
                     }
                 }));
     }
+
+    @Override
+    public void getDiscoverHeader(String utm_term) {
+        addSubscribe(discoverManager.getDiscoverHeaderData(utm_term)
+                .subscribe(new Subscriber<DiscoverHeaderBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError("获取顶部栏目失败");
+                    }
+
+                    @Override
+                    public void onNext(DiscoverHeaderBean discoverHeaderBean) {
+                        mView.addDiscoverHeaderData(discoverHeaderBean.getData());
+                    }
+                }));
+    }
 }
