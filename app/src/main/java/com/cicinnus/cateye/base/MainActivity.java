@@ -8,7 +8,7 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.cinema.CinemaFragment;
 import com.cicinnus.cateye.module.discover.DiscoverFragment;
 import com.cicinnus.cateye.module.mine.MineFragment;
-import com.cicinnus.cateye.module.movie.MovieMainFragment;
+import com.cicinnus.cateye.module.movie.movie_main.MovieMainFragment;
 
 import butterknife.BindView;
 
