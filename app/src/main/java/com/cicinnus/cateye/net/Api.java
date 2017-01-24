@@ -2,6 +2,7 @@ package com.cicinnus.cateye.net;
 
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
+import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -25,4 +26,10 @@ public interface Api {
     @GET("/sns/v2/buttons.json")
     Observable<DiscoverHeaderBean> getDiscoverHeader(@Query("utm_medium") String utm_medium,
                                                      @Query("utm_term") String utm_term);
+
+
+    //ci 参数不知道是什么，抓包时候的是20
+    @GET("/mmdb/movie/v3/list/hot.json")
+    Observable<HotMovieListBean> getHostList(@Query("ci")int ci,
+                                             @Query("limit")int limit);
 }

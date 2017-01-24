@@ -42,11 +42,11 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
-            case BaseConstant.TYPE_ONE_IMG:
+            case BaseConstant.TYPE_DISCOVER_ONE_IMG:
                 return new OneImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discover_one_img, parent, false));
-            case BaseConstant.TYPE_MULTI_IMG:
+            case BaseConstant.TYPE_DISCOVER_MULTI_IMG:
                 return new MultiImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discover_muilt_img, parent, false));
-            case BaseConstant.TYPE_BIG_IMG:
+            case BaseConstant.TYPE_DISCOVER_BIG_IMG:
                 return new BigImgViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discover_big_img, parent, false));
         }
         return null;
@@ -55,7 +55,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
-            case BaseConstant.TYPE_ONE_IMG:
+            case BaseConstant.TYPE_DISCOVER_ONE_IMG:
                 ((OneImgViewHolder) holder).tvComment.setText(String.format("%s", mData.get(position).getCommentCount()));
                 ((OneImgViewHolder) holder).tvDiscTitle.setText(mData.get(position).getTitle());
                 ((OneImgViewHolder) holder).tvNickName.setText(String.format("%s", mData.get(position).getUser().getNickName()));
@@ -63,7 +63,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((OneImgViewHolder) holder).tvTime.setText(String.format("%s", TimeUtils.dateYMDHM(mData.get(position).getTime())));
                 GlideManager.loadImage(mContext, mData.get(position).getImages().get(0).getUrl(), ((OneImgViewHolder) holder).ivImg);
                 break;
-            case BaseConstant.TYPE_MULTI_IMG:
+            case BaseConstant.TYPE_DISCOVER_MULTI_IMG:
                 ((MultiImgViewHolder) holder).tvComment.setText(String.format("%s", mData.get(position).getCommentCount()));
                 ((MultiImgViewHolder) holder).tvDiscTitle.setText(mData.get(position).getTitle());
                 ((MultiImgViewHolder) holder).tvNickName.setText(String.format("%s", mData.get(position).getUser().getNickName()));
@@ -73,7 +73,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
                 GlideManager.loadImage(mContext, mData.get(position).getImages().get(1).getUrl(), ((MultiImgViewHolder) holder).ivImg2);
                 GlideManager.loadImage(mContext, mData.get(position).getImages().get(2).getUrl(), ((MultiImgViewHolder) holder).ivImg3);
                 break;
-            case BaseConstant.TYPE_BIG_IMG:
+            case BaseConstant.TYPE_DISCOVER_BIG_IMG:
                 ((BigImgViewHolder) holder).tvComment.setText(String.format("%s", mData.get(position).getCommentCount()));
                 ((BigImgViewHolder) holder).tvDiscTitle.setText(mData.get(position).getTitle());
                 ((BigImgViewHolder) holder).tvNickName.setText(String.format("%s", mData.get(position).getUser().getNickName()));
@@ -97,11 +97,11 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemViewType(int position) {
         switch (mData.get(position).getStyle()) {
             case 2:
-                return BaseConstant.TYPE_ONE_IMG;
+                return BaseConstant.TYPE_DISCOVER_ONE_IMG;
             case 3:
-                return BaseConstant.TYPE_MULTI_IMG;
+                return BaseConstant.TYPE_DISCOVER_MULTI_IMG;
             case 4:
-                return BaseConstant.TYPE_BIG_IMG;
+                return BaseConstant.TYPE_DISCOVER_BIG_IMG;
         }
         return super.getItemViewType(position);
     }

@@ -24,52 +24,63 @@
             android:layout_centerInParent="true"
             android:padding="2dp">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_vp_indicator"
                 android:padding="2dp">
 
-                <TextView
-                    android:id="@+id/tv_hot_movie"
+                <View
+                    android:id="@+id/view_indicator"
                     android:layout_width="62dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp"
-                    android:text="热映"
-                    android:textColor="@android:color/white" />
+                    android:background="@drawable/bg_tv_indicator" />
 
-                <TextView
-                    android:id="@+id/tv_wait_movie"
-                    android:layout_width="62dp"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:gravity="center"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp"
-                    android:text="待映"
-                    android:textColor="@android:color/white" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_find_movie"
-                    android:layout_width="62dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingBottom="6dp"
-                    android:paddingTop="6dp"
-                    android:text="找片"
-                    android:textColor="@android:color/white" />
+                    <TextView
+                        android:id="@+id/tv_hot_movie"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:text="热映"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:id="@+id/tv_wait_movie"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:text="待映"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_find_movie"
+                        android:layout_width="62dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingBottom="6dp"
+                        android:paddingTop="6dp"
+                        android:text="找片"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
 
 
-            </LinearLayout>
+            </FrameLayout>
         </HorizontalScrollView>
 
         <ImageView
-            android:layout_alignParentRight="true"
             android:layout_width="70dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 

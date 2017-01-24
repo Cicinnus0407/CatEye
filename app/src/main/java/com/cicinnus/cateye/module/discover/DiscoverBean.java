@@ -231,13 +231,15 @@ public class DiscoverBean {
             public int getItemType() {
                 switch (getStyle()){
                     case 2:
-                        return BaseConstant.TYPE_ONE_IMG;
+                        return BaseConstant.TYPE_DISCOVER_ONE_IMG;
                     case 3:
-                        return BaseConstant.TYPE_MULTI_IMG;
+                        return BaseConstant.TYPE_DISCOVER_MULTI_IMG;
                     case 4:
-                        return BaseConstant.TYPE_BIG_IMG;
+                        return BaseConstant.TYPE_DISCOVER_BIG_IMG;
+                    case 7:
+                        return BaseConstant.TYPE_DISCOVER_ONE_BIG_IMG;
                     default:
-                        return BaseConstant.TYPE_ONE_IMG;
+                        return BaseConstant.TYPE_DISCOVER_ONE_IMG;
                 }
             }
 

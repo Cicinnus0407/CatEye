@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_discover_search" />
+    <include layout="@layout/layout_search" />
 
 
     <com.cicinnus.cateye.view.ProgressLayout
