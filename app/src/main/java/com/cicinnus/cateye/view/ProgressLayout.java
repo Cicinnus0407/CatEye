@@ -117,6 +117,9 @@ public class ProgressLayout extends LinearLayout {
         return currentState == State.CONTENT;
     }
 
+    /**
+     * 显示加载中布局
+     */
     private void showLoadingView() {
         if (loadingView == null) {
             loadingView = (LinearLayout) layoutInflater.inflate(R.layout.layout_loading_view, null);

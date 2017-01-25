@@ -9,7 +9,7 @@
     <color name="tv_normal_gray_light">#c8c8c8</color>
 
     <color name="text_primary">#333333</color>
-
+    <color name="text_blue">#12a2f1</color>
     <color name="text_yellow">#ffb400</color>
 
     <color name="divider_normal">#d0d0d0</color>

@@ -48,6 +48,7 @@
                 tools:text="太空旅客" />
 
             <ImageView
+                android:id="@+id/iv_ver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_4"
@@ -70,21 +71,6 @@
                 android:layout_height="wrap_content"
                 tools:text="观众" />
 
-            <TextView
-                android:id="@+id/tv_score_or_wish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_yellow"
-                android:textSize="@dimen/sp_16"
-                tools:text="分数/人数" />
-
-            <TextView
-                android:id="@+id/tv_wish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="人想看"
-                android:visibility="gone"
-                tools:visibility="visible" />
 
         </LinearLayout>
 
@@ -109,13 +95,12 @@
             tools:text="今天138家影院放映1152场" />
 
         <TextView
+            android:id="@+id/tv_buy_ticket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/bg_tv_buy"
-            android:text="购票"
-            android:textColor="@color/colorAccent" />
+            tools:text="购票"/>
 
     </RelativeLayout>
 

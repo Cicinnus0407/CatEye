@@ -13,15 +13,24 @@ public class HotMovieListManager {
 
     /**
      * 获取热门电影列表
+     *
      * @param ci
      * @param limit
      * @return
      */
-    public Observable<HotMovieListBean> getHotMovieList(int ci,int limit){
+    public Observable<HotMovieListBean> getHotMovieList(int ci, int limit) {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getHostList(ci,limit)
+                .getHostList(ci, limit)
+                .compose(SchedulersCompat.<HotMovieListBean>applyIoSchedulers());
+    }
+
+    public Observable<HotMovieListBean> getMoreMovieList(int ci, int headline,String movieIds){
+        return RetrofitClient
+                .getInstance()
+                .api()
+                .getMoreHotMovieList(ci,headline,movieIds)
                 .compose(SchedulersCompat.<HotMovieListBean>applyIoSchedulers());
     }
 }

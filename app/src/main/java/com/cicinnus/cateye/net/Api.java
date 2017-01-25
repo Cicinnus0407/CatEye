@@ -3,6 +3,7 @@ package com.cicinnus.cateye.net;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
+import com.cicinnus.cateye.module.movie.wait_movie.TrailerRecommendBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -28,8 +29,19 @@ public interface Api {
                                                      @Query("utm_term") String utm_term);
 
 
-    //ci 参数不知道是什么，抓包时候的是20
+    //获取首页热映列表
+    // ci 参数不知道是什么，抓包时候的是20
     @GET("/mmdb/movie/v3/list/hot.json")
     Observable<HotMovieListBean> getHostList(@Query("ci")int ci,
                                              @Query("limit")int limit);
+
+    //获取首页热映加载更多的数据
+    @GET("/mmdb/movie/list/info.json")
+    Observable<HotMovieListBean> getMoreHotMovieList(@Query("ci")int ci,
+                                                     @Query("headline")int headline,
+                                                     @Query("movieIds")String movieIds);
+
+    //待映-预告片推荐
+    @GET("/mmdb/movie/lp/list.json")
+    Observable<TrailerRecommendBean> getTrailerRecommend();
 }

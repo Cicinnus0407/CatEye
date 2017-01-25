@@ -12,9 +12,19 @@ import java.util.List;
 public class HotMovieListContract {
     public interface IHotMovieListView extends ILoadingView{
         void addHotMovieList(List<HotMovieListBean.DataBean.HotBean> hot);
+
+        void addMovieIds(List<Integer> movieIds);
+
+        void addMoreMovieIds(List<HotMovieListBean.DataBean.HotBean> movies);
+
+        void loadMoreError();
+
+        void loadMoreCompleted();
     }
 
     public interface IHotMoviePresenter{
         void getHotMovieList(int ci,int limit);
+
+        void getMoreHotMovieList(int ci,int headline,String movieIds);
     }
 }

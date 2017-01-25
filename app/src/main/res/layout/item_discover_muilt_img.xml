@@ -21,14 +21,12 @@
         android:layout_marginTop="@dimen/dp_14">
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/iv_img1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/iv_img2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -37,7 +35,6 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/iv_img3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
