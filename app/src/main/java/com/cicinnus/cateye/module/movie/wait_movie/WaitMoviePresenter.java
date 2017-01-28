@@ -3,6 +3,10 @@ package com.cicinnus.cateye.module.movie.wait_movie;
 import android.app.Activity;
 
 import com.cicinnus.cateye.base.BasePresenter;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
+import com.cicinnus.cateye.tools.ErrorHanding;
 
 import rx.Subscriber;
 
@@ -35,7 +39,51 @@ public class WaitMoviePresenter extends BasePresenter<WaitMovieFragmentContract.
 
                     @Override
                     public void onNext(TrailerRecommendBean trailerRecommendBean) {
-                        mView.addWaitMovieList(trailerRecommendBean.getData());
+                        mView.addTrailerRecommendMovieList(trailerRecommendBean.getData());
+                    }
+                }));
+    }
+
+    @Override
+    public void getRecentExpect(int offset, int limit) {
+        mView.showLoading();
+        addSubscribe(waitMovieManager.getRecentExpectList(offset, limit)
+                .subscribe(new Subscriber<RecentExpectBean>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.showContent();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(ErrorHanding.handleError(e));
+                    }
+
+                    @Override
+                    public void onNext(RecentExpectBean recentExpectBean) {
+                        mView.addRecentExpectMovieList(recentExpectBean.getData().getComing());
+                    }
+                }));
+    }
+
+    @Override
+    public void getWaitMovieList(int ci, int limit) {
+        mView.showLoading();
+        addSubscribe(waitMovieManager.getWaitMovieList(ci, limit)
+                .subscribe(new Subscriber<WaitMovieBean>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.showContent();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(ErrorHanding.handleError(e));
+                    }
+
+                    @Override
+                    public void onNext(WaitMovieBean waitMovieBean) {
+                        mView.addWaitMovieList(waitMovieBean.getData().getComing());
                     }
                 }));
     }

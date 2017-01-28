@@ -1,9 +1,10 @@
-package com.cicinnus.cateye.module.movie.wait_movie;
+package com.cicinnus.cateye.module.movie.wait_movie.bean;
 
 import java.util.List;
 
 /**
  * Created by Cicinnus on 2017/1/25.
+ * 待映-预告片推荐
  */
 
 public class TrailerRecommendBean {

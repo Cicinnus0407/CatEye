@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="114dp"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/fl_wait_movie_iv"
+        android:layout_width="64dp"
+        android:layout_height="90dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_wait_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_video_play" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_wait_movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_toRightOf="@id/fl_wait_movie_iv">
+
+        <TextView
+            android:id="@+id/tv_wait_movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_16"
+            tools:text="健忘村" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_wait_movie_wish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_wait_movie_name"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_toRightOf="@id/fl_wait_movie_iv"
+        tools:text="1234人想看" />
+
+    <TextView
+        android:id="@+id/tv_wait_movie_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_wait_movie_wish"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_toRightOf="@id/fl_wait_movie_iv"
+        tools:text="影片描述" />
+
+    <TextView
+        android:id="@+id/tv_wait_movie_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_wait_movie_desc"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/fl_wait_movie_iv"
+        android:maxLines="1"
+        tools:text="影片主演" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_wait_movie_presale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tv_presale"
+            android:textColor="@color/text_blue"
+            android:text="预售" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_normal" />
+
+</RelativeLayout>

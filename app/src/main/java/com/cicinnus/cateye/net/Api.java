@@ -3,7 +3,9 @@ package com.cicinnus.cateye.net;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
-import com.cicinnus.cateye.module.movie.wait_movie.TrailerRecommendBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -32,16 +34,26 @@ public interface Api {
     //获取首页热映列表
     // ci 参数不知道是什么，抓包时候的是20
     @GET("/mmdb/movie/v3/list/hot.json")
-    Observable<HotMovieListBean> getHostList(@Query("ci")int ci,
-                                             @Query("limit")int limit);
+    Observable<HotMovieListBean> getHostList(@Query("ci") int ci,
+                                             @Query("limit") int limit);
 
     //获取首页热映加载更多的数据
     @GET("/mmdb/movie/list/info.json")
-    Observable<HotMovieListBean> getMoreHotMovieList(@Query("ci")int ci,
-                                                     @Query("headline")int headline,
-                                                     @Query("movieIds")String movieIds);
+    Observable<HotMovieListBean> getMoreHotMovieList(@Query("ci") int ci,
+                                                     @Query("headline") int headline,
+                                                     @Query("movieIds") String movieIds);
 
     //待映-预告片推荐
     @GET("/mmdb/movie/lp/list.json")
     Observable<TrailerRecommendBean> getTrailerRecommend();
+
+    //待映-近期最受期待
+    @GET("mmdb/movie/v1/list/wish/order/coming.json")
+    Observable<RecentExpectBean> getRecentExpectMovieList(@Query("offset") int offset,
+                                                          @Query("limit") int limit);
+
+    //待映-列表
+    @GET("http://api.maoyan.com/mmdb/movie/v2/list/rt/order/coming.json")
+    Observable<WaitMovieBean> getWaitMovieList(@Query("ci") int ci,
+                                               @Query("limit") int limit);
 }

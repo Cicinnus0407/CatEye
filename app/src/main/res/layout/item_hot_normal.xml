@@ -56,29 +56,21 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_hot_score_or_wish"
+        <TextView
+            android:id="@+id/tv_hot_audience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_hot_title"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_6"
-            android:layout_toRightOf="@id/fl_hot_title">
-
-            <TextView
-                android:id="@+id/tv_hot_audience"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="观众" />
-
-
-        </LinearLayout>
+            android:layout_toRightOf="@id/fl_hot_title"
+            tools:text="观众" />
 
         <TextView
             android:id="@+id/tv_hot_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_hot_score_or_wish"
+            android:layout_below="@id/tv_hot_audience"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_6"
             android:layout_toRightOf="@id/fl_hot_title"
@@ -100,10 +92,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="购票"/>
+            tools:text="购票" />
 
     </RelativeLayout>
 
-    <include layout="@layout/layout_1px_divider"/>
+    <include layout="@layout/layout_1px_divider" />
 
 </LinearLayout>

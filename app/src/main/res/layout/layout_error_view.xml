@@ -19,7 +19,7 @@
         android:text="网络正在开小差"
         android:textSize="@dimen/sp_14" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_try"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

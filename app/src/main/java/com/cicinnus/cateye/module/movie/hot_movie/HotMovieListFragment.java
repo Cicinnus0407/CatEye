@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.view.ProgressLayout;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +72,10 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
             }
         });
 
+        //获取更多
         hotMovieListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                //获取更多
                 if (mCurrentIndex <= groupCount) {
                     StringBuilder builder = new StringBuilder();
                     for (int i = 0; i < mMovieIds.get(mCurrentIndex).size(); i++) {
@@ -87,6 +86,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
                             builder.append(mMovieIds.get(mCurrentIndex).get(i));
                         }
                     }
+                    //ci参数默认为20，headline参数为0
                     mPresenter.getMoreHotMovieList(20, 0, builder.toString());
                 } else {
                     hotMovieListAdapter.loadMoreEnd();
@@ -127,13 +127,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
         for (int i = 0; i < leftCount; i++) {
             integers.add(movieIds.get((groupCount) * 12 + i));
             mMovieIds.add(groupCount, integers);
-
         }
-        Logger.d("groupCount=" + groupCount + "---leftCount=" + leftCount);
-//        Logger.d(mMovieIds.get(0));
-//        Logger.d(mMovieIds.get(1));
-//        Logger.d(mMovieIds.get(2));
-//        Logger.d(mMovieIds.get(3));
 
     }
 

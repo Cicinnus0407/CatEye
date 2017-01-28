@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.net.SchedulersCompat;
@@ -36,7 +36,7 @@ public class ProgressLayout extends LinearLayout {
     private LayoutInflater layoutInflater;
     private LinearLayout loadingView, errorView;
 
-    private Button btn_error;
+    private TextView btn_error;
 
     private List<View> contentViews = new ArrayList<>();
 
@@ -127,8 +127,8 @@ public class ProgressLayout extends LinearLayout {
             layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             ImageView iv_loading = (ImageView) loadingView.findViewById(R.id.iv_loading);
             RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotateAnimation.setDuration(700);
-            rotateAnimation.setRepeatCount(5);
+            rotateAnimation.setDuration(1000);
+            rotateAnimation.setRepeatCount(15);
             rotateAnimation.startNow();
             iv_loading.startAnimation(rotateAnimation);
             this.addView(loadingView, layoutParams);
@@ -141,7 +141,7 @@ public class ProgressLayout extends LinearLayout {
         if (errorView == null) {
             errorView = (LinearLayout) layoutInflater.inflate(R.layout.layout_error_view, null);
             errorView.setTag(ERROR_TAG);
-            btn_error = (Button) errorView.findViewById(R.id.btn_try);
+            btn_error = (TextView) errorView.findViewById(R.id.btn_try);
             layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
             this.addView(errorView, layoutParams);
