@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="115dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_award_movie_title"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_arrow_right"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="1234566" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="@color/divider_normal" />
+
+        <TextView
+            android:id="@+id/tv_award_movie_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            tools:text="02-02" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="@color/divider_normal" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14">
+
+
+        <ImageView
+            android:id="@+id/iv_award_movie"
+            android:layout_width="100dp"
+            android:layout_height="141dp"
+            tools:src="@drawable/icon_default" />
+
+        <TextView
+            android:layout_marginTop="1dp"
+            android:textSize="11sp"
+            android:id="@+id/tv_award_prize_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/text_blue"
+            android:textColor="@color/white"
+            tools:text="123456" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_award_movie_name"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14"
+        tools:text="电影名" />
+
+</LinearLayout>

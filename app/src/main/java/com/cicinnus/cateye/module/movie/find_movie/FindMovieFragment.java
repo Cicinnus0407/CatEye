@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
+import com.cicinnus.cateye.module.movie.find_movie.adapter.AwardsMovieAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieGridAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieNationAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMoviePeriodAdapter;
@@ -45,12 +46,15 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
     RecyclerView rvMoviePeriod;
     @BindView(R.id.rv_find_movie_grid)
     RecyclerView rvFindMovieGrid;//热映口碑
+    @BindView(R.id.rv_movie_awards)
+    RecyclerView rvMovieAwards;
 
     private FindMovieTypeAdapter findMovieTypeAdapter;
     private FindMovieNationAdapter findMovieNationAdapter;
     private FindMoviePeriodAdapter findMoviePeriodAdapter;
-
     private FindMovieGridAdapter findMovieGridAdapter;
+    private AwardsMovieAdapter awardsMovieAdapter;
+
     private boolean isFirst = true;
 
     @Override
@@ -73,6 +77,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         if(isFirst){
             mPresenter.getMovieTypeList();
             mPresenter.getMovieGrid();
+            mPresenter.getAwardsMovie();
             isFirst = false;
             progressLayout.setVisibility(View.VISIBLE);
         }
@@ -111,6 +116,14 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         rvFindMovieGrid.setLayoutManager(gridLayoutManager);
         findMovieGridAdapter = new FindMovieGridAdapter();
         rvFindMovieGrid.setAdapter(findMovieGridAdapter);
+        rvFindMovieGrid.setNestedScrollingEnabled(false);//禁止滑动
+
+        //获奖电影
+        awardsMovieAdapter = new AwardsMovieAdapter();
+        rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+        rvMovieAwards.setAdapter(awardsMovieAdapter);
+
+
     }
 
     @Override
@@ -135,7 +148,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     public void addAwardsMovie(List<AwardsMovieBean.DataBean> data) {
-
+        awardsMovieAdapter.setNewData(data);
     }
 
     @Override
