@@ -51,6 +51,7 @@ public class WaitMovieFragment extends BaseFragment<WaitMoviePresenter> implemen
     private HashMap<Integer, String> keys;
     private WaitMovieBean.DataBean dataBean;
     private FloatingItemDecoration floatingItemDecoration;
+    private boolean isFirst = true;
 
     @Override
     protected int getLayoutId() {
@@ -101,10 +102,14 @@ public class WaitMovieFragment extends BaseFragment<WaitMoviePresenter> implemen
     }
 
     @Override
-    protected void lazyLoad() {
-        mPresenter.getTrailerRecommendMovie();
-        mPresenter.getRecentExpect(0, 50);
-        mPresenter.getWaitMovieList(20, 12);
+    protected void lazyLoadEveryTime() {
+        if(isFirst){
+            mPresenter.getTrailerRecommendMovie();
+            mPresenter.getRecentExpect(0, 50);
+            mPresenter.getWaitMovieList(20, 12);
+            isFirst = false;
+        }
+
     }
 
     @Override

@@ -11,7 +11,12 @@ public class TimeUtils {
 
     public static String dateYMDHM(long time){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-        String day = format.format(time);
-        return day;
+        return format.format(time);
     }
+
+    public static String dateYMD(long time){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+        return format.format(time);
+    }
+
 }

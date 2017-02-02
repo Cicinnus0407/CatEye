@@ -57,7 +57,7 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
         }
 
         if (getUserVisibleHint()) {
-            lazyLoad();
+            lazyLoadEveryTime();
             isLoad = true;
         } else {
             if (isLoad) {
@@ -69,7 +69,7 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
     /**
      * 懒加载实现该方法
      */
-    protected void lazyLoad() {
+    protected void lazyLoadEveryTime() {
 
     }
 

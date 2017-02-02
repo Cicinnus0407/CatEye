@@ -98,7 +98,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     }
 
     @Override
-    protected void lazyLoad() {
+    protected void lazyLoadEveryTime() {
 
     }
 
@@ -113,6 +113,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
         groupCount = movieIds.size() / 12;
         int leftCount = movieIds.size() % 12;
         mMovieIds = new ArrayList<>();
+
         //n组
         for (int i = 0; i < groupCount; i++) {
             List<Integer> integers = new ArrayList<>();

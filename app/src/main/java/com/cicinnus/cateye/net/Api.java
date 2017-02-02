@@ -2,12 +2,16 @@ package com.cicinnus.cateye.net;
 
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
+import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -53,7 +57,19 @@ public interface Api {
                                                           @Query("limit") int limit);
 
     //待映-列表
-    @GET("http://api.maoyan.com/mmdb/movie/v2/list/rt/order/coming.json")
+    @GET("mmdb/movie/v2/list/rt/order/coming.json")
     Observable<WaitMovieBean> getWaitMovieList(@Query("ci") int ci,
                                                @Query("limit") int limit);
+
+    //找片-类型
+    @GET("mmdb/search/movie/tag/types.json")
+    Observable<MovieTypeBean> getMovieTypeList();
+
+    //找片-表格
+    @GET("mmdb/movieboard/fixedboard/v1/hot/list.json")
+    Observable<GridMovieBean> getMovieGrid();
+
+    //找片-获奖
+    @GET("mmdb/movie/winning/film/{time}/list.json")
+    Observable<AwardsMovieBean> getAwardsMovieList(@Path("time")String time);
 }

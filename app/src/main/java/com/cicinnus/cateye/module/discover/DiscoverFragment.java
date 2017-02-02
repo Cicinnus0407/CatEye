@@ -88,7 +88,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
     }
 
     @Override
-    protected void lazyLoad() {
+    protected void lazyLoadEveryTime() {
         if (isFirst) {
             mPresenter.getDiscoverData(offset, limit);
             mPresenter.getDiscoverHeader("7.8.0");

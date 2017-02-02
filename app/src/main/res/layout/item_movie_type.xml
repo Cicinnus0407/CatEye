@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true"  >
+
+    <TextView
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:clickable="true"
+        android:id="@+id/tv_movie_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/selector_tv_movie_type"
+        android:orientation="vertical"
+        android:textColor="@drawable/selector_tv_movie_type"
+        tools:text="喜剧" />
+</LinearLayout>
