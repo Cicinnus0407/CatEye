@@ -8,8 +8,8 @@
   
   ###截图
 ![热映](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231055.png)
-![找片](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231054.png)
-![分类查找](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231056.png)
+![找片](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231254.png)
+![分类查找](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231356.png)
 ![热映口碑榜](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231507.png)
 
 </br>
