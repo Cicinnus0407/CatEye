@@ -5,6 +5,7 @@ import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
@@ -72,14 +73,19 @@ public interface Api {
 
     //找片-获奖
     @GET("mmdb/movie/winning/film/{time}/list.json")
-    Observable<AwardsMovieBean> getAwardsMovieList(@Path("time")String time);
+    Observable<AwardsMovieBean> getAwardsMovieList(@Path("time") String time);
 
     //分类查找
     @GET("mmdb/search/movie/tag/list.json")
-    Observable<ClassifySearchBean> getClassfySearchList(@Query("limit")int limit,
-                                                        @Query("offset")int offset,
-                                                        @Query("catId")int catId,
-                                                        @Query("sourceId")int sourceId,
-                                                        @Query("yearId")int yearId,
-                                                        @Query("sortId")int sortId);
+    Observable<ClassifySearchBean> getClassfySearchList(@Query("limit") int limit,
+                                                        @Query("offset") int offset,
+                                                        @Query("catId") int catId,
+                                                        @Query("sourceId") int sourceId,
+                                                        @Query("yearId") int yearId,
+                                                        @Query("sortId") int sortId);
+
+    //热映口碑
+    @GET("mmdb/movieboard/fixedboard/7.json")
+    Observable<HotGoodCommentBean> getHotGoodCommentList(@Query("limit") int limit,
+                                                         @Query("offset") int offset);
 }

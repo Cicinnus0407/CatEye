@@ -25,6 +25,10 @@
         <activity
             android:name=".module.movie.search_movie.SearchMovieActivity"
             android:screenOrientation="portrait" />
+        <!--热门口碑电影-->
+        <activity
+            android:name=".module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
