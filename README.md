@@ -6,7 +6,7 @@
   - Glide
   
   
-  ###截图
+###截图
 ![热映](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231055.png)
 ![找片](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231254.png)
 ![分类查找](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231356.png)
