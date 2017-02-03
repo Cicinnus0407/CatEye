@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CatEye</string>
+    <string name="tv_filter_search">分类查找</string>
 </resources>

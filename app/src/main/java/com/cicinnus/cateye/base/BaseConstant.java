@@ -23,11 +23,17 @@ public interface BaseConstant {
     int TYPE_HOT_NORMAL = 1;//正常
     int TYPE_HOT_PRE_SELL = 2;//预售
 
-    //待映4种item
+    //待映5种item
     int TYPE_WAIT_DIVIDER = 0;//悬浮item
     int TYPE_WAIT_HEADLINES = 1;//有专访的item
     int TYPE_WAIT_TRAILER = 2;//预告片
     int TYPE_WAIT_RECENT = 3;//近期受期待
     int TYPE_WAIT_NORMAL = 4;//正常
+
+    //分类查找
+    int TYPE_CLASSIFY_NORMAL = 0;//不在上映
+    int TYPE_CLASSIFY_WISH = 1;//想看
+    int TYPE_CLASSIFY_BUY = 2;//可以购票
+    int TYPE_CLASSIFY_PRESALE = 3;//预售
 }
 

@@ -35,7 +35,8 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         FindMovieFragment fragment = new FindMovieFragment();
         return fragment;
     }
-
+    @BindView(R.id.tv_search_content)
+    TextView tvSearchContent;
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
     @BindView(R.id.rv_movie_type)
@@ -69,6 +70,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     protected void initEventAndData() {
+        tvSearchContent.setText(String.format("%s","找影片、影人、影院"));
         initMovieTypeList();
     }
 

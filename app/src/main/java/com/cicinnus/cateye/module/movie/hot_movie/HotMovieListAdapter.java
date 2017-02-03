@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.tools.GlideManager;
+import com.cicinnus.cateye.tools.ImgSizeUtil;
 
 /**
  * Created by Cicinnus on 2017/1/24.
@@ -33,8 +34,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                 .setText(R.id.tv_hot_desc, String.format("%s", item.getScm()))
                 .setText(R.id.tv_hot_showInfo, String.format("%s", item.getShowInfo()));
         //图片地址不能直接使用，需要进行转换
-        String originUrl = item.getImg();
-        String imgUrl = originUrl.replace("/w.h/", "/") + "@171w_240h_1e_1c_1l";//后缀为图片大小
+        String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(),".webp@171w_240h_1e_1c_1l");
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_hot_img));
 
         //显示3D和IMAX的标签
