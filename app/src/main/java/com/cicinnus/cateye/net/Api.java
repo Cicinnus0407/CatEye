@@ -6,9 +6,10 @@ import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 
@@ -55,8 +56,8 @@ public interface Api {
 
     //待映-近期最受期待
     @GET("mmdb/movie/v1/list/wish/order/coming.json")
-    Observable<RecentExpectBean> getRecentExpectMovieList(@Query("offset") int offset,
-                                                          @Query("limit") int limit);
+    Observable<ExpectMovieBean> getExpectMovieList(@Query("offset") int offset,
+                                                   @Query("limit") int limit);
 
     //待映-列表
     @GET("mmdb/movie/v2/list/rt/order/coming.json")
@@ -77,15 +78,20 @@ public interface Api {
 
     //分类查找
     @GET("mmdb/search/movie/tag/list.json")
-    Observable<ClassifySearchBean> getClassfySearchList(@Query("limit") int limit,
-                                                        @Query("offset") int offset,
-                                                        @Query("catId") int catId,
-                                                        @Query("sourceId") int sourceId,
-                                                        @Query("yearId") int yearId,
-                                                        @Query("sortId") int sortId);
+    Observable<ClassifySearchBean> getClassifySearchList(@Query("limit") int limit,
+                                                         @Query("offset") int offset,
+                                                         @Query("catId") int catId,
+                                                         @Query("sourceId") int sourceId,
+                                                         @Query("yearId") int yearId,
+                                                         @Query("sortId") int sortId);
 
     //热映口碑
     @GET("mmdb/movieboard/fixedboard/7.json")
     Observable<HotGoodCommentBean> getHotGoodCommentList(@Query("limit") int limit,
                                                          @Query("offset") int offset);
+
+    //最受期待
+    @GET("mmdb/movieboard/fixedboard/6.json")
+    Observable<RecentExpectMovieBean> getRecentExpectMovie(@Query("limit") int limit,
+                                                           @Query("offset") int offset);
 }

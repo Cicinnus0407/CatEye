@@ -90,8 +90,8 @@ public class ProgressLayout extends LinearLayout {
     }
 
     public void showContent() {
-        //延迟700毫秒显示
-        Observable.timer(700, TimeUnit.MILLISECONDS)
+        //延迟500毫秒显示
+        Observable.timer(500, TimeUnit.MILLISECONDS)
                 .compose(SchedulersCompat.<Long>applyIoSchedulers())
                 .subscribe(new Action1<Long>() {
                     @Override

@@ -1,6 +1,5 @@
 package com.cicinnus.cateye.module.movie.hot_movie;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +9,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
 
     private HotMovieListAdapter hotMovieListAdapter;
     private int groupCount;
+    private MyPullToRefreshListener pullToRefreshListener;
 
     public static HotMovieListFragment newInstance() {
 
@@ -35,7 +37,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
     @BindView(R.id.swipe)
-    SwipeRefreshLayout swip;
+    SuperSwipeRefreshLayout swip;
     @BindView(R.id.rv_hot_movie_list)
     RecyclerView rvHotMovieList;
 
@@ -62,15 +64,16 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
         ((TextView) view_search_header.findViewById(R.id.tv_search_content)).setText("找影片、影人、影院");
         hotMovieListAdapter.addHeaderView(view_search_header);
 
-        swip.setColorSchemeResources(R.color.colorAccent);
-        swip.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //下拉刷新
+        pullToRefreshListener = new MyPullToRefreshListener(mContext,swip);
+        pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                swip.setRefreshing(true);
+            public void refresh() {
                 mCurrentIndex = 1;
                 mPresenter.getHotMovieList(20, 12);
             }
         });
+        swip.setOnPullRefreshListener(pullToRefreshListener);
 
         //获取更多
         hotMovieListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -160,12 +163,12 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
-        swip.setRefreshing(false);
+        pullToRefreshListener.refreshDone();
     }
 
     @Override
     public void showError(String errorMsg) {
-        swip.setRefreshing(false);
+        pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

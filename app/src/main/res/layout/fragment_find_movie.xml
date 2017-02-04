@@ -1,88 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.cicinnus.cateye.view.ProgressLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progressLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
-    <com.cicinnus.cateye.view.ProgressLayout
-        tools:visibility="visible"
-        android:visibility="invisible"
-        android:id="@+id/progressLayout"
+    <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/layout_search" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="@dimen/dp_22"
-            android:id="@+id/rv_movie_type"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="41dp" />
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_movie_nation"
-            android:layout_width="match_parent"
-            android:layout_height="41dp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_movie_period"
-            android:layout_width="match_parent"
-            android:layout_height="41dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_14"
-            android:background="@color/divider_normal" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_find_movie_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_22"
-            android:background="@color/divider_normal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_14"
-                android:layout_marginTop="@dimen/dp_14"
-                android:text="全球电影奖项"
-                android:textColor="@color/text_primary" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_movie_awards"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_14" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
-        </LinearLayout>
+                <include layout="@layout/layout_search" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/divider_normal" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_movie_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:layout_marginTop="@dimen/dp_22" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/dp_14"
-            android:layout_marginTop="@dimen/dp_14"
-            android:text="全部电影奖项>"
-            android:textColor="@color/colorAccent" />
-    </com.cicinnus.cateye.view.ProgressLayout>
-</android.support.v4.widget.NestedScrollView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_movie_nation"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_movie_period"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_14"
+                    android:background="@color/divider_normal" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_find_movie_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_22"
+                    android:background="@color/divider_normal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_14"
+                        android:layout_marginTop="@dimen/dp_14"
+                        android:text="全球电影奖项"
+                        android:textColor="@color/text_primary" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_movie_awards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_14" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/dp_14"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:text="全部电影奖项>"
+                    android:textColor="@color/colorAccent" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
+
+</com.cicinnus.cateye.view.ProgressLayout>

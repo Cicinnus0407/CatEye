@@ -11,7 +11,7 @@ import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.module.movie.wait_movie.adapter.RecentExpectAdapter;
 import com.cicinnus.cateye.module.movie.wait_movie.adapter.TrailerRecommendAdapter;
 import com.cicinnus.cateye.module.movie.wait_movie.adapter.WaitMovieAdapter;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.view.FloatingItemDecoration;
@@ -118,7 +118,7 @@ public class WaitMovieFragment extends BaseFragment<WaitMoviePresenter> implemen
     }
 
     @Override
-    public void addRecentExpectMovieList(List<RecentExpectBean.DataBean.ComingBean> coming) {
+    public void addRecentExpectMovieList(List<ExpectMovieBean.DataBean.ComingBean> coming) {
         recentExpectAdapter.setNewData(coming);
     }
 

@@ -1,7 +1,7 @@
 package com.cicinnus.cateye.module.movie.wait_movie;
 
 import com.cicinnus.cateye.base.ILoadingView;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 
@@ -15,7 +15,7 @@ public class WaitMovieFragmentContract {
     public interface IWaitMovieView extends ILoadingView {
         void addTrailerRecommendMovieList(List<TrailerRecommendBean.DataBean> data);
 
-        void addRecentExpectMovieList(List<RecentExpectBean.DataBean.ComingBean> coming);
+        void addRecentExpectMovieList(List<ExpectMovieBean.DataBean.ComingBean> coming);
 
         void addWaitMovieList(List<WaitMovieBean.DataBean.ComingBean> coming);
 

@@ -27,6 +27,13 @@ public class HotGoodCommentAdapter extends BaseQuickAdapter<HotGoodCommentBean.D
         helper.setText(R.id.tv_movie_name,item.getNm())
                 .setText(R.id.tv_movie_star,item.getStar())
                 .setText(R.id.tv_movie_pubDesc,item.getPubDesc())
-                .setText(R.id.tv_movie_score,String.format("%s",item.getSc()));
+                .setText(R.id.tv_movie_score,String.format("%s",item.getSc()))
+                .setText(R.id.tv_movie_rank,String.format("%s",helper.getAdapterPosition()));
+        if(helper.getAdapterPosition()<4){
+            ((ImageView) helper.getView(R.id.iv_movie_rank)).setImageResource(R.drawable.ic_yellow_angle_small);
+        }else {
+            ((ImageView) helper.getView(R.id.iv_movie_rank)).setImageResource(R.drawable.ic_gray_angle);
+
+        }
     }
 }

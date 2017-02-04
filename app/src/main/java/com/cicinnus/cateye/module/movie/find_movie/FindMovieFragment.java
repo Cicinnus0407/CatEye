@@ -18,7 +18,9 @@ import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieTypeAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 
 import java.util.List;
 
@@ -31,10 +33,15 @@ import butterknife.BindView;
 public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implements FindMovieContract.IFindMovieView {
 
 
+    private MyPullToRefreshListener pullToRefreshListener;
+
     public static FindMovieFragment newInstance() {
         FindMovieFragment fragment = new FindMovieFragment();
         return fragment;
     }
+
+    @BindView(R.id.swipe)
+    SuperSwipeRefreshLayout swipe;
     @BindView(R.id.tv_search_content)
     TextView tvSearchContent;
     @BindView(R.id.progressLayout)
@@ -48,7 +55,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
     @BindView(R.id.rv_find_movie_grid)
     RecyclerView rvFindMovieGrid;//热映口碑
     @BindView(R.id.rv_movie_awards)
-    RecyclerView rvMovieAwards;
+    RecyclerView rvMovieAwards;//获奖电影
 
     private FindMovieTypeAdapter findMovieTypeAdapter;
     private FindMovieNationAdapter findMovieNationAdapter;
@@ -70,18 +77,28 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     protected void initEventAndData() {
-        tvSearchContent.setText(String.format("%s","找影片、影人、影院"));
+        tvSearchContent.setText(String.format("%s", "找影片、影人、影院"));
         initMovieTypeList();
+        pullToRefreshListener = new MyPullToRefreshListener(mContext, swipe);
+        swipe.setOnPullRefreshListener(pullToRefreshListener);
+        pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
+            @Override
+            public void refresh() {
+                mPresenter.getMovieTypeList();
+                mPresenter.getMovieGrid();
+                mPresenter.getAwardsMovie();
+            }
+        });
+
     }
 
     @Override
     protected void lazyLoadEveryTime() {
-        if(isFirst){
+        if (isFirst) {
             mPresenter.getMovieTypeList();
             mPresenter.getMovieGrid();
             mPresenter.getAwardsMovie();
             isFirst = false;
-            progressLayout.setVisibility(View.VISIBLE);
         }
 
     }
@@ -94,27 +111,27 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         findMovieTypeAdapter = new FindMovieTypeAdapter();
         rvMovieType.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvMovieType.setAdapter(findMovieTypeAdapter);
-        View head_type = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMovieType.getParent(),false);
+        View head_type = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMovieType.getParent(), false);
         ((TextView) head_type.findViewById(R.id.tv_content)).setText("类型");
-        findMovieTypeAdapter.addHeaderView(head_type,0, LinearLayout.HORIZONTAL);
+        findMovieTypeAdapter.addHeaderView(head_type, 0, LinearLayout.HORIZONTAL);
 
         //地区
         findMovieNationAdapter = new FindMovieNationAdapter();
         rvMovieNation.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvMovieNation.setAdapter(findMovieNationAdapter);
-        View head_nation = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMovieNation.getParent(),false);
+        View head_nation = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMovieNation.getParent(), false);
         ((TextView) head_nation.findViewById(R.id.tv_content)).setText("地区");
-        findMovieNationAdapter.addHeaderView(head_nation,0, LinearLayout.HORIZONTAL);
+        findMovieNationAdapter.addHeaderView(head_nation, 0, LinearLayout.HORIZONTAL);
         //年代
         findMoviePeriodAdapter = new FindMoviePeriodAdapter();
         rvMoviePeriod.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvMoviePeriod.setAdapter(findMoviePeriodAdapter);
-        View head_period = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMoviePeriod.getParent(),false);
+        View head_period = mContext.getLayoutInflater().inflate(R.layout.layout_normal_tv, (ViewGroup) rvMoviePeriod.getParent(), false);
         ((TextView) head_period.findViewById(R.id.tv_content)).setText("年代");
-        findMoviePeriodAdapter.addHeaderView(head_period,0, LinearLayout.HORIZONTAL);
+        findMoviePeriodAdapter.addHeaderView(head_period, 0, LinearLayout.HORIZONTAL);
 
         //表格RecyclerView
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext,2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
         rvFindMovieGrid.setLayoutManager(gridLayoutManager);
         findMovieGridAdapter = new FindMovieGridAdapter();
         rvFindMovieGrid.setAdapter(findMovieGridAdapter);
@@ -122,7 +139,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
         //获奖电影
         awardsMovieAdapter = new AwardsMovieAdapter();
-        rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+        rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvMovieAwards.setAdapter(awardsMovieAdapter);
 
 
@@ -155,11 +172,14 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     public void showLoading() {
-        progressLayout.showLoading();
+        if (!progressLayout.isContent()) {
+            progressLayout.showLoading();
+        }
     }
 
     @Override
     public void showContent() {
+        pullToRefreshListener.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
@@ -167,6 +187,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     public void showError(String errorMsg) {
+        pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

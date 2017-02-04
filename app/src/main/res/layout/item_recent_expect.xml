@@ -11,23 +11,23 @@
         android:layout_height="117dp">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_movie_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <ImageView
-            android:layout_gravity="top|left"
             android:id="@+id/iv_movie_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
             tools:src="@drawable/ic_yellow_angle" />
 
         <TextView
-            android:layout_gravity="top|left"
             android:id="@+id/tv_movie_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
             android:layout_marginLeft="@dimen/dp_4"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_12"
@@ -40,6 +40,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dp_12"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
@@ -54,8 +55,7 @@
         <TextView
             android:id="@+id/tv_movie_star"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
@@ -65,8 +65,14 @@
             android:id="@+id/tv_movie_pubDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_10"
             tools:text="2017-xx-xx大陆上映" />
+
+        <TextView
+            android:id="@+id/tv_total_wish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            tools:text="总想看人数" />
 
 
     </LinearLayout>
@@ -74,35 +80,30 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:gravity="right"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tv_movie_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_yellow"
-                android:textSize="@dimen/sp_16"
-                tools:text="9.4" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="分"
-                android:textColor="@color/text_yellow"
-                android:textSize="@dimen/sp_12" />
-
-        </LinearLayout>
 
         <TextView
-            android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="本月新增想看"
+            android:textColor="@color/text_yellow"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_new_wish"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/text_yellow"
+            tools:text="124" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/bg_tv_buy"
             android:drawableLeft="@drawable/ic_wish"
             android:drawablePadding="@dimen/dp_4"

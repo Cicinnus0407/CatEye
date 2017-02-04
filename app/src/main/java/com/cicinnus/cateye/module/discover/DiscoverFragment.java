@@ -1,6 +1,5 @@
 package com.cicinnus.cateye.module.discover;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,9 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.tools.GlideManager;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,12 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
     @BindView(R.id.swipe)
-    SwipeRefreshLayout swipe;
+    SuperSwipeRefreshLayout swipe;
     @BindView(R.id.rv_discover)
     RecyclerView rvDiscover;
     private View headerView;
     private boolean isFirst = true;
+    private MyPullToRefreshListener pullToRefreshListener;
 
 
     public static DiscoverFragment newInstance() {
@@ -65,13 +67,12 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
         headerView = mContext.getLayoutInflater().inflate(R.layout.item_discover_header, (ViewGroup) rvDiscover.getParent(), false);
         discoverAdapter.addHeaderView(headerView);
         //下拉刷新
-        swipe.setColorSchemeResources(R.color.colorAccent);
-        //从小变大的swipe
-        swipe.setProgressViewOffset(true, 50, 200);
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        pullToRefreshListener = new MyPullToRefreshListener(mContext,swipe);
+        swipe.setOnPullRefreshListener(pullToRefreshListener);
+        pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                swipe.setRefreshing(true);
+            public void refresh() {
                 offset = 0;
                 discoverAdapter.setNewData(new ArrayList<DiscoverBean.DataBean.FeedsBean>());
                 mPresenter.getDiscoverData(offset, limit);
@@ -139,7 +140,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
 
     @Override
     public void showContent() {
-        swipe.setRefreshing(false);
+        pullToRefreshListener.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
@@ -147,6 +148,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
 
     @Override
     public void showError(String errorMsg) {
+        pullToRefreshListener.refreshDone();
         discoverAdapter.loadMoreEnd();
         progressLayout.showError(new View.OnClickListener() {
             @Override

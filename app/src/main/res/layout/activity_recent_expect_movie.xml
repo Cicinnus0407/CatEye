@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_search" />
-
+    <include layout="@layout/layout_normal_back_title" />
 
     <com.cicinnus.cateye.view.ProgressLayout
         android:id="@+id/progressLayout"
@@ -19,12 +17,14 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_discover"
+                android:id="@+id/rv_recent_expect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+
         </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
 
-    </com.cicinnus.cateye.view.ProgressLayout>
 
+    </com.cicinnus.cateye.view.ProgressLayout>
 
 </LinearLayout>

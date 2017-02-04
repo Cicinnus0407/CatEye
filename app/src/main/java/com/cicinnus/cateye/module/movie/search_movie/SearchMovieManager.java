@@ -24,7 +24,7 @@ public class SearchMovieManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getClassfySearchList(10,offset,catId,sourceId,yearId,sortId)
+                .getClassifySearchList(10,offset,catId,sourceId,yearId,sortId)
                 .compose(SchedulersCompat.<ClassifySearchBean>applyIoSchedulers());
     }
 }

@@ -5,20 +5,20 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.tools.GlideManager;
 
 /**
  * Created by Cicinnus on 2017/1/26.
  */
 
-public class RecentExpectAdapter extends BaseQuickAdapter<RecentExpectBean.DataBean.ComingBean, BaseViewHolder> {
+public class RecentExpectAdapter extends BaseQuickAdapter<ExpectMovieBean.DataBean.ComingBean, BaseViewHolder> {
     public RecentExpectAdapter() {
         super(R.layout.item_wait_movie_recent_expect, null);
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, RecentExpectBean.DataBean.ComingBean item) {
+    protected void convert(final BaseViewHolder helper, ExpectMovieBean.DataBean.ComingBean item) {
 
 
         String originUrl = item.getImg();

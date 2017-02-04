@@ -29,6 +29,10 @@
         <activity
             android:name=".module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentActivity"
             android:screenOrientation="portrait" />
+        <!--最受期待榜单-->
+        <activity
+            android:name=".module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

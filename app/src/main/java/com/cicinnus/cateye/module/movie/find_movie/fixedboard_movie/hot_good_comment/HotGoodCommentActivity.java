@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.RefreshView;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Cicinnus on 2017/2/3.
@@ -19,6 +26,12 @@ import butterknife.BindView;
 
 public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter> implements HotGoodCommentContract.IHotGoodCommentView {
 
+
+    private View headerView;
+    private RefreshView refreshView;
+    private int mScolly;
+    private boolean isRefresh;
+    private MyPullToRefreshListener pull;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, HotGoodCommentActivity.class);
@@ -31,6 +44,11 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
     RecyclerView rvHotGoodCommentList;
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
+    @BindView(R.id.swipe)
+    SuperSwipeRefreshLayout pullToRefresh;
+    TextView tvCreateDate;
+    TextView tvContent;
+
     private HotGoodCommentAdapter hotGoodCommentAdapter;
     private int offset;
 
@@ -44,7 +62,20 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
         hotGoodCommentAdapter = new HotGoodCommentAdapter();
         rvHotGoodCommentList.setLayoutManager(new LinearLayoutManager(mContext));
         rvHotGoodCommentList.setAdapter(hotGoodCommentAdapter);
+        headerView = getLayoutInflater().inflate(R.layout.layout_fixboard_header, (ViewGroup) rvHotGoodCommentList.getParent(), false);
+        hotGoodCommentAdapter.addHeaderView(headerView);
+
         mPresenter.getHotGoodCommentList(offset);
+        pull = new MyPullToRefreshListener(mContext, pullToRefresh);
+        pullToRefresh.setOnPullRefreshListener(pull);
+        pull.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
+            @Override
+            public void refresh() {
+                offset = 0;
+                hotGoodCommentAdapter.setNewData(new ArrayList<HotGoodCommentBean.DataBean.MoviesBean>());
+                mPresenter.getHotGoodCommentList(offset);
+            }
+        });
     }
 
     @Override
@@ -52,21 +83,32 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
         return new HotGoodCommentPresenter(mContext, this);
     }
 
+    @OnClick({R.id.rl_back})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+        }
+    }
+
     @Override
     public void addHotGoodCommentList(HotGoodCommentBean data) {
-        //TODO 头部
-        if (data.getData().getMovies().size() > 0) {
-            offset += 10;
-            hotGoodCommentAdapter.addData(data.getData().getMovies());
-            hotGoodCommentAdapter.loadMoreComplete();
-        } else {
-            hotGoodCommentAdapter.loadMoreEnd();
-        }
+        hotGoodCommentAdapter.setNewData(data.getData().getMovies());
     }
 
     @Override
     public void addTitle(String title) {
         tvTitle.setText(title);
+    }
+
+    @Override
+    public void addListHeader(String created, String content) {
+
+        tvCreateDate = (TextView) headerView.findViewById(R.id.tv_createDate);
+        tvContent = (TextView) headerView.findViewById(R.id.tv_content);
+        tvCreateDate.setText(created);
+        tvContent.setText(content);
     }
 
     @Override
@@ -78,6 +120,7 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
 
     @Override
     public void showContent() {
+        pull.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
@@ -85,10 +128,11 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
 
     @Override
     public void showError(String errorMsg) {
+        pull.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offset =0;
+                offset = 0;
                 mPresenter.getHotGoodCommentList(offset);
             }
         });

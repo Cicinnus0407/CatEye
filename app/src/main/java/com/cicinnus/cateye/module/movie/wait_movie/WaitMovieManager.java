@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.wait_movie;
 
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.net.RetrofitClient;
@@ -32,12 +32,12 @@ public class WaitMovieManager {
      * @param limit 数量
      * @return
      */
-    public Observable<RecentExpectBean> getRecentExpectList(int offset, int limit){
+    public Observable<ExpectMovieBean> getRecentExpectList(int offset, int limit){
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getRecentExpectMovieList(offset,limit)
-                .compose(SchedulersCompat.<RecentExpectBean>applyIoSchedulers());
+                .getExpectMovieList(offset,limit)
+                .compose(SchedulersCompat.<ExpectMovieBean>applyIoSchedulers());
 
     }
 

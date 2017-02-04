@@ -37,6 +37,7 @@ public class HotGoodCommentPresenter extends BasePresenter<HotGoodCommentContrac
 
                     @Override
                     public void onNext(HotGoodCommentBean hotGoodCommentBean) {
+                        mView.addListHeader(hotGoodCommentBean.getData().getCreated(),hotGoodCommentBean.getData().getContent());
                         mView.addTitle(hotGoodCommentBean.getData().getTitle());
                         mView.addHotGoodCommentList(hotGoodCommentBean);
                     }

@@ -3,7 +3,7 @@ package com.cicinnus.cateye.module.movie.wait_movie;
 import android.app.Activity;
 
 import com.cicinnus.cateye.base.BasePresenter;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.RecentExpectBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.tools.ErrorHanding;
@@ -48,7 +48,7 @@ public class WaitMoviePresenter extends BasePresenter<WaitMovieFragmentContract.
     public void getRecentExpect(int offset, int limit) {
         mView.showLoading();
         addSubscribe(waitMovieManager.getRecentExpectList(offset, limit)
-                .subscribe(new Subscriber<RecentExpectBean>() {
+                .subscribe(new Subscriber<ExpectMovieBean>() {
                     @Override
                     public void onCompleted() {
                         mView.showContent();
@@ -60,8 +60,8 @@ public class WaitMoviePresenter extends BasePresenter<WaitMovieFragmentContract.
                     }
 
                     @Override
-                    public void onNext(RecentExpectBean recentExpectBean) {
-                        mView.addRecentExpectMovieList(recentExpectBean.getData().getComing());
+                    public void onNext(ExpectMovieBean expectMovieBean) {
+                        mView.addRecentExpectMovieList(expectMovieBean.getData().getComing());
                     }
                 }));
     }

@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentActivity;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 
 /**
@@ -53,12 +54,20 @@ public class FindMovieGridAdapter extends BaseQuickAdapter<GridMovieBean.DataBea
         String imgUrl1 = originalUrl1.replace("/w.h/", "/") + ".webp@129w_183h_1e_1c_1l";
         GlideManager.loadImage(mContext, imgUrl0, (ImageView) helper.getView(R.id.iv_grid2));
         GlideManager.loadImage(mContext, imgUrl1, (ImageView) helper.getView(R.id.iv_grid1));
-        switch (helper.getAdapterPosition()){
+        switch (helper.getAdapterPosition()) {
             case 0:
                 helper.convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         HotGoodCommentActivity.start(mContext);
+                    }
+                });
+                break;
+            case 1:
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RecentExpectMovieActivity.start(mContext);
                     }
                 });
                 break;

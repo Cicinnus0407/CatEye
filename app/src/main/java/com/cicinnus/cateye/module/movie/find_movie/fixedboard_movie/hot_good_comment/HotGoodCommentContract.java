@@ -11,6 +11,8 @@ public class HotGoodCommentContract {
         void addHotGoodCommentList(HotGoodCommentBean data);
 
         void addTitle(String title);
+
+        void addListHeader(String created, String content);
     }
     public interface IHotGoodCommentPresenter{
         void getHotGoodCommentList(int offset);
