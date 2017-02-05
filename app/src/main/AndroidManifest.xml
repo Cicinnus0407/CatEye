@@ -31,8 +31,12 @@
             android:screenOrientation="portrait" />
         <!--最受期待榜单-->
         <activity
-            android:name=".module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieActivity"
+            android:name=".module.movie.find_movie.fixedboard_movie.most_expect.MostExpectMovieActivity"
             android:screenOrientation="portrait" />
+        <!--TOP100-->
+        <activity android:name=".module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieActivity" />
+        <!--海外电影-->
+        <activity android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.OverseaMovieActivity" />
     </application>
 
 </manifest>

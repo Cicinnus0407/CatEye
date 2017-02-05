@@ -16,7 +16,7 @@ public class HotGoodCommentManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getHotGoodCommentList(10,offset)
+                .getHotGoodCommentMovie(10,offset)
                 .compose(SchedulersCompat.<HotGoodCommentBean>applyIoSchedulers());
     }
 }

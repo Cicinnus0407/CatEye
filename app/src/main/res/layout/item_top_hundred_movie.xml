@@ -11,25 +11,25 @@
         android:layout_height="117dp">
 
         <ImageView
-            android:scaleType="fitXY"
             android:id="@+id/iv_movie_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <ImageView
-            android:layout_gravity="top|left"
             android:id="@+id/iv_movie_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
             tools:src="@drawable/ic_yellow_angle" />
 
         <TextView
-            android:layout_gravity="top|left"
             android:id="@+id/tv_movie_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
+            android:textSize="10sp"
             tools:text="1" />
 
     </FrameLayout>
@@ -76,9 +76,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_gravity="right"
             android:layout_weight="1">
 
             <TextView
@@ -99,9 +99,9 @@
         </LinearLayout>
 
         <TextView
-            android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/bg_tv_buy"
             android:drawableLeft="@drawable/ic_wish"
             android:drawablePadding="@dimen/dp_4"

@@ -10,7 +10,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentActivity;
-import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieActivity;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.most_expect.MostExpectMovieActivity;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.OverseaMovieActivity;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 
 /**
@@ -67,7 +69,23 @@ public class FindMovieGridAdapter extends BaseQuickAdapter<GridMovieBean.DataBea
                 helper.convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RecentExpectMovieActivity.start(mContext);
+                        MostExpectMovieActivity.start(mContext);
+                    }
+                });
+                break;
+            case 2:
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OverseaMovieActivity.start(mContext);
+                    }
+                });
+                break;
+            case 3:
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TopHundredMovieActivity.start(mContext);
                     }
                 });
                 break;

@@ -1,4 +1,4 @@
-package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.recent_expect;
+package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.most_expect;
 
 import android.widget.ImageView;
 
@@ -12,14 +12,14 @@ import com.cicinnus.cateye.tools.ImgSizeUtil;
  * Created by Administrator on 2017/2/4.
  */
 
-public class RecentExpectMovieAdapter extends BaseQuickAdapter<RecentExpectMovieBean.DataBean.MoviesBean, BaseViewHolder> {
+public class MostExpectMovieAdapter extends BaseQuickAdapter<MostExpectMovieBean.DataBean.MoviesBean, BaseViewHolder> {
 
-    public RecentExpectMovieAdapter() {
+    public MostExpectMovieAdapter() {
         super(R.layout.item_recent_expect, null);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RecentExpectMovieBean.DataBean.MoviesBean item) {
+    protected void convert(BaseViewHolder helper, MostExpectMovieBean.DataBean.MoviesBean item) {
 
         String imgUrl = ImgSizeUtil.processUrl(item.getImg(), 224, 315);
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));

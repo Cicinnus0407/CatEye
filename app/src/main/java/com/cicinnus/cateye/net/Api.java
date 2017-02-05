@@ -6,14 +6,19 @@ import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentBean;
-import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.recent_expect.RecentExpectMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.most_expect.MostExpectMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -87,11 +92,20 @@ public interface Api {
 
     //热映口碑
     @GET("mmdb/movieboard/fixedboard/7.json")
-    Observable<HotGoodCommentBean> getHotGoodCommentList(@Query("limit") int limit,
-                                                         @Query("offset") int offset);
+    Observable<HotGoodCommentBean> getHotGoodCommentMovie(@Query("limit") int limit,
+                                                          @Query("offset") int offset);
 
     //最受期待
     @GET("mmdb/movieboard/fixedboard/6.json")
-    Observable<RecentExpectMovieBean> getRecentExpectMovie(@Query("limit") int limit,
-                                                           @Query("offset") int offset);
+    Observable<MostExpectMovieBean> getMostExpectMovie(@Query("limit") int limit,
+                                                       @Query("offset") int offset);
+
+    //最受期待
+    @GET("mmdb/movieboard/fixedboard/4.json")
+    Observable<TopHundredMovieBean> getTopHundredMovie(@Query("limit") int limit,
+                                                       @Query("offset") int offset);
+
+    //海外电影
+    @POST("http://api.mobile.meituan.com/combo/v2/combo.json")
+    Observable<ResponseBody> getOverseaMovie(@Body RequestBody jsonContent);
 }

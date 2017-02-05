@@ -11,26 +11,18 @@
         android:layout_height="117dp">
 
         <ImageView
-            android:scaleType="fitXY"
-            android:id="@+id/iv_movie_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@drawable/ic_video_play" />
 
         <ImageView
-            android:layout_gravity="top|left"
-            android:id="@+id/iv_movie_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@drawable/ic_yellow_angle" />
-
-        <TextView
-            android:layout_gravity="top|left"
-            android:id="@+id/tv_movie_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            tools:text="1" />
+            android:id="@+id/iv_movie_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
     </FrameLayout>
 
@@ -46,26 +38,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/text_primary"
             android:textSize="@dimen/sp_16"
             tools:text="电影名" />
 
         <TextView
-            android:id="@+id/tv_movie_star"
+
+            android:id="@+id/tv_movie_type"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
-            tools:text="主演名字" />
+            tools:text="电影类型" />
 
         <TextView
-            android:id="@+id/tv_movie_pubDesc"
+            android:id="@+id/tv_movie_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_10"
-            tools:text="2017-xx-xx大陆上映" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="影星" />
 
 
     </LinearLayout>
@@ -76,32 +73,32 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_gravity="right"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_movie_score"
+                android:id="@+id/tv_movie_wish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_yellow"
                 android:textSize="@dimen/sp_16"
-                tools:text="9.4" />
+                tools:text="9xxx" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="分"
+                android:text="人想看"
                 android:textColor="@color/text_yellow"
                 android:textSize="@dimen/sp_12" />
 
         </LinearLayout>
 
         <TextView
-            android:layout_marginBottom="@dimen/dp_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
             android:background="@drawable/bg_tv_buy"
             android:drawableLeft="@drawable/ic_wish"
             android:drawablePadding="@dimen/dp_4"

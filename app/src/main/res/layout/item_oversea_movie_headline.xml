@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
+
+        <FrameLayout
+            android:id="@+id/fl_hot_title"
+            android:layout_width="74dp"
+            android:layout_height="117dp"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:id="@+id/iv_hot_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:src="@drawable/icon_default" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/ic_video_play" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_movie_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/sp_16"
+                tools:text="电影名" />
+
+            <TextView
+                android:id="@+id/tv_movie_star"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="bottom"
+                android:maxLines="1"
+                tools:text="主演名字" />
+
+            <TextView
+                android:id="@+id/tv_movie_pubDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                tools:text="2017-xx-xx大陆上映" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="right"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_movie_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="@dimen/sp_16"
+                    tools:text="9.4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@drawable/bg_tv_buy"
+                android:drawableLeft="@drawable/ic_wish"
+                android:drawablePadding="@dimen/dp_4"
+                android:text="想看"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="88dp"
+            android:background="@color/divider_normal" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_10">
+
+            <FrameLayout
+                android:layout_width="68dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_hot_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/bg_tv_topic"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="专题" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_hot_headline_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="88dp"
+            android:background="@color/divider_normal" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_10">
+
+            <FrameLayout
+                android:layout_width="68dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_hot_type2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/bg_tv_topic"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="@dimen/sp_12"
+                    tools:text="专题" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_hot_headline_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_1px_divider" />
+
+</LinearLayout>
