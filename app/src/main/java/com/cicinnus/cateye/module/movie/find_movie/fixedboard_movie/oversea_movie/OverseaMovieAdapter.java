@@ -4,12 +4,13 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 
 /**
  * Created by Cicinnus on 2017/2/5.
  */
 
-public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaMovieBean.DataBeanXXX.HotDataBean.DataBeanXX.HotBean,BaseViewHolder> {
+public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMovieBean.DataBean.HotBean,BaseViewHolder> {
 
 
 
@@ -23,7 +24,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaMovieB
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, OverseaMovieBean.DataBeanXXX.HotDataBean.DataBeanXX.HotBean item) {
+    protected void convert(BaseViewHolder helper, OverseaHotMovieBean.DataBean.HotBean item) {
         switch (helper.getItemViewType()){
             case BaseConstant.TYPE_OVERSEA_NORMAL:
                 helper.setText(R.id.tv_movie_name,item.getNm())

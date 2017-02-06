@@ -30,12 +30,27 @@
     <TextView
         android:id="@+id/tv_title"
         tools:text="标题"
-        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
-        android:gravity="center"
+        android:gravity="left"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_16" />
 
+
+    <RelativeLayout
+        android:id="@+id/rl_right_icon"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_ic_press">
+
+        <ImageView
+            android:id="@+id/iv_title_right_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
 </LinearLayout>

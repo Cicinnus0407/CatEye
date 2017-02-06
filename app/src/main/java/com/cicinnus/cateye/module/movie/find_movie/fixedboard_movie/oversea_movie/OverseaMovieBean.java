@@ -1,8 +1,5 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.cicinnus.cateye.base.BaseConstant;
-
 import java.util.List;
 
 public class OverseaMovieBean {
@@ -801,7 +798,7 @@ public class OverseaMovieBean {
                     }
                 }
 
-                public static class HotBean implements MultiItemEntity {
+                public static class HotBean  {
                     /**
                      * cat : 剧情,恐怖,惊悚
                      * civilPubSt : 1
@@ -1355,24 +1352,6 @@ public class OverseaMovieBean {
                         }
                     }
 
-
-                    @Override
-                    public int getItemType() {
-
-                        if(getHeadLinesVO()!=null&&getHeadLinesVO().size()>1){
-                            return BaseConstant.TYPE_OVERSEA_BUY_MULIT;
-                        }
-                        switch (getShowst()) {
-                            case 1:
-                                return BaseConstant.TYPE_OVERSEA_NORMAL;
-                            case 3:
-                                return BaseConstant.TYPE_OVERSEA_BUY;
-                            case 4:
-                                return BaseConstant.TYPE_OVERSEA_PRESALE;
-                            default:
-                                return BaseConstant.TYPE_OVERSEA_NORMAL;
-                        }
-                    }
                 }
             }
         }

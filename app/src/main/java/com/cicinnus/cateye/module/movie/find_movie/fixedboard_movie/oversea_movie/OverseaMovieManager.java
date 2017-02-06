@@ -2,6 +2,7 @@ package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_mov
 
 import com.cicinnus.cateye.net.JsonRequestBody;
 import com.cicinnus.cateye.net.RetrofitClient;
+import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.PostBodyBuilder;
 
 import okhttp3.ResponseBody;
@@ -19,14 +20,15 @@ public class OverseaMovieManager {
 
         builder = new PostBodyBuilder()
                 .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/recommend.json?area=" + area)
-                .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=" + area + "A&offset=0&limit=10")
+                .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=" + area + "&offset=0&limit=10")
                 .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/hot.json?area=" + area + "&offset=0&limit=10")
                 .build();
 
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getOverseaMovie(JsonRequestBody.getInstance().convertJsonContent(builder.getRequestBodyContent()));
+                .getCombineData(JsonRequestBody.getInstance().convertJsonContent(builder.getRequestBodyContent()))
+                .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers());
     }
 }
 

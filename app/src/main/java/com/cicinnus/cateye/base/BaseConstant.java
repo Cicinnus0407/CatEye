@@ -41,5 +41,10 @@ public interface BaseConstant {
     int TYPE_OVERSEA_PRESALE = 1;//预售
     int TYPE_OVERSEA_BUY = 2;//可以购票
     int TYPE_OVERSEA_BUY_MULIT = 3;//有专题内容
+
+    //电影奖项
+    int TYPE_AWARDS_MOVIE = 0;//最佳电影
+    int TYPE_AWARDS_PEOPLE= 1;//最佳导演
+
 }
 

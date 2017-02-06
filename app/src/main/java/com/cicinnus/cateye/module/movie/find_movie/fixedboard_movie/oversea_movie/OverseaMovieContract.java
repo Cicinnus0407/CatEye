@@ -1,8 +1,11 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie;
 
 import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 /**
  * Created by Cicinnus on 2017/2/5.
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class OverseaMovieContract  {
     public interface IOverseaMovieView extends ILoadingView{
-        void addOverseaMovie(List<OverseaMovieBean.DataBeanXXX.HotDataBean.DataBeanXX.HotBean> hotData);
+        void addOverseaMovie(ResponseBody hot);
     }
 
     public interface IOverseaMoviePresenter{

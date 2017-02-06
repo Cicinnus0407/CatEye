@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/divider_normal"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:paddingLeft="@dimen/dp_14"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingTop="@dimen/dp_6"
+        android:textColor="@color/text_primary"
+        android:id="@+id/tv_section_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="分组头部" />
+
+</LinearLayout>

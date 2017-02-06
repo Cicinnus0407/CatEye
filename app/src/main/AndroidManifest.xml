@@ -37,6 +37,9 @@
         <activity android:name=".module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieActivity" />
         <!--海外电影-->
         <activity android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.OverseaMovieActivity" />
+        <!--获奖电影-->
+        <activity android:name=".module.movie.find_movie.awards_movie.AwardsMovieActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

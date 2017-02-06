@@ -2,11 +2,15 @@ package com.cicinnus.cateye.net;
 
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment.HotGoodCommentBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.most_expect.MostExpectMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
@@ -105,7 +109,31 @@ public interface Api {
     Observable<TopHundredMovieBean> getTopHundredMovie(@Query("limit") int limit,
                                                        @Query("offset") int offset);
 
-    //海外电影
+    //合并查询的接口
     @POST("http://api.mobile.meituan.com/combo/v2/combo.json")
-    Observable<ResponseBody> getOverseaMovie(@Body RequestBody jsonContent);
+    Observable<ResponseBody> getCombineData(@Body RequestBody jsonContent);
+
+
+    //海外热映电影
+    @GET("mmdb/movie/oversea/hot.json")
+    Observable<OverseaHotMovieBean> getOverseaHotMovie(@Query("area") String area,
+                                                       @Query("limit") int limit,
+                                                       @Query("offset") int offset);
+
+    //海外待映电影
+    @GET("mmdb/movie/oversea/coming.json")
+    Observable<OverseaComingMovieBean> getOverseaComingMovie(@Query("area") String area,
+                                                             @Query("limit") int limit,
+                                                             @Query("offset") int offset);
+
+
+    //电影奖项
+    @GET("mmdb//movie/festival/{festivalId}/feature.json")
+    Observable<AwardsBean> getAwards(@Path("festivalId")String festSessionId);
+
+    //获奖电影
+    @GET("mmdb/movie/festival/session/{festSessionId}/award.json")
+    Observable<AwardsMovieListBean> getAwardsMovie(@Path("festSessionId") String festSessionId,
+                                                   @Query("limit") int limit,
+                                                   @Query("offset") int offset);
 }

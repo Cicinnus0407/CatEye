@@ -18,7 +18,7 @@ public class AwardsMovieBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean  {
         /**
          * festSessionId : 4071
          * festivalId : 105
@@ -40,6 +40,7 @@ public class AwardsMovieBean {
         private String movieName;
         private String prizeName;
         private int sessionNum;
+
 
         public int getFestSessionId() {
             return festSessionId;
@@ -112,5 +113,6 @@ public class AwardsMovieBean {
         public void setSessionNum(int sessionNum) {
             this.sessionNum = sessionNum;
         }
+
     }
 }
