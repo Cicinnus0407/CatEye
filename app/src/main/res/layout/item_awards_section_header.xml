@@ -1,20 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/divider_normal"
-
     android:orientation="vertical">
 
-    <TextView
-        android:paddingLeft="@dimen/dp_14"
-        android:paddingBottom="@dimen/dp_6"
-        android:paddingTop="@dimen/dp_6"
-        android:textColor="@color/text_primary"
-        android:id="@+id/tv_section_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="分组头部" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/darker_gray" />
+
+        <com.cicinnus.cateye.view.CircleImageView
+
+            android:id="@+id/civ_award_img"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:src="@drawable/icon_default"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_toRightOf="@id/civ_award_img"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_award_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp_6"
+                android:paddingTop="@dimen/dp_6"
+                android:textColor="@color/text_primary"
+                tools:text="分组头部" />
+
+            <TextView
+                android:id="@+id/tv_award_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="内容" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_14">
+
+        <TextView
+            android:id="@+id/tv_festSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_16"
+            tools:text="第几届" />
+
+        <TextView
+            android:id="@+id/tv_heldDate_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_6"
+            tools:text="举办地和时间" />
+
+
+    </LinearLayout>
+
 
 </LinearLayout>

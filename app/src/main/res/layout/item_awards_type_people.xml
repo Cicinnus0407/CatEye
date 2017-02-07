@@ -1,12 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="94dp"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
 
-    <TextView
-        android:id="@+id/tv_star_name"
+    <com.cicinnus.cateye.view.CircleImageView
+        android:id="@+id/civ_award_star"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerVertical="true"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        tools:src="@drawable/icon_default" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_toRightOf="@id/civ_award_star"
+        android:orientation="vertical">
 
-</LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="@dimen/sp_16"
+                android:id="@+id/tv_star_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                tools:text="名字" />
+
+            <ImageView
+                android:layout_marginLeft="@dimen/dp_6"
+                android:id="@+id/iv_winner_prize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_star_english_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            tools:text="英文名" />
+
+        <TextView
+            android:id="@+id/tv_movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:drawablePadding="@dimen/dp_4"
+            android:drawableRight="@drawable/ic_arrow_right"
+            tools:text="代表作" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

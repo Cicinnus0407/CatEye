@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.cicinnus.cateye.R;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,7 +95,7 @@ public class FloatingItemDecoration extends RecyclerView.ItemDecoration {
 
         mBackgroundPaint=new Paint();
         mBackgroundPaint.setAntiAlias(true);
-        mBackgroundPaint.setColor(Color.LTGRAY);
+        mBackgroundPaint.setColor(mContext.getResources().getColor(R.color.divider_normal));
     }
 
     @Override
@@ -174,19 +176,6 @@ public class FloatingItemDecoration extends RecyclerView.ItemDecoration {
         int right = parent.getWidth() - parent.getPaddingRight();
         int top=0;
         int bottom=0;
-//        for (int i = 0; i < 2; i++) {
-//            View headerView = parent.getChildAt(i);
-//            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) headerView.getLayoutParams();
-//
-//            top=headerView.getTop()-params.topMargin-mTitleHeight;
-//            bottom=top+mTitleHeight;
-//            c.drawRect(left,top,right,bottom,mBackgroundPaint);
-////                float x=child.getPaddingLeft()+params.leftMargin;
-//            float x=TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10,mContext.getResources().getDisplayMetrics());
-//            float y=bottom - (mTitleHeight - mTextHeight) / 2 - mTextBaselineOffset;//计算文字baseLine
-////                Log.e(TAG, "drawVertical: "+bottom );
-//            c.drawText(keys.get(params.getViewLayoutPosition()),x,y,mTextPaint);
-//        }
         for (int i = 0; i < parent.getChildCount(); i++) {
             View child=parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
@@ -195,9 +184,9 @@ public class FloatingItemDecoration extends RecyclerView.ItemDecoration {
                 top=child.getTop()-params.topMargin-dividerHeight;
                 bottom=top+dividerHeight;
                 mDivider.setBounds(left, top, right, bottom);
-//                mDivider.draw(c);
+                mDivider.draw(c);
             }else{
-                //画头部
+                //画分组
                 top=child.getTop()-params.topMargin-mTitleHeight;
                 bottom=top+mTitleHeight;
                 c.drawRect(left,top,right,bottom,mBackgroundPaint);

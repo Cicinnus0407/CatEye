@@ -2,6 +2,7 @@ package com.cicinnus.cateye.net;
 
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
@@ -129,11 +130,15 @@ public interface Api {
 
     //电影奖项
     @GET("mmdb//movie/festival/{festivalId}/feature.json")
-    Observable<AwardsBean> getAwards(@Path("festivalId")String festSessionId);
+    Observable<AwardsBean> getAwards(@Path("festivalId")int festSessionId);
 
     //获奖电影
     @GET("mmdb/movie/festival/session/{festSessionId}/award.json")
-    Observable<AwardsMovieListBean> getAwardsMovie(@Path("festSessionId") String festSessionId,
+    Observable<AwardsMovieListBean> getAwardsMovie(@Path("festSessionId") int festSessionId,
                                                    @Query("limit") int limit,
                                                    @Query("offset") int offset);
+
+    //奖项列表
+    @GET("mmdb/movie/region/festival/list.json")
+    Observable<AwardsListBean> getAwardsList();
 }

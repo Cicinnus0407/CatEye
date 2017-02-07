@@ -14,7 +14,7 @@ import rx.Observable;
 public class AwardsMovieManager {
 
 
-    public Observable<AwardsBean> getAwards(String festivalId){
+    public Observable<AwardsBean> getAwards(int festivalId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -24,11 +24,11 @@ public class AwardsMovieManager {
 
 
 
-    public Observable<AwardsMovieListBean> getAwardsMovie(String festSessionId, int offset) {
+    public Observable<AwardsMovieListBean> getAwardsMovie(int festSessionId, int limit,int offset) {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getAwardsMovie(festSessionId, 10, offset)
+                .getAwardsMovie(festSessionId, limit, offset)
                 .compose(SchedulersCompat.<AwardsMovieListBean>applyIoSchedulers());
     }
 }

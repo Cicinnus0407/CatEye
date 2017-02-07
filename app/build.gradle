@@ -44,5 +44,5 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     //Adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.7.8'
-
+    compile 'com.android.support:support-v4:25.1.0'
 }
