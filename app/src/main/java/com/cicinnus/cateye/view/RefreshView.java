@@ -62,13 +62,15 @@ public class RefreshView extends ImageView{
 
             Matrix matrix = new Matrix();
             matrix.postRotate(rotateProgress, (float)scaleWidth/2.0f, (float)scaleHeight/2.0f);
+            //创建一个新的可缩放的bitmap
             Bitmap temp_outter_circle = Bitmap.createScaledBitmap(outter_circle,scaleWidth,scaleHeight,true);
 
             if(progress >= 1.0f){
                 progress = 1.0f;
             }
             Bitmap mask_outter_circle = Bitmap.createBitmap(temp_outter_circle, 0, 0,
-                    temp_outter_circle.getWidth(),progress == 1.0f?temp_outter_circle.getHeight()
+                    temp_outter_circle.getWidth(),progress == 1.0f?
+                            temp_outter_circle.getHeight()
                             :(int)(temp_outter_circle.getHeight()*progress));
             canvas.drawBitmap(mask_outter_circle, matrix, mPaint);
 

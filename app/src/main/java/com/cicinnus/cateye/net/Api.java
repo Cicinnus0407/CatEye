@@ -129,7 +129,7 @@ public interface Api {
 
 
     //电影奖项
-    @GET("mmdb//movie/festival/{festivalId}/feature.json")
+    @GET("mmdb/movie/festival/{festivalId}/feature.json")
     Observable<AwardsBean> getAwards(@Path("festivalId")int festSessionId);
 
     //获奖电影

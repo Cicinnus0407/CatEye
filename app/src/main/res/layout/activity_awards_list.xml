@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
-            android:id="@id/swipe"
+            android:id="@+id/swipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

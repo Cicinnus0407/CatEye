@@ -2,13 +2,13 @@ package com.cicinnus.cateye.view;
 
 import android.content.Context;
 
-import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.UiUtils;
 
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.functions.Action1;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 /**
  * Created by Administrator on 2017/2/4.
@@ -45,15 +45,16 @@ public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRe
      */
     public void refreshDone() {
         //延迟700毫秒停止动画
-        Observable.timer(700, TimeUnit.MILLISECONDS)
-                .compose(SchedulersCompat.<Long>applyIoSchedulers())
-                .subscribe(new Action1<Long>() {
+        Observable.timer(700, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .map(new Func1<Long, Void>() {
                     @Override
-                    public void call(Long aLong) {
+                    public Void call(Long aLong) {
                         refreshView.stopAnimate();
                         mSwipeRefreshLayout.setRefreshing(false);
+                        return null;
                     }
-                });
+                })
+                .subscribe();
     }
 
 
