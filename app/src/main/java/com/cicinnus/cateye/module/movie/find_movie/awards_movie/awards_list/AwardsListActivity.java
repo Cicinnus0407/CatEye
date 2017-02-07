@@ -1,25 +1,41 @@
 package com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list;
 
-import android.support.v7.widget.GridLayoutManager;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.AwardsMovieActivity;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/2/7.
  */
 
 public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implements AwardsListContract.IAwardsListView {
+
+
+    private static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
+    private boolean isComeFromFindMovie;
+
+    public static void start(Context context, boolean isComeFromFindMovieActivity) {
+        Intent starter = new Intent(context, AwardsListActivity.class);
+        starter.putExtra(COME_FROM_FIND_MOVIE, isComeFromFindMovieActivity);
+        context.startActivity(starter);
+    }
 
 
     @BindView(R.id.tv_title)
@@ -30,7 +46,7 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     SuperSwipeRefreshLayout swipe;
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
-    private AwardsListAdapter adapter;
+    private AwardsListAdapter adapter;//分组adapter
     private MyPullToRefreshListener pullListener;
 
 
@@ -40,49 +56,96 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     }
 
     @Override
-    protected void initEventAndData() {
-
-        adapter = new AwardsListAdapter();
-        rvAwardsList.setLayoutManager(new GridLayoutManager(mContext,2));
-        rvAwardsList.setAdapter(adapter);
-
-        pullListener = new MyPullToRefreshListener(mContext,swipe);
-        swipe.setOnPullRefreshListener(pullListener);
-        pullListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
-            @Override
-            public void refresh() {
-                adapter.setNewData(new ArrayList<AwardsListBean.DataBean.FestivalsBean>());
-                mPresenter.getAwardsList();
-            }
-        });
-        mPresenter.getAwardsList();
-    }
-
-    @Override
     protected AwardsListPresenter getPresenter() {
         return new AwardsListPresenter(mContext, this);
     }
 
     @Override
-    public void addAwardsList(List<AwardsListBean.DataBean> data) {
-        for (int i = 0; i < data.size(); i++) {
-            adapter.addData(data.get(i).getFestivals());
+    protected void initEventAndData() {
+
+        isComeFromFindMovie = getIntent().getBooleanExtra(COME_FROM_FIND_MOVIE, false);
+
+        tvTitle.setText("全球电影奖项");
+        adapter = new AwardsListAdapter();
+        //分组Adapter需要使用瀑布流布局
+        rvAwardsList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rvAwardsList.setAdapter(adapter);
+        pullListener = new MyPullToRefreshListener(mContext, swipe);
+        swipe.setOnPullRefreshListener(pullListener);
+        pullListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
+            @Override
+            public void refresh() {
+                adapter.setNewData(new ArrayList<AwardsSection>());
+                mPresenter.getAwardsList();
+            }
+        });
+        adapter.setOnAwardsClickListener(new AwardsListAdapter.OnAwardsClickListener() {
+            @Override
+
+            public void onClick(int festivalId) {
+                Intent intent = new Intent(mContext, AwardsMovieActivity.class);
+                intent.putExtra(AwardsMovieActivity.ID, festivalId);
+                if (isComeFromFindMovie) {
+                    intent.putExtra(AwardsMovieActivity.COME_FROM_AWARDS_LIST,true);
+                    startActivity(intent);
+                } else {
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+            }
+        });
+
+        mPresenter.getAwardsList();
+    }
+
+    @OnClick({R.id.rl_back})
+    void onClick(View view){
+        switch (view.getId()){
+            case R.id.rl_back:
+                finish();
+                break;
         }
     }
 
     @Override
-    public void showLoading() {
+    public void addAwardsList(List<AwardsListBean.DataBean> data) {
+        List<AwardsSection> awardsSectionList = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            //6组
+            awardsSectionList.add(new AwardsSection(true, data.get(i).getRegion()));
+            for (int j = 0; j < data.get(i).getFestivals().size(); j++) {
+                awardsSectionList.add(new AwardsSection(data.get(i).getFestivals().get(j)));
+            }
+        }
+        adapter.setNewData(awardsSectionList);
+    }
 
+    @Override
+    public void showLoading() {
+        if (!progressLayout.isContent()) {
+            progressLayout.showLoading();
+        }
     }
 
     @Override
     public void showContent() {
         pullListener.refreshDone();
+        if (!progressLayout.isContent()) {
+            progressLayout.showContent();
+        }
     }
 
     @Override
     public void showError(String errorMsg) {
+        Logger.e(errorMsg);
         pullListener.refreshDone();
+        progressLayout.showError(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.getAwardsList();
+            }
+        });
     }
 
 }

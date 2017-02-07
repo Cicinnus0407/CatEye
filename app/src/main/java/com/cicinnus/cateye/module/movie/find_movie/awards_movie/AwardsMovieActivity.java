@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
 import com.cicinnus.cateye.tools.GlideManager;
@@ -38,20 +39,23 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
 
     private static final String FESTIVAL_ID = "festivalId";
-    private static final String FESTSESSION_ID = "festSessionId";
-    private MyPullToRefreshListener pullListener;
-
+    private static final String FEST_SESSION_ID = "festSessionId";
+    public static final int REQUEST_CODE = 101;
+    public static final String ID = "fest_id";
+    public static final String COME_FROM_AWARDS_LIST = "come_from_awards_list";
 
     public static void start(Context context, int festivalId, int festSessionId) {
         Intent starter = new Intent(context, AwardsMovieActivity.class);
         starter.putExtra(FESTIVAL_ID, festivalId);
-        starter.putExtra(FESTSESSION_ID, festSessionId);
+        starter.putExtra(FEST_SESSION_ID, festSessionId);
         context.startActivity(starter);
     }
 
 
     @BindView(R.id.tv_title)
     TextView tv_title;
+    @BindView(R.id.iv_title_right_icon)
+    ImageView ivRight;
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
     @BindView(R.id.swipe)
@@ -86,6 +90,14 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
     private boolean canPrevious = false;//能够向上
     private boolean canNext = true;//能向下
 
+
+    private MyPullToRefreshListener pullListener;//下拉刷新
+
+
+    private boolean isResult = false;//判断是否手动选择奖项
+    private boolean isComeFromAwardsList = false;//直接从照片进入奖项列表
+
+
     @Override
     protected int getLayout() {
         return R.layout.activity_awards_movie;
@@ -100,8 +112,13 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
     @Override
     protected void initEventAndData() {
         tv_title.setText("电影奖项");
-        festSessionId = getIntent().getIntExtra(FESTSESSION_ID, 0);
+        ivRight.setImageResource(R.drawable.ic_menu);
+        festSessionId = getIntent().getIntExtra(FEST_SESSION_ID, 0);
         festivalId = getIntent().getIntExtra(FESTIVAL_ID, 0);
+        isComeFromAwardsList = getIntent().getBooleanExtra(COME_FROM_AWARDS_LIST,false);
+        if(isComeFromAwardsList) {
+            festivalId = getIntent().getIntExtra(AwardsMovieActivity.ID, 0);
+        }
 
         /**
          * adapter
@@ -129,6 +146,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
     }
 
+
     /**
      * 下拉刷新
      */
@@ -145,11 +163,15 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
         });
     }
 
-    @OnClick({R.id.rl_back, R.id.iv_previous, R.id.iv_next})
+    @OnClick({R.id.rl_back, R.id.rl_right_icon, R.id.iv_previous, R.id.iv_next})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
                 finish();
+                break;
+            case R.id.rl_right_icon:
+                Intent intent = new Intent(mContext, AwardsListActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.iv_previous:
                 if (canPrevious) {
@@ -189,6 +211,16 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                     mPresenter.getAwardsMovie(festSessionId, 10, offset);
                 }
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            festivalId = data.getIntExtra(ID, 0);
+            mPresenter.getAwards(festivalId);
+            isResult = true;
         }
     }
 
@@ -258,6 +290,19 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
     @Override
     public void addAwardTitle(AwardsBean.DataBean data) {
+        if (isResult||isComeFromAwardsList) {
+            //选择奖项后刷新,还原所有数据的状态
+            awardsList.clear();
+            awardsList.addAll(data.getFestSessions());
+            currentIndex = 0;
+            festSessionId = data.getFestSessions().get(0).getFestSessionId();
+            offset = 0;
+            awardsMovieListAdapter.setNewData(new ArrayList<AwardsMovieListBean.DataBean.AwardsBean>());
+            mPresenter.getAwardsMovie(festSessionId, 10, offset);
+            isResult = false;
+            currentSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
+
+        }
         //加载历届奖项数据
         awardsList.addAll(data.getFestSessions());
         currentSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));

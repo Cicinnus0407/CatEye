@@ -22,10 +22,13 @@ public abstract class BaseFragment<T extends IPresenter> extends Fragment {
     private boolean isInit;
     private boolean isLoad;
 
+
+
     @Override
     public void onAttach(Context context) {
         mContext = (Activity) context;
         super.onAttach(context);
+
     }
 
     @Nullable

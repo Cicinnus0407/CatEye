@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by Cicinnus on 2017/2/5.
+ * Top100
  */
 
 public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundredMoviePresenter> implements TopHundredMovieContract.ITopHundredMovieView {

@@ -80,6 +80,9 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
      */
     protected abstract void resetData();
 
+    /**
+     * 显示Loading
+     */
     @Override
     public void showLoading() {
         if (!progressLayout.isContent()) {
@@ -87,6 +90,9 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
         }
     }
 
+    /**
+     * 显示内容
+     */
     @Override
     public void showContent() {
         pullToRefreshListener.refreshDone();
@@ -95,6 +101,10 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
         }
     }
 
+    /**
+     * 错误点击重试
+     * @param errorMsg 错误信息
+     */
     @Override
     public void showError(String errorMsg) {
         pullToRefreshListener.refreshDone();

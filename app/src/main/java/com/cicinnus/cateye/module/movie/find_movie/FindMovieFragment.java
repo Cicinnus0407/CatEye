@@ -15,6 +15,7 @@ import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieGridAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieNationAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMoviePeriodAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieTypeAdapter;
+import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListActivity;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
@@ -25,6 +26,7 @@ import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Cicinnus on 2017/1/22.
@@ -102,6 +104,16 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         }
 
     }
+
+    @OnClick({R.id.tv_all_awards})
+    void onClick(View view){
+        switch (view.getId()) {
+            case R.id.tv_all_awards:
+                AwardsListActivity.start(mContext,true);
+                break;
+        }
+    }
+
 
     /**
      * 初始化RecyclerView相关
