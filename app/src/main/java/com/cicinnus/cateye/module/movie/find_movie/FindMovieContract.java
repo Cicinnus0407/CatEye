@@ -26,10 +26,7 @@ public class FindMovieContract {
     }
 
     public interface IFindMoviePresenter {
-        void getMovieTypeList();
+        void getFindMovieData();
 
-        void getMovieGrid();
-
-        void getAwardsMovie();
     }
 }

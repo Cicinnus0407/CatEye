@@ -61,10 +61,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
+                android:id="@+id/swipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_search_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
 
             <TextView
                 android:id="@+id/tv_classify_title"

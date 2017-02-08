@@ -86,9 +86,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
             @Override
             public void refresh() {
-                mPresenter.getMovieTypeList();
-                mPresenter.getMovieGrid();
-                mPresenter.getAwardsMovie();
+                mPresenter.getFindMovieData();
             }
         });
 
@@ -97,9 +95,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
     @Override
     protected void lazyLoadEveryTime() {
         if (isFirst) {
-            mPresenter.getMovieTypeList();
-            mPresenter.getMovieGrid();
-            mPresenter.getAwardsMovie();
+            mPresenter.getFindMovieData();
             isFirst = false;
         }
 
@@ -199,8 +195,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.getMovieTypeList();
-                mPresenter.getMovieGrid();
+                mPresenter.getFindMovieData();
             }
         });
     }

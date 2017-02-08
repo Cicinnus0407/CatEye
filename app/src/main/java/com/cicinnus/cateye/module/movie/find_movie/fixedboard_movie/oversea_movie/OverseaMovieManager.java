@@ -1,5 +1,7 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie;
 
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.net.JsonRequestBody;
 import com.cicinnus.cateye.net.RetrofitClient;
 import com.cicinnus.cateye.net.SchedulersCompat;
@@ -29,6 +31,20 @@ public class OverseaMovieManager {
                 .api()
                 .getCombineData(JsonRequestBody.getInstance().convertJsonContent(builder.getRequestBodyContent()))
                 .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers());
+    }
+
+    public Observable<OverseaHotMovieBean> getOverseaHotMoie(String area){
+        return RetrofitClient
+                .getInstance()
+                .api()
+                .getOverseaHotMovie(area,10,0);
+    }
+
+    public Observable<OverseaComingMovieBean> getOverseaComingMovie(String area){
+        return RetrofitClient
+                .getInstance()
+                .api()
+                .getOverseaComingMovie(area,10,0);
     }
 }
 

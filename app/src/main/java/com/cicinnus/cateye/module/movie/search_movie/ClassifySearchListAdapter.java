@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.module.movie.search_movie;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -39,20 +40,34 @@ public class ClassifySearchListAdapter extends BaseMultiItemQuickAdapter<Classif
 
         } else if (item.getVer().contains("3D")) {
             helper.setImageResource(R.id.iv_ver, R.drawable.ic_3d);
-
         }
         switch (helper.getItemViewType()) {
             case BaseConstant.TYPE_CLASSIFY_NORMAL:
-                helper.setText(R.id.tv_movie_score, String.format("%s", item.getSc()));
+                if(item.getSc()==0){
+                    helper.setText(R.id.tv_point,"暂无评分");
+                    helper.getView(R.id.tv_movie_score).setVisibility(View.INVISIBLE);
+                }else {
+                    helper.setText(R.id.tv_movie_score, String.format("%s", item.getSc()));
+                }
                 break;
             case BaseConstant.TYPE_CLASSIFY_WISH:
                 helper.setText(R.id.tv_movie_wish, String.format("%s", item.getWish()));
                 break;
             case BaseConstant.TYPE_CLASSIFY_BUY:
-                helper.setText(R.id.tv_movie_score, String.format("%s", item.getSc()));
+                if(item.getSc()==0){
+                    helper.setText(R.id.tv_point,"暂无评分");
+                    helper.getView(R.id.tv_movie_score).setVisibility(View.INVISIBLE);
+                }else {
+                    helper.setText(R.id.tv_movie_score, String.format("%s", item.getSc()));
+                }
                 break;
             case BaseConstant.TYPE_CLASSIFY_PRESALE:
-                helper.setText(R.id.tv_movie_wish, String.format("%s", item.getWish()));
+                if(item.getSc()==0){
+                    helper.setText(R.id.tv_point,"暂无评分");
+                }else {
+                    helper.getView(R.id.tv_movie_score).setVisibility(View.INVISIBLE);
+                    helper.setText(R.id.tv_movie_score, String.format("%s", item.getSc()));
+                }
                 break;
         }
     }

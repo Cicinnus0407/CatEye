@@ -219,7 +219,7 @@ public class ClassifySearchBean {
         }
 
         public String getVer() {
-            return ver;
+            return ver==null?"":ver;
         }
 
         public void setVer(String ver) {
