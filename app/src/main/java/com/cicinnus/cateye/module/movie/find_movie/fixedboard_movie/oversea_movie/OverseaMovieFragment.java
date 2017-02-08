@@ -114,7 +114,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
     @Override
     public void showError(String errorMsg) {
-
+        Logger.d(errorMsg);
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

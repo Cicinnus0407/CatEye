@@ -157,7 +157,7 @@ public class OverseaComingMovieBean {
             private String img;
             private boolean late;
             private int localPubSt;
-            private int mk;
+            private double mk;
             private String nm;
             private String overseaTime;
             private int pn;
@@ -168,7 +168,7 @@ public class OverseaComingMovieBean {
             private int pubShowNum;
             private int recentShowDate;
             private int recentShowNum;
-            private int sc;
+            private double sc;
             private String scm;
             private int showCinemaNum;
             private int showNum;
@@ -308,11 +308,11 @@ public class OverseaComingMovieBean {
                 this.localPubSt = localPubSt;
             }
 
-            public int getMk() {
+            public double getMk() {
                 return mk;
             }
 
-            public void setMk(int mk) {
+            public void setMk(double mk) {
                 this.mk = mk;
             }
 
@@ -396,11 +396,11 @@ public class OverseaComingMovieBean {
                 this.recentShowNum = recentShowNum;
             }
 
-            public int getSc() {
+            public double getSc() {
                 return sc;
             }
 
-            public void setSc(int sc) {
+            public void setSc(double sc) {
                 this.sc = sc;
             }
 

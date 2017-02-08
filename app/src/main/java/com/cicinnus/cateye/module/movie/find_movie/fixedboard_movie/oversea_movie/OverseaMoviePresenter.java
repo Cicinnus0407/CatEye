@@ -36,7 +36,7 @@ public class OverseaMoviePresenter extends BasePresenter<OverseaMovieContract.IO
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError("解析出错");
+                        mView.showError(e.getMessage());
                     }
 
                     @Override
