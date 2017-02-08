@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/2/7.
@@ -38,6 +40,16 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     private MyPullToRefreshListener pullListener;
 
 
+    public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
+    private boolean isComeFromFindMovie;
+
+    public static void start(Context context,boolean isComeFromFindMovie) {
+        Intent starter = new Intent(context, AwardsListActivity.class);
+        starter.putExtra(COME_FROM_FIND_MOVIE,isComeFromFindMovie);
+        context.startActivity(starter);
+    }
+
+
     @Override
     protected int getLayout() {
         return R.layout.activity_awards_list;
@@ -50,6 +62,8 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
 
     @Override
     protected void initEventAndData() {
+
+        isComeFromFindMovie = getIntent().getBooleanExtra(COME_FROM_FIND_MOVIE,false);
 
         tvTitle.setText("全球电影奖项");
         adapter = new AwardsListAdapter();
@@ -71,12 +85,23 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
             public void onClick(int festivalId) {
                 Intent intent = new Intent(mContext,AwardsMovieActivity.class);
                 intent.putExtra(AwardsMovieActivity.ID, festivalId);
-                setResult( RESULT_OK, intent);
-                finish();
+                if (isComeFromFindMovie) {
+                    intent.putExtra(AwardsMovieActivity.COME_FROM_FIND_MOVIE,true);
+                    startActivity(intent);
+                }else {
+                    setResult( RESULT_OK, intent);
+                    finish();
+
+                }
             }
         });
 
         mPresenter.getAwardsList();
+    }
+
+    @OnClick({R.id.rl_back})
+    void onClick(View view){
+        finish();
     }
 
 

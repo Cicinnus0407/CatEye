@@ -38,10 +38,12 @@ import butterknife.OnClick;
 public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> implements AwardsMovieContract.IAwardsMovieView {
 
 
-    private static final String FESTIVAL_ID = "festivalId";
+    private static final String FESTIVAL_ID = "festivalId";//从adapter点击拿到的Id
     private static final String FEST_SESSION_ID = "festSessionId";
     public static final int REQUEST_CODE = 101;
-    public static final String ID = "fest_id";
+    public static final String ID = "fest_id";//从奖项列表拿到的数据
+    public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
+    private boolean isComeFromFindMovie =false;
 
     public static void start(Context context, int festivalId, int festSessionId) {
         Intent starter = new Intent(context, AwardsMovieActivity.class);
@@ -113,6 +115,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
         ivRight.setImageResource(R.drawable.ic_menu);
         festSessionId = getIntent().getIntExtra(FEST_SESSION_ID, 0);
         festivalId = getIntent().getIntExtra(FESTIVAL_ID, 0);
+        isComeFromFindMovie = getIntent().getBooleanExtra(COME_FROM_FIND_MOVIE, false);
 
         /**
          * adapter
@@ -134,9 +137,14 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
             }
         });
         awardsList = new ArrayList<>();
+        if (isComeFromFindMovie) {
+            festivalId = getIntent().getIntExtra(ID, 0);
+        } else {
+            mPresenter.getAwardsMovie(festSessionId, 10, offset);
 
-        mPresenter.getAwardsMovie(festSessionId, 10, offset);
+        }
         mPresenter.getAwards(festivalId);
+
 
     }
 
@@ -171,10 +179,12 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                 if (canPrevious) {
                     canNext = true;
                     currentIndex -= 1;
+
                     if (currentIndex == 0) {
                         currentIndex = 0;
                         canPrevious = false;
                     }
+
 //                    Log.d("奖项", "onClick: " + currentIndex);
                     currentSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
                     tvFestSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
@@ -190,11 +200,13 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                 if (canNext) {
                     canPrevious = true;
                     currentIndex += 1;
+
                     if (currentIndex == awardsList.size()) {
                         currentIndex = awardsList.size();
                         canNext = false;
                         return;
                     }
+
 //                    Log.d("奖项", "onClick: " + currentIndex);
                     currentSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
                     tvFestSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
@@ -284,11 +296,12 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
     @Override
     public void addAwardTitle(AwardsBean.DataBean data) {
-        if (isResult) {
+        if (isResult || isComeFromFindMovie) {
             //选择奖项后刷新,还原所有数据的状态
             awardsList.clear();
             awardsList.addAll(data.getFestSessions());
             currentIndex = 0;
+            canPrevious = false;
             festSessionId = data.getFestSessions().get(0).getFestSessionId();
             offset = 0;
             awardsMovieListAdapter.setNewData(new ArrayList<AwardsMovieListBean.DataBean.AwardsBean>());
@@ -298,6 +311,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
         }
         //加载历届奖项数据
+        currentIndex = 0;
         awardsList.addAll(data.getFestSessions());
         currentSession.setText(String.format("第%s届", awardsList.get(currentIndex).getSessionNum()));
         for (int i = 0; i < data.getFestSessions().size(); i++) {
