@@ -28,16 +28,6 @@ import butterknife.OnClick;
 public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implements AwardsListContract.IAwardsListView {
 
 
-    private static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
-    private boolean isComeFromFindMovie;
-
-    public static void start(Context context, boolean isComeFromFindMovieActivity) {
-        Intent starter = new Intent(context, AwardsListActivity.class);
-        starter.putExtra(COME_FROM_FIND_MOVIE, isComeFromFindMovieActivity);
-        context.startActivity(starter);
-    }
-
-
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.rv_awards_list)
@@ -48,6 +38,16 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     ProgressLayout progressLayout;
     private AwardsListAdapter adapter;//分组adapter
     private MyPullToRefreshListener pullListener;
+
+
+    public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
+    private boolean isComeFromFindMovie;
+
+    public static void start(Context context,boolean isComeFromFindMovie) {
+        Intent starter = new Intent(context, AwardsListActivity.class);
+        starter.putExtra(COME_FROM_FIND_MOVIE,isComeFromFindMovie);
+        context.startActivity(starter);
+    }
 
 
     @Override
@@ -63,7 +63,7 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     @Override
     protected void initEventAndData() {
 
-        isComeFromFindMovie = getIntent().getBooleanExtra(COME_FROM_FIND_MOVIE, false);
+        isComeFromFindMovie = getIntent().getBooleanExtra(COME_FROM_FIND_MOVIE,false);
 
         tvTitle.setText("全球电影奖项");
         adapter = new AwardsListAdapter();
@@ -83,16 +83,16 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
             @Override
 
             public void onClick(int festivalId) {
-                Intent intent = new Intent(mContext, AwardsMovieActivity.class);
+                Intent intent = new Intent(mContext,AwardsMovieActivity.class);
                 intent.putExtra(AwardsMovieActivity.ID, festivalId);
                 if (isComeFromFindMovie) {
-                    intent.putExtra(AwardsMovieActivity.COME_FROM_AWARDS_LIST,true);
+                    intent.putExtra(AwardsMovieActivity.COME_FROM_FIND_MOVIE,true);
                     startActivity(intent);
-                } else {
-                    setResult(RESULT_OK, intent);
+                }else {
+                    setResult( RESULT_OK, intent);
                     finish();
-                }
 
+                }
             }
         });
 
@@ -101,12 +101,10 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
 
     @OnClick({R.id.rl_back})
     void onClick(View view){
-        switch (view.getId()){
-            case R.id.rl_back:
-                finish();
-                break;
-        }
+        finish();
     }
+
+
 
     @Override
     public void addAwardsList(List<AwardsListBean.DataBean> data) {

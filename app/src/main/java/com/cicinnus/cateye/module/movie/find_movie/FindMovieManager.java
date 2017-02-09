@@ -4,7 +4,6 @@ import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.TimeUtils;
 
 import rx.Observable;
@@ -17,11 +16,11 @@ public class FindMovieManager {
 
     //电影类型
     public Observable<MovieTypeBean> getMovieTypeList() {
+
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getMovieTypeList()
-                .compose(SchedulersCompat.<MovieTypeBean>applyIoSchedulers());
+                .getMovieTypeList();
     }
 
     /**
@@ -32,8 +31,7 @@ public class FindMovieManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getMovieGrid()
-                .compose(SchedulersCompat.<GridMovieBean>applyIoSchedulers());
+                .getMovieGrid();
     }
 
     /**
@@ -45,8 +43,7 @@ public class FindMovieManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getAwardsMovieList(currentTime)
-                .compose(SchedulersCompat.<AwardsMovieBean>applyIoSchedulers());
+                .getAwardsMovieList(currentTime);
     }
 
 

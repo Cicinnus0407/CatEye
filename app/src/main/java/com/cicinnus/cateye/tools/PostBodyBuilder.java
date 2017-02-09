@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by Cicinnus on 2017/2/5.
+ * 猫眼电影api的多个请求合并
  */
 
 public class PostBodyBuilder {

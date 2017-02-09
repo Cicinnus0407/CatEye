@@ -38,7 +38,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     ProgressLayout progressLayout;
     @BindView(R.id.swipe)
     SuperSwipeRefreshLayout swip;
-    @BindView(R.id.rv_hot_movie_list)
+    @BindView(R.id.rv_hot_movie)
     RecyclerView rvHotMovieList;
 
     private List<List<Integer>> mMovieIds;//存放获取更多的集合

@@ -3,8 +3,11 @@ package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_mov
 import android.app.Activity;
 
 import com.cicinnus.cateye.base.BasePresenter;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
+import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
+import com.cicinnus.cateye.net.SchedulersCompat;
 
-import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -23,8 +26,9 @@ public class OverseaMoviePresenter extends BasePresenter<OverseaMovieContract.IO
     @Override
     public void getOverseaMovie(final String area) {
         mView.showLoading();
-        addSubscribe(overseaMovieManager.getOverseaMovie(area)
-                .subscribe(new Subscriber<ResponseBody>() {
+        addSubscribe(Observable.merge(overseaMovieManager.getOverseaHotMoie(area),overseaMovieManager.getOverseaComingMovie(area))
+                .compose(SchedulersCompat.applyIoSchedulers())
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
                         mView.showContent();
@@ -32,12 +36,16 @@ public class OverseaMoviePresenter extends BasePresenter<OverseaMovieContract.IO
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showError("解析出错");
+                        mView.showError(e.getMessage());
                     }
 
                     @Override
-                    public void onNext(ResponseBody responseBody) {
-                        mView.addOverseaMovie(responseBody);
+                    public void onNext(Object o) {
+                        if(o instanceof OverseaHotMovieBean){
+                            mView.addOverseaHotMovie(((OverseaHotMovieBean) o).getData().getHot());
+                        }else if(o instanceof OverseaComingMovieBean){
+                            mView.addOverseaComingMovie(((OverseaComingMovieBean) o).getData().getComing());
+                        }
                     }
                 }));
 

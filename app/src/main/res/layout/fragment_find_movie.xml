@@ -89,11 +89,11 @@
 
                 <TextView
                     android:id="@+id/tv_all_awards"
-                    android:padding="@dimen/dp_14"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/dp_14"
+                    android:layout_marginTop="@dimen/dp_14"
                     android:text="全部电影奖项>"
                     android:textColor="@color/colorAccent" />
             </LinearLayout>

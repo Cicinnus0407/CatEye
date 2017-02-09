@@ -16,7 +16,9 @@ import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.base.BaseSingleChoiceAdapter;
 import com.cicinnus.cateye.base.BaseSingleChoiceBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
     private static final String TYPE_TITLE = "type_title";
     private static final String NATION_TITLE = "nation_title";
     private static final String PERIOD_TITLE = "period_title";
+    private MyPullToRefreshListener pullToRefreshListener;
 
 
     public static void startFromType(Context context, int id, String typeTitle) {
@@ -65,6 +68,8 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
 
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
+    @BindView(R.id.swipe)
+    SuperSwipeRefreshLayout swipe;
     @BindView(R.id.rv_search_list)
     RecyclerView rvSearchList;
     @BindView(R.id.tv_classify_title)
@@ -244,6 +249,16 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
             }
         });
 
+        pullToRefreshListener = new MyPullToRefreshListener(mContext,swipe);
+        swipe.setOnPullRefreshListener(pullToRefreshListener);
+        pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
+            @Override
+            public void refresh() {
+                mPresenter.getClassifySearchList(offset, catId, sourceId, yearId, sortId);
+
+            }
+        });
+
     }
 
     @OnClick({R.id.rl_back,R.id.rl_search})
@@ -420,6 +435,7 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
 
     @Override
     public void showContent() {
+        pullToRefreshListener.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
@@ -427,6 +443,7 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
 
     @Override
     public void showError(String errorMsg) {
+        pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

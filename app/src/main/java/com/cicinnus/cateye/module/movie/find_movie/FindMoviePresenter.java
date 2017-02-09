@@ -6,8 +6,10 @@ import com.cicinnus.cateye.base.BasePresenter;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.ErrorHanding;
 
+import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -25,70 +27,40 @@ public class FindMoviePresenter extends BasePresenter<FindMovieContract.IFindMov
     }
 
     @Override
-    public void getMovieTypeList() {
-        mView.showContent();
-        addSubscribe(findMovieManager.getMovieTypeList()
-                .subscribe(new Subscriber<MovieTypeBean>() {
+    public void getFindMovieData() {
+        mView.showLoading();
+        //merge合并多个请求
+        addSubscribe(Observable
+                .merge(findMovieManager.getMovieTypeList(), findMovieManager.getMovieGrid(), findMovieManager.getAwardsMovie())
+                .compose(SchedulersCompat.applyIoSchedulers())
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
                         mView.showContent();
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(ErrorHanding.handleError(e));
+
                     }
 
                     @Override
-                    public void onNext(MovieTypeBean movieTypeBean) {
-                        mView.addMovieType(movieTypeBean.getData().get(0).getTagList());
-                        mView.addMovieNation(movieTypeBean.getData().get(1).getTagList());
-                        mView.addMoviePeriod(movieTypeBean.getData().get(2).getTagList());
+                    public void onNext(Object o) {
+                        if (o instanceof MovieTypeBean) {
+                            mView.addMovieType(((MovieTypeBean) o).getData().get(0).getTagList());
+                            mView.addMovieNation(((MovieTypeBean) o).getData().get(1).getTagList());
+                            mView.addMoviePeriod(((MovieTypeBean) o).getData().get(2).getTagList());
+                        } else if (o instanceof GridMovieBean) {
+                            mView.addMovieGrid(((GridMovieBean) o).getData());
+                        } else if (o instanceof AwardsMovieBean) {
+                            mView.addAwardsMovie(((AwardsMovieBean) o).getData());
+
+                        }
                     }
                 }));
+
     }
 
-    @Override
-    public void getMovieGrid() {
-        mView.showLoading();
-        addSubscribe(findMovieManager.getMovieGrid()
-                .subscribe(new Subscriber<GridMovieBean>() {
-                    @Override
-                    public void onCompleted() {
-                        mView.showContent();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.showError(ErrorHanding.handleError(e));
-                    }
-
-                    @Override
-                    public void onNext(GridMovieBean gridMovieBean) {
-                        mView.addMovieGrid(gridMovieBean.getData());
-                    }
-                }));
-    }
-
-    @Override
-    public void getAwardsMovie() {
-        mView.showLoading();
-        addSubscribe(findMovieManager.getAwardsMovie()
-        .subscribe(new Subscriber<AwardsMovieBean>() {
-            @Override
-            public void onCompleted() {
-                mView.showContent();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mView.showError(ErrorHanding.handleError(e));
-            }
-
-            @Override
-            public void onNext(AwardsMovieBean awardsMovieBean) {
-                mView.addAwardsMovie(awardsMovieBean.getData());
-            }
-        }));
-    }
 }

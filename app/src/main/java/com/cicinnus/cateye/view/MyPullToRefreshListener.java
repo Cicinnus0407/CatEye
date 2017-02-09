@@ -33,7 +33,6 @@ public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRe
         scrollPx = UiUtils.dp2px(context, 25);
     }
 
-
     private void setupRefreshView(Context context) {
         refreshView = new RefreshView(context);
         mSwipeRefreshLayout.setHeaderView(refreshView);
@@ -76,6 +75,7 @@ public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRe
             //当不在刷新状态并且滑动距离超过scrollPx之后才开始变色
             if (!isRefresh && distance > scrollPx) {
 //                Log.d("滑动", "onPullDistance: 向上变颜色");
+
                 float scale = ((float) distance - scrollPx) / (((2 * height * scrollPx) / distance));
                 refreshView.setProgress(scale <= 0f ? 0f : scale);
             }

@@ -114,7 +114,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
     @Override
     public void showError(String errorMsg) {
-
+        Logger.d(errorMsg);
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -226,5 +226,75 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void addOverseaHotMovie(List<OverseaHotMovieBean.DataBean.HotBean> hot) {
+        overseaMovieAdapter.addData(hot);
+    }
+
+    @Override
+    public void addOverseaComingMovie(List<OverseaComingMovieBean.DataBean.ComingBean> coming) {
+        Observable.from(coming)
+                .map(new Func1<OverseaComingMovieBean.DataBean.ComingBean, OverseaHotMovieBean.DataBean.HotBean>() {
+                    @Override
+                    public OverseaHotMovieBean.DataBean.HotBean call(OverseaComingMovieBean.DataBean.ComingBean comingBean) {
+                        OverseaHotMovieBean.DataBean.HotBean hotBean = new OverseaHotMovieBean.DataBean.HotBean();
+                        List<OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean> headLineList = new ArrayList<>();
+                        if(comingBean.getHeadLinesVO()!=null) {
+                            for (int i = 0; i < comingBean.getHeadLinesVO().size(); i++) {
+                                OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean headLinesVOBean = new OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean();
+                                headLinesVOBean.setMovieId(comingBean.getHeadLinesVO().get(i).getMovieId());
+                                headLinesVOBean.setTitle(comingBean.getHeadLinesVO().get(i).getTitle());
+                                headLinesVOBean.setType(comingBean.getHeadLinesVO().get(i).getType());
+                                headLinesVOBean.setUrl(comingBean.getHeadLinesVO().get(i).getUrl());
+                                headLineList.add(headLinesVOBean);
+                            }
+                        }
+                        hotBean.setHeadLinesVO(headLineList);
+                        hotBean.setStar(comingBean.getStar());
+                        hotBean.setShowst(comingBean.getShowst());
+                        hotBean.setWish(comingBean.getWish());
+                        hotBean.setVideourl(comingBean.getVideourl());
+                        hotBean.setVideoName(comingBean.getVideoName());
+                        hotBean.setStar(comingBean.getStar());
+                        hotBean.setNm(comingBean.getNm());
+                        return hotBean;
+                    }
+                })
+                .toList()
+                .compose(SchedulersCompat.<List<OverseaHotMovieBean.DataBean.HotBean>>applyIoSchedulers())
+                .subscribe(new Subscriber<List<OverseaHotMovieBean.DataBean.HotBean>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<OverseaHotMovieBean.DataBean.HotBean> hotBeen) {
+
+                        TextView headerView = new TextView(mContext);
+                        int padding = UiUtils.dp2px(mContext,10);
+                        headerView.setPadding(padding,padding,0,padding);
+                        String title = "";
+                        switch (area) {
+                            case "NA":
+                                title = "美国热映";
+                                break;
+                            case "KR":
+                                title = "韩国热映";
+                                break;
+                            case "JP":
+                                title = "日本热映";
+                                break;
+                        }
+                        overseaMovieAdapter.addData(hotBeen);
+                    }
+                });
     }
 }
