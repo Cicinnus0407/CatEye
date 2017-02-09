@@ -12,12 +12,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:foreground="@drawable/ic_trailer_recommend_bg"
+            android:scaleType="centerCrop"
+            android:id="@+id/iv_blur"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="100dp" />
 
         <com.cicinnus.cateye.view.CircleImageView
-
             android:id="@+id/civ_award_img"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
@@ -42,10 +43,11 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dp_6"
                 android:paddingTop="@dimen/dp_6"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/white"
                 tools:text="分组头部" />
 
             <TextView
+                android:textColor="@color/tv_normal_gray_light"
                 android:id="@+id/tv_award_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -153,11 +153,6 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     }
 
-    @OnClick(R.id.tv_all_awards)
-    void onClick(View view){
-        AwardsListActivity.start(mContext,true);
-    }
-
 
     @Override
     public void addMovieType(List<MovieTypeBean.DataBean.TagListBean> tagList) {
@@ -188,11 +183,15 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
     public void showLoading() {
         if (!progressLayout.isContent()) {
             progressLayout.showLoading();
+            if (progressLayout.getVisibility()== View.INVISIBLE) {
+                progressLayout.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public void showContent() {
+
         pullToRefreshListener.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();

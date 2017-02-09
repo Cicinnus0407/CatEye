@@ -5,6 +5,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
+ * Observable整体切换，
  * 切换工作线程和UI线程
  */
 public class SchedulersCompat {

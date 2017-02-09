@@ -2,12 +2,8 @@ package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_mov
 
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
-import com.cicinnus.cateye.net.JsonRequestBody;
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
-import com.cicinnus.cateye.tools.PostBodyBuilder;
 
-import okhttp3.ResponseBody;
 import rx.Observable;
 
 /**
@@ -16,30 +12,25 @@ import rx.Observable;
 
 public class OverseaMovieManager {
 
-    private PostBodyBuilder builder;
 
-    public Observable<ResponseBody> getOverseaMovie(String area) {
+    /**
+     * 获取10条热映电影
+     * @param area 地区
+     * @return
+     */
 
-        builder = new PostBodyBuilder()
-                .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/recommend.json?area=" + area)
-                .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=" + area + "&offset=0&limit=10")
-                .addKeyValue("GET", "http://api.maoyan.com/mmdb/movie/oversea/hot.json?area=" + area + "&offset=0&limit=10")
-                .build();
-
-        return RetrofitClient
-                .getInstance()
-                .api()
-                .getCombineData(JsonRequestBody.getInstance().convertJsonContent(builder.getRequestBodyContent()))
-                .compose(SchedulersCompat.<ResponseBody>applyIoSchedulers());
-    }
-
-    public Observable<OverseaHotMovieBean> getOverseaHotMoie(String area){
+    public Observable<OverseaHotMovieBean> getOverseaHotMovie(String area){
         return RetrofitClient
                 .getInstance()
                 .api()
                 .getOverseaHotMovie(area,10,0);
     }
 
+    /**
+     * 获取10条待映电影
+     * @param area 地区
+     * @return
+     */
     public Observable<OverseaComingMovieBean> getOverseaComingMovie(String area){
         return RetrofitClient
                 .getInstance()

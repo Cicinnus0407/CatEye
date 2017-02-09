@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
@@ -23,6 +24,8 @@ public class OverseaMovieActivity extends BaseActivity {
         context.startActivity(starter);
     }
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.tab_oversea)
     TabLayout tabOversea;
 
@@ -37,8 +40,8 @@ public class OverseaMovieActivity extends BaseActivity {
 
     @Override
     protected void initEventAndData(Bundle savedInstance) {
+        tvTitle.setText("海外电影");
         setupFragment(savedInstance);
-
         tabOversea.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -116,5 +119,11 @@ public class OverseaMovieActivity extends BaseActivity {
                 break;
         }
         transaction.commit();
+    }
+
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
     }
 }

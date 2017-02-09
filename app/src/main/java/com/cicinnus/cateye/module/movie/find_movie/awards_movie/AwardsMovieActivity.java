@@ -2,6 +2,8 @@ package com.cicinnus.cateye.module.movie.find_movie.awards_movie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +18,8 @@ import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
+import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.CircleImageView;
@@ -23,13 +27,19 @@ import com.cicinnus.cateye.view.FloatingItemDecoration;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by Administrator on 2017/2/6.
@@ -44,6 +54,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
     public static final String ID = "fest_id";//从奖项列表拿到的数据
     public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
     private boolean isComeFromFindMovie =false;
+    private ImageView ivBlur;
 
     public static void start(Context context, int festivalId, int festSessionId) {
         Intent starter = new Intent(context, AwardsMovieActivity.class);
@@ -245,6 +256,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
      */
     private void initHeader() {
         View headerView = getLayoutInflater().inflate(R.layout.item_awards_section_header, (ViewGroup) rvAwardsMovie.getParent(), false);
+        ivBlur = (ImageView) headerView.findViewById(R.id.iv_blur);
         cirAwardImg = (CircleImageView) headerView.findViewById(R.id.civ_award_img);
         tvAwardTitle = (TextView) headerView.findViewById(R.id.tv_award_title);
         tvAwardContent = (TextView) headerView.findViewById(R.id.tv_award_desc);
@@ -325,6 +337,37 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
         tvAwardTitle.setText(data.getCnm());
         tvAwardContent.setText(data.getIntro());
         GlideManager.loadImage(mContext, data.getIcon(), cirAwardImg);
+        Observable.just(data.getIcon())
+                .map(new Func1<String, Bitmap>() {
+                    @Override
+                    public Bitmap call(String s) {
+                        try {
+                            URL url = new URL(s);
+                            return BitmapFactory.decodeStream(url.openStream());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                })
+                .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
+                .subscribe(new Subscriber<Bitmap>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Bitmap bitmap) {
+                        Bitmap ivBitmap = FastBlurUtil.doBlur(bitmap,9,false);
+                        ivBlur.setImageBitmap(ivBitmap);
+                    }
+                });
     }
 
     @Override
@@ -349,6 +392,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
     @Override
     public void showError(String errorMsg) {
+        Logger.e(errorMsg);
         pullListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override

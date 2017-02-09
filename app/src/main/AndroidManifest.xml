@@ -36,12 +36,21 @@
         <!--TOP100-->
         <activity android:name=".module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieActivity" />
         <!--海外电影-->
-        <activity android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.OverseaMovieActivity" />
+        <activity
+            android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.OverseaMovieActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoAnimation" />
         <!--获奖电影-->
-        <activity android:name=".module.movie.find_movie.awards_movie.AwardsMovieActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.movie.find_movie.awards_movie.AwardsMovieActivity"
+            android:screenOrientation="portrait" />
         <!--奖项列表-->
-        <activity android:name=".module.movie.find_movie.awards_movie.awards_list.AwardsListActivity"
+        <activity
+            android:name=".module.movie.find_movie.awards_movie.awards_list.AwardsListActivity"
+            android:screenOrientation="portrait" />
+        <!--热映/待映电影列表-->
+        <activity android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.oversea_movie_total_list.OverSeaMovieListActivity"
+            android:theme="@style/AppThemeNoAnimation"
             android:screenOrientation="portrait"/>
     </application>
 

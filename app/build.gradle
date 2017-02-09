@@ -44,5 +44,10 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     //Adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.7.8'
-    compile 'com.android.support:support-v4:25.1.0'
+    //内存泄漏检测
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    //模糊
+    compile 'com.wingjay:blurimageviewlib:2.0.1'
 }

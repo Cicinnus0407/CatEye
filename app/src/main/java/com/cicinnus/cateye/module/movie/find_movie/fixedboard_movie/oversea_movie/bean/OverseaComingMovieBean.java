@@ -1,5 +1,8 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.cicinnus.cateye.base.BaseConstant;
+
 import java.util.List;
 
 /**
@@ -93,7 +96,7 @@ public class OverseaComingMovieBean {
             }
         }
 
-        public static class ComingBean {
+        public static class ComingBean implements MultiItemEntity{
             /**
              * cat : 动作,惊悚
              * civilPubSt : 3
@@ -546,6 +549,23 @@ public class OverseaComingMovieBean {
 
             public void setNewsHeadlines(List<NewsHeadlinesBean> newsHeadlines) {
                 this.newsHeadlines = newsHeadlines;
+            }
+
+            @Override
+            public int getItemType() {
+                if(getHeadLinesVO()!=null&&getHeadLinesVO().size()>1){
+                    return BaseConstant.TYPE_OVERSEA_HEAD_LINE;
+                }
+                switch (getShowst()) {
+                    case 1:
+                        return BaseConstant.TYPE_OVERSEA_NORMAL;
+                    case 3:
+                        return BaseConstant.TYPE_OVERSEA_BUY;
+                    case 4:
+                        return BaseConstant.TYPE_OVERSEA_PRESALE;
+                    default:
+                        return BaseConstant.TYPE_OVERSEA_NORMAL;
+                }
             }
 
             public static class HeadLinesVOBean {

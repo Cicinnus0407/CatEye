@@ -190,6 +190,9 @@ public class OverseaHotMovieBean {
             private String ftime;
             private List<HeadLinesVOBean> headLinesVO;
             private List<NewsHeadlinesBean> newsHeadlines;
+            private String footerName;
+            private String type;
+            private String area;
 
             public String getCat() {
                 return cat;
@@ -554,7 +557,10 @@ public class OverseaHotMovieBean {
             @Override
             public int getItemType() {
                 if(getHeadLinesVO()!=null&&getHeadLinesVO().size()>1){
-                    return BaseConstant.TYPE_OVERSEA_BUY_MULIT;
+                    return BaseConstant.TYPE_OVERSEA_HEAD_LINE;
+                }
+                if(getFooterName()!=null){
+                    return BaseConstant.TYPE_OVERSEA_FOOTER;
                 }
                 switch (getShowst()) {
                     case 1:
@@ -566,6 +572,30 @@ public class OverseaHotMovieBean {
                     default:
                         return BaseConstant.TYPE_OVERSEA_NORMAL;
                 }
+            }
+
+            public String getFooterName() {
+                return footerName;
+            }
+
+            public void setFooterName(String footerName) {
+                this.footerName = footerName;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getArea() {
+                return area;
+            }
+
+            public void setArea(String area) {
+                this.area = area;
             }
 
             public static class HeadLinesVOBean {

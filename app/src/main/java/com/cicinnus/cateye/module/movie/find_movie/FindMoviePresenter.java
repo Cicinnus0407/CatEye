@@ -31,7 +31,9 @@ public class FindMoviePresenter extends BasePresenter<FindMovieContract.IFindMov
         mView.showLoading();
         //merge合并多个请求
         addSubscribe(Observable
-                .merge(findMovieManager.getMovieTypeList(), findMovieManager.getMovieGrid(), findMovieManager.getAwardsMovie())
+                .merge(findMovieManager.getMovieTypeList(),
+                        findMovieManager.getMovieGrid(),
+                        findMovieManager.getAwardsMovie())
                 .compose(SchedulersCompat.applyIoSchedulers())
                 .subscribe(new Subscriber<Object>() {
                     @Override

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
@@ -13,21 +11,17 @@ import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movi
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.UiUtils;
+import com.cicinnus.cateye.view.FloatingItemDecoration;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
-import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -38,10 +32,26 @@ import rx.functions.Func1;
 
 public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> implements OverseaMovieContract.IOverseaMovieView {
 
+
+
+
     private static final String AREA = "area";
-    private String area;
+
+
+
+    @BindView(R.id.swipe)
+    SuperSwipeRefreshLayout swipe;
+    @BindView(R.id.progressLayout)
+    ProgressLayout progressLayout;
+    @BindView(R.id.rv_oversea_movie)
+    RecyclerView rvOverseaMovie;
+
+    private OverseaMovieAdapter overseaMovieAdapter;
     private MyPullToRefreshListener pullToRefreshListener;
-    private Gson gson;
+    private String area;
+    private FloatingItemDecoration floatingItemDecoration;
+    private HashMap<Integer,String> keys;
+    private boolean isFirst = true;
 
     public static OverseaMovieFragment newInstance(String area) {
 
@@ -53,14 +63,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
     }
 
 
-    @BindView(R.id.swipe)
-    SuperSwipeRefreshLayout swipe;
-    @BindView(R.id.progressLayout)
-    ProgressLayout progressLayout;
-    @BindView(R.id.rv_oversea_movie)
-    RecyclerView rvOverseaMovie;
 
-    private OverseaMovieAdapter overseaMovieAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -75,26 +78,51 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
     @Override
     protected void initEventAndData() {
         area = getArguments().getString(AREA);
-        gson = new Gson();
-
 
         overseaMovieAdapter = new OverseaMovieAdapter();
         rvOverseaMovie.setLayoutManager(new LinearLayoutManager(mContext));
         rvOverseaMovie.setAdapter(overseaMovieAdapter);
 
+
+        floatingItemDecoration = new FloatingItemDecoration(mContext);
+        floatingItemDecoration.setmTitleHeight(UiUtils.dp2px(mContext,27));
+        floatingItemDecoration.setShowFloatingHeaderOnScrolling(false);
+        keys = new HashMap<>();
+        rvOverseaMovie.addItemDecoration(floatingItemDecoration);
         pullToRefreshListener = new MyPullToRefreshListener(mContext, swipe);
         swipe.setOnPullRefreshListener(pullToRefreshListener);
         pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
             @Override
             public void refresh() {
+                overseaMovieAdapter.setNewData(new ArrayList<OverseaHotMovieBean.DataBean.HotBean>());
                 mPresenter.getOverseaMovie(area);
             }
         });
+        if(area.equals("NA")){
+            mPresenter.getOverseaMovie(area);
+        }
+    }
+
+    private String getArea(String area){
+        switch (area){
+            case "NA":
+                return "美国";
+            case "KR":
+                return "韩国";
+            case "JP":
+                return "日本";
+            default:
+                return "";
+
+        }
     }
 
     @Override
     protected void lazyLoadEveryTime() {
-        mPresenter.getOverseaMovie(area);
+        if(isFirst) {
+            mPresenter.getOverseaMovie(area);
+            isFirst = false;
+        }
     }
 
 
@@ -107,6 +135,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
     @Override
     public void showContent() {
+        pullToRefreshListener.refreshDone();
         if (!progressLayout.isContent()) {
             progressLayout.showContent();
         }
@@ -114,7 +143,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
     @Override
     public void showError(String errorMsg) {
-        Logger.d(errorMsg);
+        pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,112 +153,16 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
     }
 
     @Override
-    public void addOverseaMovie(ResponseBody responseBody) {
-        try {
-            JSONObject jsonObject = new JSONObject(responseBody.string());
-            JSONObject data = (JSONObject) jsonObject.get("data");
-            JSONObject hotData = (JSONObject) data.get("http://api.maoyan.com/mmdb/movie/oversea/hot.json?area=" + area + "&offset=0&limit=10");
-            JSONObject hot = (JSONObject) hotData.get("data");
-            OverseaHotMovieBean.DataBean hotDataBean = gson.fromJson(hot.toString(), OverseaHotMovieBean.DataBean.class);
-            overseaMovieAdapter.setNewData(hotDataBean.getHot());
-            TextView headerView = new TextView(mContext);
-            int padding = UiUtils.dp2px(mContext,10);
-            headerView.setPadding(padding,padding,0,padding);
-            String title = "";
-            switch (area) {
-                case "NA":
-                    title = "美国热映";
-                    break;
-                case "KR":
-                    title = "韩国热映";
-                    break;
-                case "JP":
-                    title = "日本热映";
-                    break;
-            }
-            headerView.setText(title);
-            overseaMovieAdapter.addHeaderView(headerView);
-            View footerView = mContext.getLayoutInflater().inflate(R.layout.layout_oversea_footer, (ViewGroup) rvOverseaMovie.getParent(), false);
-            ((TextView) footerView.findViewById(R.id.tv_oversea_footer)).setText("查看全部热门电影");
-            overseaMovieAdapter.addFooterView(footerView);
-
-
-            JSONObject comingList = (JSONObject) data.get("http://api.maoyan.com/mmdb/movie/oversea/coming.json?area=" + area + "&offset=0&limit=10");
-            final JSONObject coming = (JSONObject) comingList.get("data");
-            OverseaComingMovieBean.DataBean comingData = gson.fromJson(coming.toString(), OverseaComingMovieBean.DataBean.class);
-            Observable.from(comingData.getComing())
-                    .map(new Func1<OverseaComingMovieBean.DataBean.ComingBean, OverseaHotMovieBean.DataBean.HotBean>() {
-                        @Override
-                        public OverseaHotMovieBean.DataBean.HotBean call(OverseaComingMovieBean.DataBean.ComingBean comingBean) {
-                            OverseaHotMovieBean.DataBean.HotBean hotBean = new OverseaHotMovieBean.DataBean.HotBean();
-                            List<OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean> headLineList = new ArrayList<>();
-                            if(comingBean.getHeadLinesVO()!=null) {
-                                for (int i = 0; i < comingBean.getHeadLinesVO().size(); i++) {
-                                    OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean headLinesVOBean = new OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean();
-                                    headLinesVOBean.setMovieId(comingBean.getHeadLinesVO().get(i).getMovieId());
-                                    headLinesVOBean.setTitle(comingBean.getHeadLinesVO().get(i).getTitle());
-                                    headLinesVOBean.setType(comingBean.getHeadLinesVO().get(i).getType());
-                                    headLinesVOBean.setUrl(comingBean.getHeadLinesVO().get(i).getUrl());
-                                    headLineList.add(headLinesVOBean);
-                                }
-                            }
-                            hotBean.setHeadLinesVO(headLineList);
-                            hotBean.setStar(comingBean.getStar());
-                            hotBean.setShowst(comingBean.getShowst());
-                            hotBean.setWish(comingBean.getWish());
-                            hotBean.setVideourl(comingBean.getVideourl());
-                            hotBean.setVideoName(comingBean.getVideoName());
-                            hotBean.setStar(comingBean.getStar());
-                            hotBean.setNm(comingBean.getNm());
-                            return hotBean;
-                        }
-                    })
-                    .toList()
-                    .compose(SchedulersCompat.<List<OverseaHotMovieBean.DataBean.HotBean>>applyIoSchedulers())
-                    .subscribe(new Subscriber<List<OverseaHotMovieBean.DataBean.HotBean>>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Logger.e(e.getMessage());
-                        }
-
-                        @Override
-                        public void onNext(List<OverseaHotMovieBean.DataBean.HotBean> hotBeen) {
-
-                            TextView headerView = new TextView(mContext);
-                            int padding = UiUtils.dp2px(mContext,10);
-                            headerView.setPadding(padding,padding,0,padding);
-                            String title = "";
-                            switch (area) {
-                                case "NA":
-                                    title = "美国热映";
-                                    break;
-                                case "KR":
-                                    title = "韩国热映";
-                                    break;
-                                case "JP":
-                                    title = "日本热映";
-                                    break;
-                            }
-                            headerView.setText(title);
-                            overseaMovieAdapter.addData(hotBeen);
-                            View footerView = mContext.getLayoutInflater().inflate(R.layout.layout_oversea_footer, (ViewGroup) rvOverseaMovie.getParent(), false);
-                            ((TextView) footerView.findViewById(R.id.tv_oversea_footer)).setText("查看全部待映电影");
-                            overseaMovieAdapter.addFooterView(footerView);
-                        }
-                    });
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void addOverseaHotMovie(List<OverseaHotMovieBean.DataBean.HotBean> hot) {
+        keys.put(0,String.format("%s热映",getArea(area)));
+        floatingItemDecoration.setKeys(keys);
+        if(hot.size()>=10){
+            OverseaHotMovieBean.DataBean.HotBean footer= new OverseaHotMovieBean.DataBean.HotBean();
+            footer.setFooterName("查看全部热映影片");
+            footer.setType("hot");
+            footer.setArea(area);
+            hot.add(footer);
+        }
         overseaMovieAdapter.addData(hot);
     }
 
@@ -243,7 +176,9 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
                         List<OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean> headLineList = new ArrayList<>();
                         if(comingBean.getHeadLinesVO()!=null) {
                             for (int i = 0; i < comingBean.getHeadLinesVO().size(); i++) {
-                                OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean headLinesVOBean = new OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean();
+                                OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean headLinesVOBean =
+                                        new OverseaHotMovieBean.DataBean.HotBean.HeadLinesVOBean();
+
                                 headLinesVOBean.setMovieId(comingBean.getHeadLinesVO().get(i).getMovieId());
                                 headLinesVOBean.setTitle(comingBean.getHeadLinesVO().get(i).getTitle());
                                 headLinesVOBean.setType(comingBean.getHeadLinesVO().get(i).getType());
@@ -251,6 +186,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
                                 headLineList.add(headLinesVOBean);
                             }
                         }
+                        hotBean.setImg(comingBean.getImg());
                         hotBean.setHeadLinesVO(headLineList);
                         hotBean.setStar(comingBean.getStar());
                         hotBean.setShowst(comingBean.getShowst());
@@ -269,7 +205,6 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
                     public void onCompleted() {
 
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         Logger.e(e.getMessage());
@@ -277,21 +212,14 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
                     @Override
                     public void onNext(List<OverseaHotMovieBean.DataBean.HotBean> hotBeen) {
-
-                        TextView headerView = new TextView(mContext);
-                        int padding = UiUtils.dp2px(mContext,10);
-                        headerView.setPadding(padding,padding,0,padding);
-                        String title = "";
-                        switch (area) {
-                            case "NA":
-                                title = "美国热映";
-                                break;
-                            case "KR":
-                                title = "韩国热映";
-                                break;
-                            case "JP":
-                                title = "日本热映";
-                                break;
+                        keys.put(overseaMovieAdapter.getData().size(),String.format("%s待映",getArea(area)));
+                        floatingItemDecoration.setKeys(keys);
+                        if(hotBeen.size()>=10){
+                            OverseaHotMovieBean.DataBean.HotBean footer= new OverseaHotMovieBean.DataBean.HotBean();
+                            footer.setFooterName("查看全部待映影片");
+                            footer.setType("coming");
+                            footer.setArea(area);
+                            hotBeen.add(footer);
                         }
                         overseaMovieAdapter.addData(hotBeen);
                     }

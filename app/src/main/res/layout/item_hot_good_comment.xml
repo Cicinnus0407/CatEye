@@ -51,7 +51,7 @@
             tools:text="电影名" />
 
         <TextView
-            android:id="@+id/tv_movie_star"
+            android:id="@+id/tv_movie_desc"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -61,7 +61,7 @@
             tools:text="主演名字" />
 
         <TextView
-            android:id="@+id/tv_movie_pubDesc"
+            android:id="@+id/tv_movie_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp_10"

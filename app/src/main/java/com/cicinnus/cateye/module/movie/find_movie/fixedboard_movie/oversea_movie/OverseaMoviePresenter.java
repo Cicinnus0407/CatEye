@@ -26,7 +26,8 @@ public class OverseaMoviePresenter extends BasePresenter<OverseaMovieContract.IO
     @Override
     public void getOverseaMovie(final String area) {
         mView.showLoading();
-        addSubscribe(Observable.merge(overseaMovieManager.getOverseaHotMoie(area),overseaMovieManager.getOverseaComingMovie(area))
+        //合并两个请求
+        addSubscribe(Observable.merge(overseaMovieManager.getOverseaHotMovie(area),overseaMovieManager.getOverseaComingMovie(area))
                 .compose(SchedulersCompat.applyIoSchedulers())
                 .subscribe(new Subscriber<Object>() {
                     @Override

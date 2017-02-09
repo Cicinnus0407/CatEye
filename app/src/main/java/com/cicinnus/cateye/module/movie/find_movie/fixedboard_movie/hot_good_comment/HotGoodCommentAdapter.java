@@ -25,8 +25,8 @@ public class HotGoodCommentAdapter extends BaseQuickAdapter<HotGoodCommentBean.D
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
 
         helper.setText(R.id.tv_movie_name,item.getNm())
-                .setText(R.id.tv_movie_star,item.getStar())
-                .setText(R.id.tv_movie_pubDesc,item.getPubDesc())
+                .setText(R.id.tv_movie_desc,item.getStar())
+                .setText(R.id.tv_movie_desc,item.getPubDesc())
                 .setText(R.id.tv_movie_score,String.format("%s",item.getSc()))
                 .setText(R.id.tv_movie_rank,String.format("%s",helper.getAdapterPosition()));
         if(helper.getAdapterPosition()<4){

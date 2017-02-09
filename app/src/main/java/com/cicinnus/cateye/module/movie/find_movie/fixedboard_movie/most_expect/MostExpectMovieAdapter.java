@@ -32,8 +32,8 @@ public class MostExpectMovieAdapter extends BaseQuickAdapter<MostExpectMovieBean
         }
 
         helper.setText(R.id.tv_movie_name, item.getNm())
-                .setText(R.id.tv_movie_star, item.getStar())
-                .setText(R.id.tv_movie_pubDesc, item.getPubDesc())
+                .setText(R.id.tv_movie_desc, item.getStar())
+                .setText(R.id.tv_movie_desc, item.getPubDesc())
                 .setText(R.id.tv_total_wish, String.format("总想看:%s人", item.getWish()))
                 .setText(R.id.tv_new_wish, String.format("%s", item.getMonthWish()))
                 .setText(R.id.tv_movie_rank, String.format("%s", helper.getAdapterPosition()));

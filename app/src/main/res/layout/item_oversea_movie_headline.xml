@@ -17,11 +17,11 @@
         <FrameLayout
             android:id="@+id/fl_hot_title"
             android:layout_width="74dp"
-            android:layout_height="117dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true">
 
             <ImageView
-                android:id="@+id/iv_hot_img"
+                android:id="@+id/iv_movie_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:src="@drawable/icon_default" />
@@ -52,26 +52,29 @@
                 tools:text="电影名" />
 
             <TextView
-                android:id="@+id/tv_movie_star"
+                android:id="@+id/tv_movie_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="bottom"
                 android:maxLines="1"
-                tools:text="主演名字" />
+                tools:text="主演类型描述" />
 
             <TextView
-                android:id="@+id/tv_movie_pubDesc"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/tv_movie_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_10"
-                tools:text="2017-xx-xx大陆上映" />
+                tools:text="电影名星" />
 
 
         </LinearLayout>
 
         <LinearLayout
+            android:gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -153,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+                tools:text="航天博士提醒太空啪啪啪都是骗人滴！" />
         </LinearLayout>
 
 
@@ -199,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+                tools:text="航天博士提醒太空啪啪啪都是骗人滴！" />
         </LinearLayout>
 
 
