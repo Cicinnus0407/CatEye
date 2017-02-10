@@ -11,7 +11,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/BaseAppTheme">
         <activity android:name="com.cicinnus.cateye.base.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,8 @@
         <!--最受期待榜单-->
         <activity
             android:name=".module.movie.find_movie.fixedboard_movie.most_expect.MostExpectMovieActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoAnimation" />
         <!--TOP100-->
         <activity android:name=".module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieActivity" />
         <!--海外电影-->
@@ -43,15 +44,22 @@
         <!--获奖电影-->
         <activity
             android:name=".module.movie.find_movie.awards_movie.AwardsMovieActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoAnimation" />
         <!--奖项列表-->
         <activity
             android:name=".module.movie.find_movie.awards_movie.awards_list.AwardsListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoAnimation" />
         <!--热映/待映电影列表-->
-        <activity android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.oversea_movie_total_list.OverSeaMovieListActivity"
-            android:theme="@style/AppThemeNoAnimation"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.oversea_movie_total_list.OverSeaMovieListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoAnimation" />
+        <activity
+            android:name=".module.movie.movie_detail.MovieDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme" />
     </application>
 
 </manifest>

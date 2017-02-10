@@ -1,15 +1,23 @@
 <resources>
 
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppThemeNoAnimation" parent="AppTheme">
+    <style name="AppTheme" parent="BaseAppTheme">
+
+    </style>
+
+    <style name="AppThemeNoAnimation" parent="BaseAppTheme">
         <item name="android:windowAnimationStyle">@style/noAnimation</item>
+    </style>
+
+    <style name="FullScreenTheme" parent="BaseAppTheme">
     </style>
 
     <!--底部按钮文字-->

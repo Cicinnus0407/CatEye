@@ -14,6 +14,7 @@ import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movi
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
@@ -141,4 +142,9 @@ public interface Api {
     //奖项列表
     @GET("mmdb/movie/region/festival/list.json")
     Observable<AwardsListBean> getAwardsList();
+
+    //电影详情页
+    @GET("mmdb/movie/v5/{movieId}.json")
+    Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId")int movieId);
+
 }

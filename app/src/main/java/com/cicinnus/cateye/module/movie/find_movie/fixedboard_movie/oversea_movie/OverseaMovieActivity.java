@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Cicinnus on 2017/2/5.
@@ -61,6 +63,11 @@ public class OverseaMovieActivity extends BaseActivity {
         tabOversea.addTab(tabOversea.newTab().setText("美国"), true);
         tabOversea.addTab(tabOversea.newTab().setText("韩国"));
         tabOversea.addTab(tabOversea.newTab().setText("日本"));
+    }
+
+    @OnClick({R.id.rl_back})
+    void onClick(View view){
+        finish();
     }
 
     private void setupFragment(Bundle savedInstance) {

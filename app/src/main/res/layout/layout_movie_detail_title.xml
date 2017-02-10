@@ -4,15 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_gravity="top"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:id="@+id/rl_title"
-    android:background="@color/colorAccent"
     android:gravity="center_vertical">
 
     <RelativeLayout
         android:id="@+id/rl_back"
         android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/selector_ic_press">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -23,11 +23,11 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/divider"
         android:layout_width="1px"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/dp_14"
-        android:layout_marginTop="@dimen/dp_14"
-        android:background="@color/colorPrimaryDark" />
+        android:layout_marginTop="@dimen/dp_14" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -44,8 +44,7 @@
     <RelativeLayout
         android:id="@+id/rl_right_icon"
         android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="@drawable/selector_ic_press">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_title_right_icon"

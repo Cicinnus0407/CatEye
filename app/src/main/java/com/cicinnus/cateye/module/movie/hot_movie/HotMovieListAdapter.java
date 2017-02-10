@@ -4,6 +4,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -29,7 +31,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
 
 
     @Override
-    protected void convert(BaseViewHolder helper, HotMovieListBean.DataBean.HotBean item) {
+    protected void convert(BaseViewHolder helper, final HotMovieListBean.DataBean.HotBean item) {
         helper.setText(R.id.tv_hot_movie_name, String.format("%s", item.getNm()))
                 .setText(R.id.tv_hot_desc, String.format("%s", item.getScm()))
                 .setText(R.id.tv_hot_showInfo, String.format("%s", item.getShowInfo()));
@@ -90,5 +92,11 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
 
                 break;
         }
+        helper.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getId());
+            }
+        });
     }
 }

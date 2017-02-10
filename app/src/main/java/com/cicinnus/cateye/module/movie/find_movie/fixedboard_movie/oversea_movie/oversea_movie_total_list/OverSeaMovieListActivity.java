@@ -146,5 +146,9 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
         }
     }
 
-
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
+    }
 }

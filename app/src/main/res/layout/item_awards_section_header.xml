@@ -9,14 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="100dp">
 
         <ImageView
             android:foreground="@drawable/ic_trailer_recommend_bg"
             android:scaleType="centerCrop"
             android:id="@+id/iv_blur"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="match_parent" />
 
         <com.cicinnus.cateye.view.CircleImageView
             android:id="@+id/civ_award_img"

@@ -93,4 +93,9 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
         tvContent.setText(content);
     }
 
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
+    }
 }

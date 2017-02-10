@@ -53,7 +53,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
     public static final int REQUEST_CODE = 101;
     public static final String ID = "fest_id";//从奖项列表拿到的数据
     public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
-    private boolean isComeFromFindMovie =false;
+    private boolean isComeFromFindMovie = false;
     private ImageView ivBlur;
 
     public static void start(Context context, int festivalId, int festSessionId) {
@@ -364,8 +364,10 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        Bitmap ivBitmap = FastBlurUtil.doBlur(bitmap,9,false);
-                        ivBlur.setImageBitmap(ivBitmap);
+                        if (bitmap != null) {
+                            Bitmap ivBitmap = FastBlurUtil.doBlur(bitmap, 9, false);
+                            ivBlur.setImageBitmap(ivBitmap);
+                        }
                     }
                 });
     }
@@ -401,5 +403,11 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                 mPresenter.getAwards(festivalId);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
     }
 }

@@ -150,4 +150,9 @@ public class MostExpectMovieActivity extends BaseActivity<MostExpectPresenter> i
         });
     }
 
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
+    }
 }

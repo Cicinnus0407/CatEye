@@ -136,7 +136,6 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
 
     @Override
     public void showError(String errorMsg) {
-        Logger.e(errorMsg);
         pullListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
@@ -146,4 +145,9 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
         });
     }
 
+    @Override
+    protected void onPause() {
+        overridePendingTransition(0,0);
+        super.onPause();
+    }
 }
