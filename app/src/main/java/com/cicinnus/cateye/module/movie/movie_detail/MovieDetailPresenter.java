@@ -4,8 +4,11 @@ import android.app.Activity;
 
 import com.cicinnus.cateye.base.BasePresenter;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
 
+import rx.Observable;
 import rx.Subscriber;
 
 /**
@@ -24,9 +27,12 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
     @Override
     public void getMovieBasicData(int movieId) {
         mView.showLoading();
-        addSubscribe(movieDetailManager.getMovieBasicData(movieId)
-                .compose(SchedulersCompat.<MovieBasicDataBean>applyIoSchedulers())
-                .subscribe(new Subscriber<MovieBasicDataBean>() {
+        addSubscribe(Observable.merge(
+                movieDetailManager.getMovieBasicData(movieId),
+                movieDetailManager.getMovieStarList(movieId),
+                movieDetailManager.getMovieBox(movieId))
+                .compose(SchedulersCompat.applyIoSchedulers())
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
                         mView.showContent();
@@ -38,8 +44,14 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                     }
 
                     @Override
-                    public void onNext(MovieBasicDataBean movieBasicDataBean) {
-                        mView.addMovieBasicData(movieBasicDataBean.getData().getMovie());
+                    public void onNext(Object o) {
+                        if (o instanceof MovieBasicDataBean) {
+                            mView.addMovieBasicData(((MovieBasicDataBean) o).getData().getMovie());
+                        } else if (o instanceof MovieStarBean) {
+                            mView.addMovieStarList(((MovieStarBean) o));
+                        }else if(o instanceof MovieMoneyBoxBean){
+                            mView.addMovieMoneyBox(((MovieMoneyBoxBean) o));
+                        }
                     }
                 }));
     }

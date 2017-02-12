@@ -13,11 +13,13 @@
 
     </style>
 
+    <!--无动画主题-->
     <style name="AppThemeNoAnimation" parent="BaseAppTheme">
         <item name="android:windowAnimationStyle">@style/noAnimation</item>
     </style>
 
-    <style name="FullScreenTheme" parent="BaseAppTheme">
+    <!--全屏无动画主题-->
+    <style name="FullScreenTheme" parent="AppThemeNoAnimation">
     </style>
 
     <!--底部按钮文字-->

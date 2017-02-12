@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.cicinnus.cateye.view.ProgressLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progressLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <!--clipToPadding = false-->
-    <!--令布局可以延伸到状态栏-->
-
-    <com.cicinnus.cateye.view.ProgressLayout
-        android:id="@+id/progressLayout"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-21dp"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/sc_movie_detail"
+
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
 
-                <LinearLayout
+                <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="@color/colorAccent"
+                    app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
+                    app:titleEnabled="false">
 
                     <RelativeLayout
                         android:id="@+id/rl_movie_info"
                         android:layout_width="match_parent"
                         android:layout_height="284dp"
-                        android:background="@drawable/ic_blur_bg">
+                        android:background="@drawable/ic_blur_bg"
+                        app:layout_collapseMode="pin">
 
                         <FrameLayout
                             android:id="@+id/fl_movie_img"
@@ -231,75 +230,180 @@
 
                     </RelativeLayout>
 
-
-                    <com.cicinnus.cateye.view.ExpandTextView
-                        android:id="@+id/expandText_movie_Desc"
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:padding="@dimen/dp_14"
-                        app:maxLine="3"
-                        app:textColor="@color/text_primary"
-                        app:textSize="@dimen/sp_14" />
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_14"
-                        android:background="@color/divider_normal" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_movie_star"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/dp_14"
-                        android:paddingLeft="@dimen/dp_14" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_14"
-                        android:background="@color/divider_normal" />
-
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_movie_photos"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="@dimen/dp_14"
-                        android:background="@color/divider_normal" />
-
-                    <include layout="@layout/layout_movie_music" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_10"
-                        android:background="@color/divider_normal" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@drawable/selector_layout_press">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="票房"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_16"
+                                tools:text="电影名字" />
+
+                            <TextView
+                                android:id="@+id/tv_subTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="10sp"
+                                tools:text="电影英文名" />
+                        </LinearLayout>
+
+
+                    </android.support.v7.widget.Toolbar>
+
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+
+            </android.support.design.widget.AppBarLayout>
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/sc_movie_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:fitsSystemWindows="true"
+                android:overScrollMode="never"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_14">
+
+                        <TextView
+                            android:id="@+id/tv_movie_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="3"
                             android:textColor="@color/text_primary" />
 
                         <ImageView
+                            android:id="@+id/expand_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right" />
+                            android:layout_gravity="right"
+                            android:paddingBottom="5dip"
+                            android:paddingLeft="5dip"
+                            android:paddingRight="5dip"
+                            android:paddingTop="5dip"
+                            android:src="@drawable/ic_arrow_down"
+                            android:visibility="gone" />
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
-                    <include layout="@layout/layout_movie_money_box" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_default" />
 
 
                 </LinearLayout>
@@ -307,18 +411,8 @@
 
             </android.support.v4.widget.NestedScrollView>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.design.widget.CoordinatorLayout>
 
-    </com.cicinnus.cateye.view.ProgressLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/layout_movie_detail_title" />
-
-
-</FrameLayout>
-
-
-
-
-
-
-
+</com.cicinnus.cateye.view.ProgressLayout>

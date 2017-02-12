@@ -15,6 +15,8 @@ import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movi
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
@@ -146,5 +148,13 @@ public interface Api {
     //电影详情页
     @GET("mmdb/movie/v5/{movieId}.json")
     Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId")int movieId);
+
+    //演员列表
+    @GET("mmdb/v7/movie/{movieId}/celebrities.json")
+    Observable<MovieStarBean> getMovieStarList(@Path("movieId")int movieId);
+
+    //票房
+    @GET("mmdb/movie/{movieId}/feature/v1/mbox.json")
+    Observable<MovieMoneyBoxBean> getMovieBox(@Path("movieId")int movieId);
 
 }

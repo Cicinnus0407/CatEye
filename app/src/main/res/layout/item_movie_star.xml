@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="70dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/tv_role"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:textColor="@color/text_primary"
+        tools:text="导演" />
+
+    <ImageView
+        android:id="@+id/iv_movie_star"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        tools:src="@drawable/icon_default" />
+
+
+    <TextView
+        android:id="@+id/tv_real_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_gray_deep"
+        android:textSize="@dimen/sp_12"
+        tools:text="真名" />
+
+    <TextView
+        android:id="@+id/tv_fake_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/sp_12"
+        tools:text="演员" />
+</LinearLayout>

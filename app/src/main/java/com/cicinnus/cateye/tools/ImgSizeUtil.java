@@ -11,6 +11,10 @@ public class ImgSizeUtil {
     //部分图片通过拼接url
     public static String resetPicUrl(@NonNull String url, String size){
 
+        if(url.contains("@")){
+            String origin = url.substring(0,url.indexOf("@"));
+            return origin.replace("/w.h/", "/")+size;
+        }
         return url.replace("/w.h/", "/")+size;
     }
 

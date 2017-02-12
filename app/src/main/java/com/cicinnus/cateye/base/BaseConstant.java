@@ -45,7 +45,11 @@ public interface BaseConstant {
 
     //电影奖项
     int TYPE_AWARDS_MOVIE = 0;//最佳电影
-    int TYPE_AWARDS_PEOPLE= 1;//最佳导演
+    int TYPE_AWARDS_PEOPLE = 1;//最佳导演
+
+    //视频/图片
+    int TYPE_MOVIE_DETAIL_VEDIO = 0;
+    int TYPE_MOVIE_DETAIL_PHOTO = 1;
 
 }
 
