@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,11 +17,18 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieAwardsAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieResourceAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieStarListAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieAwardsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MoviePhotosBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.GlideManager;
@@ -29,6 +37,9 @@ import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ExpandTextView;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.orhanobut.logger.Logger;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +57,29 @@ import rx.functions.Func1;
 public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> implements MovieDetailContract.IMovieDetailView {
     @BindView(R.id.sc_movie_detail)
     NestedScrollView scMovieDetail;
+    @BindView(R.id.progressLayout)
+    ProgressLayout progressLayout;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
+    @BindView(R.id.rl_back)
+    RelativeLayout rlBack;
+    @BindView(R.id.iv_title_right_icon)
+    ImageView ivTitleRightIcon;
+    @BindView(R.id.rl_right_icon)
+    RelativeLayout rlRightIcon;
+    @BindView(R.id.ll_title)
+    LinearLayout llTitle;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_subTitle)
+    TextView tvSubTitle;
+    @BindView(R.id.divider)
+    View divider;
+    @BindView(R.id.status_bar_bg)
+    View statusBarBg;
+    /*************
+     * 电影信息
+     *******************/
     @BindView(R.id.iv_movie_img)
     ImageView ivMovieImg;
     @BindView(R.id.fl_movie_img)
@@ -66,38 +100,28 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     TextView tvSrcDur;
     @BindView(R.id.tv_pubDesc)
     TextView tvPubDesc;
-    @BindView(R.id.expandText_movie_Desc)
-    ExpandTextView expandText_movie_Desc;
-    @BindView(R.id.progressLayout)
-    ProgressLayout progressLayout;
-    @BindView(R.id.swipe)
-    SwipeRefreshLayout swipe;
-    @BindView(R.id.rl_back)
-    RelativeLayout rlBack;
-    @BindView(R.id.iv_title_right_icon)
-    ImageView ivTitleRightIcon;
-    @BindView(R.id.rl_right_icon)
-    RelativeLayout rlRightIcon;
-    @BindView(R.id.ll_title)
-    LinearLayout llTitle;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_subTitle)
-    TextView tvSubTitle;
     @BindView(R.id.rl_movie_info)
     RelativeLayout rlMovieInfo;
     @BindView(R.id.ll_score)
     LinearLayout ll_score;
-    @BindView(R.id.divider)
-    View divider;
-    @BindView(R.id.status_bar_bg)
-    View statusBarBg;
+    /***************
+     * 电影简介
+     *****************/
+    @BindView(R.id.expandText_movie_Desc)
+    ExpandTextView expandText_movie_Desc;
+    /**************
+     * 导演,演员
+     *****************/
     @BindView(R.id.rv_movie_star)
     RecyclerView rvMovieStar;
+    /*************
+     * 视频截图,影片截图
+     ***********/
     @BindView(R.id.rv_movie_photos)
     RecyclerView rvMoviePhotos;
-
-    /***************电影音乐*****************/
+    /***************
+     * 电影音乐
+     *****************/
     @BindView(R.id.ll_movie_music)
     LinearLayout llMovieMusic;
     @BindView(R.id.iv_movie_music)
@@ -106,19 +130,41 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     TextView tvMusicName;
     @BindView(R.id.tv_music_num)
     TextView tvMusicNum;
-
-    /*****************票房*******************/
+    /*****************
+     * 票房
+     *******************/
     @BindView(R.id.tv_lastDayRank)
     TextView tvLastDayRank;
     @BindView(R.id.tv_firstWeekBox)
     TextView tvFirstWeekBox;
     @BindView(R.id.tv_sumBox)
     TextView tvSumBox;
+    /************
+     * 电影奖项
+     ***********/
+    @BindView(R.id.rv_movie_awards)
+    RecyclerView rvMovieAwards;
+    /************
+     * 电影资料
+     **********/
+    @BindView(R.id.rv_movie_resource)
+    RecyclerView rvMovieResource;
+    /*************
+     * 评论tag
+     **********/
+    @BindView(R.id.flowLayout)
+    TagFlowLayout tagFlowLayout;
+    /*******长评************/
+    @BindView(R.id.rv_long_comment)
+    RecyclerView rvLongComment;
 
     private static final String MOVIE_ID = "movie_id";
-    private int movieId;
+    private int movieId;//电影Id
     private MovieStarListAdapter movieStarListAdapter;//影星和导演
     private MoviePhotosAdapter moviePhotosAdapter;//视频和照片
+    private MovieAwardsAdapter movieAwardsAdapter;//奖项提名
+    private MovieResourceAdapter movieResourceAdapter;//电影资料
+    private MovieLongCommentAdapter movieLongCommentAdapter;
 
     public static void start(Context context, int movieId) {
         Intent starter = new Intent(context, MovieDetailActivity.class);
@@ -138,15 +184,46 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.getMovieBasicData(movieId);
+                mPresenter.getMovieData(movieId);
             }
         });
         initSwipe();
         initStatusBar();
         initMovieStar();
+        initMovieAwards();
+        initMovieResource();
+        initLongComment();
         initListener();
-        mPresenter.getMovieBasicData(movieId);
+        mPresenter.getMovieData(movieId);
+    }
 
+    /**
+     * 长评
+     */
+    private void initLongComment() {
+        movieLongCommentAdapter = new MovieLongCommentAdapter();
+        rvLongComment.setLayoutManager(new LinearLayoutManager(mContext));
+        rvLongComment.setAdapter(movieLongCommentAdapter);
+        rvLongComment.setNestedScrollingEnabled(false);
+    }
+
+    /**
+     * 电影资料
+     */
+    private void initMovieResource() {
+        movieResourceAdapter = new MovieResourceAdapter();
+        rvMovieResource.setLayoutManager(new GridLayoutManager(mContext, 2));
+        rvMovieResource.setAdapter(movieResourceAdapter);
+        rvMovieResource.setNestedScrollingEnabled(false);
+    }
+
+    /**
+     * 获奖提名列表
+     */
+    private void initMovieAwards() {
+        movieAwardsAdapter = new MovieAwardsAdapter();
+        rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        rvMovieAwards.setAdapter(movieAwardsAdapter);
     }
 
     /**
@@ -235,19 +312,21 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
     /**
      * 设置电影音乐
+     *
      * @param movie
      */
     private void setMovieMusic(MovieBasicDataBean.DataBean.MovieBean movie) {
-        if (movie.getMusicNum()!=0) {
+        if (movie.getMusicNum() != 0) {
             llMovieMusic.setVisibility(View.VISIBLE);
             tvMusicName.setText(movie.getMusicName());
-            tvMusicNum.setText(String.format("%s",movie.getMusicNum()));
-            GlideManager.loadImage(mContext,movie.getAlbumImg(),ivMovieMusic);
+            tvMusicNum.setText(String.format("%s", movie.getMusicNum()));
+            GlideManager.loadImage(mContext, movie.getAlbumImg(), ivMovieMusic);
         }
     }
 
     /**
      * 设置电影图片
+     *
      * @param movie
      */
     private void setMoviePhoto(MovieBasicDataBean.DataBean.MovieBean movie) {
@@ -275,7 +354,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         photosBeanList.addAll(moviePhotosBeen);
                         moviePhotosAdapter = new MoviePhotosAdapter();
                         rvMoviePhotos.setAdapter(moviePhotosAdapter);
-                        rvMoviePhotos.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                        rvMoviePhotos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         Logger.d(photosBeanList.size());
                         moviePhotosAdapter.setNewData(photosBeanList);
                     }
@@ -284,6 +363,11 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
     }
 
+    /**
+     * 导演和演员
+     *
+     * @param movieStarBean
+     */
     @Override
     public void addMovieStarList(MovieStarBean movieStarBean) {
         List<MovieStarBean.DataBean> movieStarList = new ArrayList<>();
@@ -296,10 +380,109 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         movieStarListAdapter.setNewData(movieStarList);
     }
 
+    /**
+     * 票房
+     *
+     * @param moneyBoxBean
+     */
     @Override
     public void addMovieMoneyBox(MovieMoneyBoxBean moneyBoxBean) {
-        tvLastDayRank.setText(String.format("%s",moneyBoxBean.getMbox().getLastDayRank()));
-        tvSumBox.setText(String.format("%s",moneyBoxBean.getMbox().getSumBox()));
+        if (moneyBoxBean.getMbox().getFirstWeekBox() == 0) {
+            tvFirstWeekBox.setTextColor(mContext.getResources().getColor(R.color.text_gray));
+            tvFirstWeekBox.setText("暂无");
+        } else {
+            tvFirstWeekBox.setText(String.format("%s", moneyBoxBean.getMbox().getFirstWeekBox()));
+        }
+        tvLastDayRank.setText(String.format("%s", moneyBoxBean.getMbox().getLastDayRank()));
+        tvSumBox.setText(String.format("%s", moneyBoxBean.getMbox().getSumBox()));
+
+    }
+
+    /**
+     * 电影奖项
+     *
+     * @param movieAwards
+     */
+    @Override
+    public void addMovieAwards(List<MovieAwardsBean.DataBean> movieAwards) {
+        Observable
+                .from(movieAwards)
+                .filter(new Func1<MovieAwardsBean.DataBean, Boolean>() {
+                    @Override
+                    public Boolean call(MovieAwardsBean.DataBean dataBean) {
+                        return dataBean.getItems().size() > 0;
+                    }
+                })
+                .map(new Func1<MovieAwardsBean.DataBean, String>() {
+                    @Override
+                    public String call(MovieAwardsBean.DataBean dataBean) {
+                        String awardsName = "";
+                        for (int i = 0; i < dataBean.getItems().size(); i++) {
+                            awardsName = dataBean.getTitle();
+                            awardsName = awardsName + dataBean.getItems().get(i).getTitle();
+                        }
+                        return awardsName;
+                    }
+                })
+                .toList()
+                .compose(SchedulersCompat.<List<String>>applyIoSchedulers())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        movieAwardsAdapter.setNewData(strings);
+                    }
+                });
+
+    }
+
+    @Override
+    public void addMovieResource(List<MovieResourceBean.DataBean> movieResources) {
+        movieResourceAdapter.setNewData(movieResources);
+    }
+
+    @Override
+    public void addMovieCommentTag(List<MovieCommentTagBean.DataBean> commentTags) {
+        commentTags.add(0, new MovieCommentTagBean.DataBean(0, movieId, 0, "全部"));
+        Observable
+                .from(commentTags)
+                .filter(new Func1<MovieCommentTagBean.DataBean, Boolean>() {
+                    @Override
+                    public Boolean call(MovieCommentTagBean.DataBean dataBean) {
+                        return dataBean != null;
+                    }
+                })
+                .map(new Func1<MovieCommentTagBean.DataBean, String>() {
+                    @Override
+                    public String call(MovieCommentTagBean.DataBean dataBean) {
+                        if (dataBean.getCount() == 0) {
+                            return dataBean.getTagName();
+                        } else {
+                            return dataBean.getTagName() + " " + dataBean.getCount();
+                        }
+                    }
+                })
+                .toList()
+                .compose(SchedulersCompat.<List<String>>applyIoSchedulers())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        tagFlowLayout.setAdapter(new TagAdapter<String>(strings) {
+                            @Override
+                            public View getView(FlowLayout parent, int position, String s) {
+                                TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_flow_tv, tagFlowLayout, false);
+                                tv.setText(s);
+                                return tv;
+                            }
+                        });
+                    }
+                });
+
+    }
+
+    @Override
+    public void addMovieLongComment(MovieLongCommentBean.DataBean movieLongComments) {
+        movieLongCommentAdapter.setNewData(movieLongComments.getFilmReviews());
+//        movieLongCommentAdapter.addFooterView();
     }
 
 

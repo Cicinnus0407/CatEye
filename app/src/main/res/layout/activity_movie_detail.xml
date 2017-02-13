@@ -34,202 +34,7 @@
                     android:orientation="vertical">
 
 
-                    <RelativeLayout
-                        android:id="@+id/rl_movie_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="284dp"
-                        android:background="@drawable/ic_blur_bg">
-
-                        <FrameLayout
-                            android:id="@+id/fl_movie_img"
-                            android:layout_width="110dp"
-                            android:layout_height="150dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/dp_14">
-
-                            <ImageView
-                                android:id="@+id/iv_movie_img"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/black"
-                                android:scaleType="centerCrop" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_vedio_play_big" />
-
-
-                        </FrameLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/fl_movie_img"
-                            android:layout_alignTop="@id/fl_movie_img"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/dp_14"
-                            android:layout_toRightOf="@id/fl_movie_img"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical">
-
-                                <TextView
-                                    android:id="@+id/tv_movie_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/sp_16"
-                                    tools:text="电影名" />
-
-                                <ImageView
-                                    android:id="@+id/iv_win_awards"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_6"
-                                    android:src="@drawable/ic_movie_win_awawrds" />
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_movie_english_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/white"
-                                tools:text="english name" />
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:drawablePadding="@dimen/dp_4"
-                                android:drawableRight="@drawable/ic_arrow_right_gray_bg"
-                                android:gravity="center_vertical"
-                                android:text="观众评分"
-                                android:textColor="@color/text_gray"
-                                android:textSize="@dimen/sp_12" />
-
-                            <LinearLayout
-                                android:id="@+id/ll_score"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/tv_movie_score"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/text_yellow"
-                                    android:textSize="@dimen/sp_16"
-                                    tools:text="8.5" />
-
-                                <TextView
-                                    android:id="@+id/tv_snum"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_4"
-                                    android:textColor="@color/text_gray"
-                                    android:textSize="11sp"
-                                    tools:text="(16.2万人评)" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_movie_type"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/text_gray"
-                                android:textSize="@dimen/sp_12"
-                                tools:text="电影类型" />
-
-                            <TextView
-                                android:id="@+id/tv_src_dur"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/text_gray"
-                                android:textSize="@dimen/sp_12"
-                                tools:text="中国大陆/110分钟" />
-
-                            <TextView
-                                android:id="@+id/tv_pubDesc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/text_gray"
-                                android:textSize="@dimen/sp_12"
-                                tools:text="上映时间" />
-
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="@dimen/dp_22"
-                            android:layout_marginLeft="@dimen/dp_14"
-                            android:layout_marginRight="@dimen/dp_14">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/dp_6"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_ll_favorite"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_favorite_solid" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_14"
-                                    android:drawablePadding="@dimen/dp_14"
-                                    android:gravity="center"
-                                    android:text="想看"
-                                    android:textColor="@color/white" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_6"
-                                android:layout_weight="1"
-                                android:background="@drawable/bg_ll_favorite"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_score_solid" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dp_14"
-                                    android:drawablePadding="@dimen/dp_14"
-                                    android:text="评分"
-                                    android:textColor="@color/white" />
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-
-                    </RelativeLayout>
+                    <include layout="@layout/layout_movie_basic_info" />
 
 
                     <com.cicinnus.cateye.view.ExpandTextView
@@ -251,8 +56,7 @@
                         android:id="@+id/rv_movie_star"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/dp_14"
-                        android:paddingLeft="@dimen/dp_14" />
+                        android:paddingBottom="@dimen/dp_14" />
 
                     <View
                         android:layout_width="match_parent"
@@ -288,19 +92,158 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
                             android:text="票房"
                             android:textColor="@color/text_primary" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_14"
                             android:src="@drawable/ic_arrow_right" />
 
                     </RelativeLayout>
 
                     <include layout="@layout/layout_movie_money_box" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/divider_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_movie_awards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_14"
+                        android:background="@color/divider_normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
+                            android:text="@string/movie_resource"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_14"
+                            android:background="@drawable/selector_add_resource"
+                            android:text="添加资料"
+                            android:textColor="@drawable/selector_add_resource"
+                            android:textSize="@dimen/sp_12" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/divider_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_movie_resource"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_14"
+                        android:background="@color/divider_normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
+                            android:text="短评"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_14"
+                            android:background="@drawable/selector_add_resource"
+                            android:text="写短评"
+                            android:textColor="@drawable/selector_add_resource"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/divider_normal" />
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/flowLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="@dimen/dp_14"
+                        app:max_select="1" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_14"
+                        android:background="@color/divider_normal" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
+                            android:text="长评"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_14"
+                            android:background="@drawable/selector_add_resource"
+                            android:text="写长评"
+                            android:textColor="@drawable/selector_add_resource"
+                            android:textSize="@dimen/sp_12" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/divider_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_long_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 

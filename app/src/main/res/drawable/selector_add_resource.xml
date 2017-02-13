@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:color="@color/colorPrimary" android:drawable="@drawable/bg_add_resource_nor" />
+    <item android:color="@color/white" android:drawable="@drawable/bg_add_resource_pre" android:state_pressed="true" />
+
+</selector>

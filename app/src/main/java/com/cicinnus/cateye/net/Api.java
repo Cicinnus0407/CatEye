@@ -14,8 +14,12 @@ import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movi
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100.TopHundredMovieBean;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieAwardsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
@@ -145,7 +149,7 @@ public interface Api {
     @GET("mmdb/movie/region/festival/list.json")
     Observable<AwardsListBean> getAwardsList();
 
-    //电影详情页
+    //电影基本信息
     @GET("mmdb/movie/v5/{movieId}.json")
     Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId")int movieId);
 
@@ -156,5 +160,23 @@ public interface Api {
     //票房
     @GET("mmdb/movie/{movieId}/feature/v1/mbox.json")
     Observable<MovieMoneyBoxBean> getMovieBox(@Path("movieId")int movieId);
+
+    //获奖
+    @GET("mmdb/movie/{movieId}/feature/awards.json")
+    Observable<MovieAwardsBean> getMovieAwards(@Path("movieId")int movieId);
+
+    //影片资料
+    @GET("mmdb/movie/{movieId}/feature/v2/list.json")
+    Observable<MovieResourceBean> getMovieResource(@Path("movieId")int movieId);
+
+    //短评标签
+    //请求写死了20(广州),会做修改,应该根据cityId
+    @GET("mmdb/comment/tag/movie/{movieId}.json")
+    Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId")int movieId,
+                                                       @Query("ci")int ci);
+
+    //热门长评
+    @GET("sns/movie/{movieId}/filmReview/top.json")
+    Observable<MovieLongCommentBean> getMovieLongComment();
 
 }

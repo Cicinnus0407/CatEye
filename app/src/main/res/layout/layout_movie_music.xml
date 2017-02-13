@@ -45,12 +45,13 @@
     </LinearLayout>
 
     <TextView
+        android:drawablePadding="@dimen/dp_4"
         android:id="@+id/tv_music_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_14"
         android:drawableRight="@drawable/ic_arrow_right"
-        android:textColor="@color/text_gray_deep" />
+        android:textColor="@color/text_gray" />
 
 
 </LinearLayout>

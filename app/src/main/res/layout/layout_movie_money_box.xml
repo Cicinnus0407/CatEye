@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:padding="@dimen/dp_14"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_lastDayRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="18sp"
+            tools:text="1" />
 
         <TextView
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="昨日票房排行" />
@@ -27,44 +31,46 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_firstWeekBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="18sp" />
 
         <TextView
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昨日票房排行" />
+            android:text="首周票房(万)" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_sumBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="18sp" />
 
         <TextView
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昨日票房排行" />
+            android:text="累计票房(万)" />
 
     </LinearLayout>
 

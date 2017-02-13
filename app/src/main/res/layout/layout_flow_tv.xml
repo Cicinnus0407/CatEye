@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/dp_6"
+    android:layout_marginBottom="@dimen/dp_6"
+    android:background="@drawable/selector_comment_tag"
+    android:textColor="@drawable/selector_comment_tag"
+    tools:text="asd">
+
+</TextView>

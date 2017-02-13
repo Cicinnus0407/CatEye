@@ -3,7 +3,7 @@ package com.cicinnus.cateye.tools;
 import android.graphics.Bitmap;
 
 /**
- *
+ * 模糊算法
  */
 
 public class FastBlurUtil {

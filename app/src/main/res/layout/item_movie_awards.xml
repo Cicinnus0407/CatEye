@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_award_name"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp"
+    android:layout_marginLeft="@dimen/dp_14"
+    android:background="@color/white"
+    android:drawableLeft="@drawable/ic_awards"
+    android:drawablePadding="@dimen/dp_6"
+    android:gravity="center_vertical"
+    android:textColor="@color/text_gray_deep"
+    tools:text="奖项名称" />

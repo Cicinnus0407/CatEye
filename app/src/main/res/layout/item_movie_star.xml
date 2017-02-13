@@ -4,6 +4,7 @@
     android:layout_width="70dp"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginLeft="@dimen/dp_14"
     android:orientation="vertical">
 
     <TextView
