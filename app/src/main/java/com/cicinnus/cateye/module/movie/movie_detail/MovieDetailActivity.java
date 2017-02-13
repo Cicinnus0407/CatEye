@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,14 +23,17 @@ import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAda
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieResourceAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieStarListAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.RelatedMovieAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieAwardsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MoviePhotosBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.StringUtil;
@@ -139,6 +143,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     TextView tvFirstWeekBox;
     @BindView(R.id.tv_sumBox)
     TextView tvSumBox;
+    @BindView(R.id.tv_sum_box_content)
+    TextView tvSumBoxContent;
     /************
      * 电影奖项
      ***********/
@@ -154,9 +160,30 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      **********/
     @BindView(R.id.flowLayout)
     TagFlowLayout tagFlowLayout;
-    /*******长评************/
+    /*******
+     * 长评
+     ************/
     @BindView(R.id.rv_long_comment)
     RecyclerView rvLongComment;
+    /********
+     * 相关资讯
+     *************/
+    @BindView(R.id.iv_related_information)
+    ImageView ivRelatedInformation;
+    @BindView(R.id.tv_related_information_title)
+    TextView tvRelatedInformationTitle;
+    @BindView(R.id.tv_related_information_author)
+    TextView tvRelatedInformationAuthor;
+    @BindView(R.id.tv_related_information_view_count)
+    TextView tvRelatedInformationViewCount;
+    @BindView(R.id.tv_related_information_comment_count)
+    TextView tvRelatedInformationCommentCount;
+    /******相关电影*********/
+    @BindView(R.id.tv_related_movie)
+    TextView tvRelatedMovie;
+    @BindView(R.id.rv_related_movie)
+    RecyclerView rvRelatedMovie;
+
 
     private static final String MOVIE_ID = "movie_id";
     private int movieId;//电影Id
@@ -164,7 +191,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     private MoviePhotosAdapter moviePhotosAdapter;//视频和照片
     private MovieAwardsAdapter movieAwardsAdapter;//奖项提名
     private MovieResourceAdapter movieResourceAdapter;//电影资料
-    private MovieLongCommentAdapter movieLongCommentAdapter;
+    private MovieLongCommentAdapter movieLongCommentAdapter;//长评论
+    private RelatedMovieAdapter relatedMovieAdapter;
 
     public static void start(Context context, int movieId) {
         Intent starter = new Intent(context, MovieDetailActivity.class);
@@ -196,6 +224,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         initListener();
         mPresenter.getMovieData(movieId);
     }
+
 
     /**
      * 长评
@@ -393,6 +422,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         } else {
             tvFirstWeekBox.setText(String.format("%s", moneyBoxBean.getMbox().getFirstWeekBox()));
         }
+
+        if (moneyBoxBean.isGlobalRelease()) {
+            tvSumBoxContent.setText("累计票房(万)");
+        } else {
+            tvSumBoxContent.setText("点映票房(万)");
+        }
+
         tvLastDayRank.setText(String.format("%s", moneyBoxBean.getMbox().getLastDayRank()));
         tvSumBox.setText(String.format("%s", moneyBoxBean.getMbox().getSumBox()));
 
@@ -479,10 +515,70 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
     }
 
+    /**
+     * 长评论
+     *
+     * @param movieLongComments
+     */
     @Override
     public void addMovieLongComment(MovieLongCommentBean.DataBean movieLongComments) {
         movieLongCommentAdapter.setNewData(movieLongComments.getFilmReviews());
-//        movieLongCommentAdapter.addFooterView();
+        View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvLongComment.getParent(), false);
+        footer.setBackgroundResource(R.color.white);
+        ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条长评论", movieLongComments.getTotal()));
+        movieLongCommentAdapter.addFooterView(footer);
+    }
+
+    /**
+     * 相关资讯
+     *
+     * @param newsListBean
+     */
+    @Override
+    public void addMovieRelatedInformation(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBean) {
+        Observable.just(newsListBean)
+                .filter(new Func1<List<MovieRelatedInformationBean.DataBean.NewsListBean>, Boolean>() {
+                    @Override
+                    public Boolean call(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBeen) {
+                        return newsListBeen.size() > 0;
+                    }
+                })
+                .take(1)
+                .map(new Func1<List<MovieRelatedInformationBean.DataBean.NewsListBean>, MovieRelatedInformationBean.DataBean.NewsListBean>() {
+                    @Override
+                    public MovieRelatedInformationBean.DataBean.NewsListBean call(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBeen) {
+                        return newsListBeen.get(0);
+                    }
+                })
+                .subscribe(new Action1<MovieRelatedInformationBean.DataBean.NewsListBean>() {
+                    @Override
+                    public void call(MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
+                        tvRelatedInformationTitle.setText(newsListBean.getTitle());
+                        tvRelatedInformationAuthor.setText(newsListBean.getSource());
+                        tvRelatedInformationViewCount.setText(String.format("%s", newsListBean.getViewCount()));
+                        tvRelatedInformationCommentCount.setText(String.format("%s", newsListBean.getCommentCount()));
+
+                        GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
+
+                    }
+                });
+    }
+
+    /**
+     * 相关电影
+     * @param relatedMovies
+     */
+    @Override
+    public void addRelatedMovie(List<RelatedMovieBean.DataBean> relatedMovies) {
+        if (relatedMovies.size()>0) {
+            tvRelatedMovie.setVisibility(View.VISIBLE);
+        }else {
+            tvRelatedMovie.setVisibility(View.GONE);
+        }
+        relatedMovieAdapter = new RelatedMovieAdapter();
+        rvRelatedMovie.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+        rvRelatedMovie.setAdapter(relatedMovieAdapter);
+        relatedMovieAdapter.setNewData(relatedMovies.get(0).getItems());
     }
 
 
@@ -507,7 +603,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         tvMovieName.setText(movie.getNm());//电影名
         tvMovieEnglishName.setText(movie.getEnm());//电影英文名
         tvMovieScore.setText(String.format("%s", movie.getSc()));//评分
-        tvSnum.setText(StringUtil.changeNumToCN(movie.getSnum()));//评价人数
+        tvSnum.setText(String.format("(%s人评)", StringUtil.changeNumToCN(movie.getSnum())));//评价人数
         tvMovieType.setText(movie.getCat());//电影类型
         tvSrcDur.setText(String.format("%s/%s分钟", movie.getSrc(), movie.getDur()));//拍摄国家和时长
         tvPubDesc.setText(movie.getPubDesc());//上映日期

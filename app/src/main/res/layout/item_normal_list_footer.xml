@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/ll_footer"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_oversea_footer"
-        android:textColor="@color/colorAccent"
+        android:id="@+id/tv_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/dp_14"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/colorAccent" />
 
 </LinearLayout>

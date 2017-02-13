@@ -27,7 +27,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
         addItemType(BaseConstant.TYPE_OVERSEA_HEAD_LINE,R.layout.item_oversea_movie_headline);
         addItemType(BaseConstant.TYPE_OVERSEA_BUY,R.layout.item_oversea_movie_buy);
         addItemType(BaseConstant.TYPE_OVERSEA_PRESALE,R.layout.item_oversea_movie_presell);
-        addItemType(BaseConstant.TYPE_OVERSEA_FOOTER,R.layout.item_oversea_footer);
+        addItemType(BaseConstant.TYPE_OVERSEA_FOOTER,R.layout.item_normal_list_footer);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_movie_wish,String.format("%s",item.getWish()));
                 break;
             case BaseConstant.TYPE_OVERSEA_FOOTER:
-                helper.setText(R.id.tv_oversea_footer,item.getFooterName());
+                helper.setText(R.id.tv_footer,item.getFooterName());
                 helper.convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

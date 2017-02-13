@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="@dimen/dp_14"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_14">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -18,14 +18,15 @@
             android:id="@+id/tv_lastDayRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="20sp"
             tools:text="1" />
 
         <TextView
-            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
             android:text="昨日票房排行" />
 
     </LinearLayout>
@@ -41,13 +42,14 @@
             android:id="@+id/tv_firstWeekBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
             android:text="首周票房(万)" />
 
     </LinearLayout>
@@ -63,14 +65,16 @@
             android:id="@+id/tv_sumBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
-            android:layout_marginTop="@dimen/dp_4"
+            android:id="@+id/tv_sum_box_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="累计票房(万)" />
+            android:layout_marginTop="@dimen/dp_4"
+            tools:text="累计票房(万)" />
 
     </LinearLayout>
 

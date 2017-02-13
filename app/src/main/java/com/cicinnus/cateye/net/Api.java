@@ -19,8 +19,10 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
@@ -177,6 +179,14 @@ public interface Api {
 
     //热门长评
     @GET("sns/movie/{movieId}/filmReview/top.json")
-    Observable<MovieLongCommentBean> getMovieLongComment();
+    Observable<MovieLongCommentBean> getMovieLongComment(@Path("movieId")int movieId);
+
+    //相关资讯
+    @GET("sns/news/v3/type/0/target/{movieId}/top.json")
+    Observable<MovieRelatedInformationBean> getMovieRelatedInformation(@Path("movieId")int movieId);
+
+    //相关电影
+    @GET("mmdb/movie/{movieId}/feature/relatedFilm.json")
+    Observable<RelatedMovieBean> getRelatedMovie(@Path("movieId")int movieId);
 
 }

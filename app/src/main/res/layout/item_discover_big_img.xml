@@ -83,7 +83,7 @@
             tools:text="46分钟前" />
 
         <TextView
-            android:drawableLeft="@drawable/ic_viewcount"
+            android:drawableLeft="@drawable/ic_view_count"
             android:drawablePadding="@dimen/dp_6"
             android:id="@+id/tv_viewCount"
             android:layout_width="wrap_content"

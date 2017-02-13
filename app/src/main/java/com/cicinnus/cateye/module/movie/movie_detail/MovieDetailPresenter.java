@@ -8,8 +8,10 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
 
 import rx.Observable;
@@ -38,7 +40,9 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                 movieDetailManager.getMovieAwards(movieId),
                 movieDetailManager.getMovieResource(movieId),
                 movieDetailManager.getMovieCommentTag(movieId),
-                movieDetailManager.getMovieLongComment(movieId))
+                movieDetailManager.getMovieLongComment(movieId),
+                movieDetailManager.getMovieRelatedInformation(movieId),
+                movieDetailManager.getRelatedMovie(movieId))
                 .compose(SchedulersCompat.applyIoSchedulers())
                 .subscribe(new Subscriber<Object>() {
                     @Override
@@ -67,6 +71,10 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                             mView.addMovieCommentTag(((MovieCommentTagBean) o).getData());
                         }else if(o instanceof MovieLongCommentBean){
                             mView.addMovieLongComment(((MovieLongCommentBean) o).getData());
+                        }else if(o instanceof MovieRelatedInformationBean){
+                            mView.addMovieRelatedInformation(((MovieRelatedInformationBean) o).getData().getNewsList());
+                        }else if(o instanceof RelatedMovieBean){
+                            mView.addRelatedMovie(((RelatedMovieBean) o).getData());
                         }
                     }
                 }));

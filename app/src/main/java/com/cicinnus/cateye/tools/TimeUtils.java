@@ -19,4 +19,10 @@ public class TimeUtils {
         return format.format(time);
     }
 
+    public static String dateMD(long time){
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd", Locale.CHINA);
+        return format.format(time);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.tools.GlideManager;
+import com.cicinnus.cateye.tools.TimeUtils;
 import com.cicinnus.cateye.view.CircleImageView;
 
 /**
@@ -24,7 +25,8 @@ public class MovieLongCommentAdapter extends BaseQuickAdapter<MovieLongCommentBe
                 .setText(R.id.tv_comment_title,item.getTitle())
                 .setText(R.id.tv_comment_content,item.getText())
                 .setText(R.id.tv_view_count,String.format("%s",item.getViewCount()))
-                .setText(R.id.tv_comment_count,String.format("%s",item.getCommentCount()));
+                .setText(R.id.tv_comment_count,String.format("%s",item.getCommentCount()))
+                .setText(R.id.tv_pub_time, TimeUtils.dateMD(item.getCreated()));
 
         Drawable icon = null;
         switch (item.getAuthor().getUserLevel()){

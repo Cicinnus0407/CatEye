@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_oversea_footer"
+        android:id="@+id/tv_footer"
         android:textColor="@color/colorAccent"
         android:gravity="center"
         android:padding="@dimen/dp_14"
