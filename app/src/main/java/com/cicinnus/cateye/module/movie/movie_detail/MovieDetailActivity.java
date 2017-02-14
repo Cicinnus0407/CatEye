@@ -37,6 +37,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
@@ -746,10 +747,16 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      *
      * @param movie
      */
-    private void setMovieInfo(MovieBasicDataBean.DataBean.MovieBean movie) {
+    private void setMovieInfo(final MovieBasicDataBean.DataBean.MovieBean movie) {
         String imgUrl = ImgSizeUtil.resetPicUrl(movie.getImg(), ".webp@321w_447h_1e_1c_1l");
         String originalUrl = ImgSizeUtil.resetPicUrl(movie.getImg(), "");
         GlideManager.loadImage(mContext, imgUrl, ivMovieImg);
+        flMovieImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieVideoActivity.start(mContext,movie.getVideourl());
+            }
+        });
         if (movie.getAwardUrl().equals("")) {
             ivWinAwards.setVisibility(View.GONE);
         }

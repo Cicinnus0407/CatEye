@@ -56,10 +56,16 @@
             android:name=".module.movie.find_movie.fixedboard_movie.oversea_movie.oversea_movie_total_list.OverSeaMovieListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoAnimation" />
+        <!--电影详情-->
         <activity
             android:name=".module.movie.movie_detail.MovieDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme" />
+        <!--预告片-->
+        <activity
+            android:name=".module.movie.movie_video.MovieVideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
