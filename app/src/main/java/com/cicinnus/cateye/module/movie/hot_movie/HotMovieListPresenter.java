@@ -61,7 +61,7 @@ public class HotMovieListPresenter extends BasePresenter<HotMovieListContract.IH
 
                     @Override
                     public void onNext(List<HotMovieListBean.DataBean.HotBean> hotBeen) {
-                        mView.addMoreMovieIds(hotBeen);
+                        mView.addMoreMovies(hotBeen);
                     }
                 }));
     }

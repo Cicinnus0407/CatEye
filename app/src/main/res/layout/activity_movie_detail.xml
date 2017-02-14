@@ -84,6 +84,7 @@
                         android:background="@color/divider_normal" />
 
                     <RelativeLayout
+                        android:id="@+id/rl_money_box"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/selector_layout_press">
@@ -215,13 +216,27 @@
                         android:layout_height="40dp"
                         android:background="@color/white">
 
+
                         <TextView
+                            android:id="@+id/tv_long_comment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp_14"
                             android:text="长评"
                             android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_no_long_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
+                            android:drawableLeft="@drawable/ic_add_long_comment"
+                            android:drawablePadding="@dimen/dp_6"
+                            android:text="暂无评论,快来发表一篇影评吧"
+                            android:textColor="@color/text_gray" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -252,34 +267,16 @@
 
                     <include layout="@layout/layout_movie_related_information" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_14"
-                        android:background="@color/divider_normal" />
 
-                    <TextView
-                        android:id="@+id/tv_related_movie"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dp_14"
-                        android:text="相关电影"
-                        android:textColor="@color/text_primary" />
+                    <include layout="@layout/layout_related_movie" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_related_movie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:paddingLeft="20dp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_14"
                         android:background="@color/divider_normal" />
 
-                    <include layout="@layout/layout_movie_related_information" />
+                    <include layout="@layout/layout_movie_related_topic" />
 
                 </LinearLayout>
 

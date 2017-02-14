@@ -43,6 +43,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_movie_img"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_14">

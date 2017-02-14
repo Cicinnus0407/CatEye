@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"
-            android:textColor="@color/tv_normal_gray_light"
+            android:textColor="@color/text_gray_light"
             android:textSize="@dimen/sp_12"
             tools:text="电影名称" />
 

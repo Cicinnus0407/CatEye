@@ -22,6 +22,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
@@ -188,5 +189,9 @@ public interface Api {
     //相关电影
     @GET("mmdb/movie/{movieId}/feature/relatedFilm.json")
     Observable<RelatedMovieBean> getRelatedMovie(@Path("movieId")int movieId);
+
+    //相关话题
+    @GET("sns/0/{movieId}/v2/hotTopics.json")
+    Observable<MovieTopicBean> getMovieTopic(@Path("movieId")int movieId);
 
 }

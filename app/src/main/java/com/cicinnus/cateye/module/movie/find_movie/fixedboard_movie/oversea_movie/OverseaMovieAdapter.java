@@ -9,6 +9,7 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.oversea_movie_total_list.OverSeaMovieListActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -43,6 +44,12 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_movie_type,item.getCat())
                         .setText(R.id.tv_movie_desc,item.getStar())
                         .setText(R.id.tv_movie_wish,String.format("%s",item.getWish()));
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MovieDetailActivity.start(mContext,item.getId());
+                    }
+                });
                 break;
             case BaseConstant.TYPE_OVERSEA_HEAD_LINE:
                 helper.setText(R.id.tv_movie_name,item.getNm())
@@ -53,12 +60,24 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_hot_type2,item.getHeadLinesVO().get(1).getType())
                         .setText(R.id.tv_hot_headline_title1,item.getHeadLinesVO().get(0).getTitle())
                         .setText(R.id.tv_hot_headline_title2,item.getHeadLinesVO().get(1).getTitle());
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MovieDetailActivity.start(mContext,item.getId());
+                    }
+                });
                 break;
             case BaseConstant.TYPE_OVERSEA_PRESALE:
                 helper.setText(R.id.tv_movie_name,item.getNm())
                         .setText(R.id.tv_movie_type,item.getCat())
                         .setText(R.id.tv_movie_desc,item.getDesc())
                         .setText(R.id.tv_movie_wish,String.format("%s",item.getWish()));
+                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MovieDetailActivity.start(mContext,item.getId());
+                    }
+                });
                 break;
             case BaseConstant.TYPE_OVERSEA_FOOTER:
                 helper.setText(R.id.tv_footer,item.getFooterName());
@@ -71,6 +90,8 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                 });
                 break;
         }
+
+
     }
 
 }

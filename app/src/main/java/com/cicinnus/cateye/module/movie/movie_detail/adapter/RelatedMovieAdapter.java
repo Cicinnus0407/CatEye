@@ -22,7 +22,7 @@ public class RelatedMovieAdapter extends BaseQuickAdapter<RelatedMovieBean.DataB
     protected void convert(BaseViewHolder helper, RelatedMovieBean.DataBean.ItemsBean item) {
         //255*234
         helper.setText(R.id.tv_movie_name,item.getTitle())
-                .setText(R.id.tv_movie_score,String.format("%s",item.getSc()));
+                .setText(R.id.tv_movie_score,String.format("%s",item.getSc()==0?"暂无评分":item.getSc()));
         String imgUrl = ImgSizeUtil.processUrl(item.getImg(),255,345);
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
     }

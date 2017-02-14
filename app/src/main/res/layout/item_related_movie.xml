@@ -8,6 +8,7 @@
 
 
     <ImageView
+        android:scaleType="centerCrop"
         android:id="@+id/iv_movie_img"
         android:layout_width="match_parent"
         android:layout_height="115dp" />

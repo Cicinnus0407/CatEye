@@ -15,7 +15,7 @@ public class HotMovieListContract {
 
         void addMovieIds(List<Integer> movieIds);
 
-        void addMoreMovieIds(List<HotMovieListBean.DataBean.HotBean> movies);
+        void addMoreMovies(List<HotMovieListBean.DataBean.HotBean> movies);
 
         void loadMoreError();
 

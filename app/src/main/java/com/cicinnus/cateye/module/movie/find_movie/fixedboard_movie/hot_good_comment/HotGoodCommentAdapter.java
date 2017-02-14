@@ -1,10 +1,12 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -19,7 +21,7 @@ public class HotGoodCommentAdapter extends BaseQuickAdapter<HotGoodCommentBean.D
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, HotGoodCommentBean.DataBean.MoviesBean item) {
+    protected void convert(BaseViewHolder helper, final HotGoodCommentBean.DataBean.MoviesBean item) {
 
         String imgUrl = ImgSizeUtil.processUrl(item.getImg(),224,315);
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
@@ -35,5 +37,12 @@ public class HotGoodCommentAdapter extends BaseQuickAdapter<HotGoodCommentBean.D
             ((ImageView) helper.getView(R.id.iv_movie_rank)).setImageResource(R.drawable.ic_gray_angle);
 
         }
+
+        helper.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getId());
+            }
+        });
     }
 }

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_related_topic"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:id="@+id/ll_related_topic"
     android:orientation="vertical">
 
     <TextView
-        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginLeft="@dimen/dp_14"
         android:layout_marginTop="@dimen/dp_14"
         android:gravity="center_vertical"
         android:text="相关话题"
-        android:textColor="@color/text_primary" />
+        android:textColor="@color/text_primary"
+        android:textSize="15sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_14"
-        android:layout_marginLeft="@dimen/dp_14">
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14">
 
 
         <ImageView
@@ -36,16 +36,16 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="15sp"
-            android:textColor="@color/text_primary" />
+            android:textColor="@color/text_primary"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_14"
         android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14"
         android:layout_marginTop="@dimen/dp_10">
 
         <TextView
@@ -72,7 +72,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_all_related_information"
+        android:id="@+id/ll_all_related_topic"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginTop="@dimen/dp_10"
@@ -90,7 +90,7 @@
             android:drawablePadding="@dimen/dp_6"
             android:drawableRight="@drawable/ic_arrow_right_red"
             android:gravity="center"
-            android:text="查看全部资讯"
+            android:text="查看全部话题"
             android:textColor="@color/colorPrimary" />
     </LinearLayout>
 

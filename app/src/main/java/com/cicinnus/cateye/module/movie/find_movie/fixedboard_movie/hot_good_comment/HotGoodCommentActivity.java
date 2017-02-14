@@ -12,7 +12,6 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
-import com.cicinnus.cateye.view.RefreshView;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -28,9 +27,6 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
 
 
     private View headerView;
-    private RefreshView refreshView;
-    private int mScolly;
-    private boolean isRefresh;
     private MyPullToRefreshListener pull;
 
     public static void start(Context context) {

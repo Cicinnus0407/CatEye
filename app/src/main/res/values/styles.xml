@@ -20,6 +20,8 @@
 
     <!--全屏无动画主题-->
     <style name="FullScreenTheme" parent="AppThemeNoAnimation">
+        <item name="android:windowAnimationStyle">@style/noAnimation</item>
+
     </style>
 
     <!--底部按钮文字-->

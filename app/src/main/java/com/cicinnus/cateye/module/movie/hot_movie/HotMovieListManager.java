@@ -3,7 +3,6 @@ package com.cicinnus.cateye.module.movie.hot_movie;
 import com.cicinnus.cateye.net.RetrofitClient;
 import com.cicinnus.cateye.net.SchedulersCompat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -42,27 +41,36 @@ public class HotMovieListManager {
                 .getInstance()
                 .api()
                 .getMoreHotMovieList(ci, headline, movieIds)
-                //map操作符将数据转换为需要的数据
-                .map(new Func1<HotMovieListBean, List<HotMovieListBean.DataBean.HotBean>>() {
+                .flatMap(new Func1<HotMovieListBean, Observable<HotMovieListBean.DataBean.MoviesBean>>() {
                     @Override
-                    public List<HotMovieListBean.DataBean.HotBean> call(HotMovieListBean hotMovieListBean) {
-                        List<HotMovieListBean.DataBean.MoviesBean> moviesBeanList = hotMovieListBean.getData().getMovies();
-                        List<HotMovieListBean.DataBean.HotBean> hotBeanList = new ArrayList<>();
-                        for (int i = 0; i < moviesBeanList.size(); i++) {
-                            HotMovieListBean.DataBean.HotBean hotBean = new HotMovieListBean.DataBean.HotBean();
-                            hotBean.setShowInfo(moviesBeanList.get(i).getShowInfo());//播放场次
-                            hotBean.setSc(moviesBeanList.get(i).getSc());//得分
-                            hotBean.setNm(moviesBeanList.get(i).getNm());//片名
-                            hotBean.setVer(moviesBeanList.get(i).getVer());//3D标签
-                            hotBean.setScm(moviesBeanList.get(i).getScm());//描述
-                            hotBean.setPreSale(moviesBeanList.get(i).getPreSale());//是否预售
-                            hotBean.setWish(moviesBeanList.get(i).getWish());//期待观影人数
-                            hotBean.setImg(moviesBeanList.get(i).getImg());
-                            hotBeanList.add(hotBean);
+                    public Observable<HotMovieListBean.DataBean.MoviesBean> call(HotMovieListBean hotMovieListBean) {
+                        if(hotMovieListBean.getData().getMovies().size()>0){
+                            return Observable.from(hotMovieListBean.getData().getMovies());
                         }
-                        return hotBeanList;
+                        return Observable.error(new Exception("没有更多数据"));
                     }
                 })
+                //map操作符将数据转换为需要的数据
+                .map(new Func1<HotMovieListBean.DataBean.MoviesBean, HotMovieListBean.DataBean.HotBean>() {
+                    @Override
+                    public HotMovieListBean.DataBean.HotBean call(HotMovieListBean.DataBean.MoviesBean moviesBean) {
+                        HotMovieListBean.DataBean.HotBean hotBean = new HotMovieListBean.DataBean.HotBean();
+                        hotBean.setBoxInfo(moviesBean.getBoxInfo());
+                        hotBean.setCat(moviesBean.getCat());
+                        hotBean.setCivilPubSt(moviesBean.getCivilPubSt());
+                        hotBean.setId(moviesBean.getId());
+                        hotBean.setShowInfo(moviesBean.getShowInfo());//播放场次
+                        hotBean.setSc(moviesBean.getSc());//得分
+                        hotBean.setNm(moviesBean.getNm());//片名
+                        hotBean.setVer(moviesBean.getVer());//3D标签
+                        hotBean.setScm(moviesBean.getScm());//描述
+                        hotBean.setPreSale(moviesBean.getPreSale());//是否预售
+                        hotBean.setWish(moviesBean.getWish());//期待观影人数
+                        hotBean.setImg(moviesBean.getImg());
+                        return hotBean;
+                    }
+                })
+                .toList()
                 .compose(SchedulersCompat.<List<HotMovieListBean.DataBean.HotBean>>applyIoSchedulers());
     }
 }

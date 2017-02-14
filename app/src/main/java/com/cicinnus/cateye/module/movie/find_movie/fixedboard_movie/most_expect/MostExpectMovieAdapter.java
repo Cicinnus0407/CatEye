@@ -1,10 +1,12 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.most_expect;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -19,7 +21,7 @@ public class MostExpectMovieAdapter extends BaseQuickAdapter<MostExpectMovieBean
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MostExpectMovieBean.DataBean.MoviesBean item) {
+    protected void convert(BaseViewHolder helper, final MostExpectMovieBean.DataBean.MoviesBean item) {
 
         String imgUrl = ImgSizeUtil.processUrl(item.getImg(), 224, 315);
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
@@ -37,5 +39,13 @@ public class MostExpectMovieAdapter extends BaseQuickAdapter<MostExpectMovieBean
                 .setText(R.id.tv_total_wish, String.format("总想看:%s人", item.getWish()))
                 .setText(R.id.tv_new_wish, String.format("%s", item.getMonthWish()))
                 .setText(R.id.tv_movie_rank, String.format("%s", helper.getAdapterPosition()));
+
+        helper.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getId());
+            }
+        });
+
     }
 }

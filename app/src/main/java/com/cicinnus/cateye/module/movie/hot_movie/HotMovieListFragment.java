@@ -101,11 +101,6 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     }
 
     @Override
-    protected void lazyLoadEveryTime() {
-
-    }
-
-    @Override
     public void addHotMovieList(List<HotMovieListBean.DataBean.HotBean> hotList) {
         hotMovieListAdapter.setNewData(hotList);
     }
@@ -136,7 +131,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     }
 
     @Override
-    public void addMoreMovieIds(List<HotMovieListBean.DataBean.HotBean> movies) {
+    public void addMoreMovies(List<HotMovieListBean.DataBean.HotBean> movies) {
         hotMovieListAdapter.addData(movies);
     }
 

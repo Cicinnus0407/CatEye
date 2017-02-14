@@ -36,7 +36,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                 .setText(R.id.tv_hot_desc, String.format("%s", item.getScm()))
                 .setText(R.id.tv_hot_showInfo, String.format("%s", item.getShowInfo()));
         //图片地址不能直接使用，需要进行转换
-        String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(),".webp@171w_240h_1e_1c_1l");
+        final String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(),".webp@171w_240h_1e_1c_1l");
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_hot_img));
 
         //显示3D和IMAX的标签
@@ -47,7 +47,6 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
             helper.setImageResource(R.id.iv_ver, R.drawable.ic_3d);
 
         }
-
 
         if (item.getPreSale() == 0) {
             //presale为0时表示正在销售 显示为（观众 7.6）
@@ -80,16 +79,12 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
             tv.setText(span);
         }
 
-
         switch (helper.getItemViewType()) {
             case BaseConstant.TYPE_HOT_HEADLINE:
                 helper.setText(R.id.tv_hot_type1, String.format("%s", item.getHeadLinesVO().get(0).getType()))
                         .setText(R.id.tv_hot_type2, String.format("%s", item.getHeadLinesVO().get(1).getType()))
                         .setText(R.id.tv_hot_headline_title1, String.format("%s", item.getHeadLinesVO().get(0).getTitle()))
                         .setText(R.id.tv_hot_headline_title2, String.format("%s", item.getHeadLinesVO().get(1).getTitle()));
-                break;
-            case BaseConstant.TYPE_HOT_NORMAL:
-
                 break;
         }
         helper.convertView.setOnClickListener(new View.OnClickListener() {
