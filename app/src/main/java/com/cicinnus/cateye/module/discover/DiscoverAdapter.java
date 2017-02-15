@@ -32,7 +32,7 @@ public class DiscoverAdapter extends BaseMultiItemQuickAdapter<DiscoverBean.Data
             case BaseConstant.TYPE_DISCOVER_ONE_IMG:
                 helper.setText(R.id.tv_disc_title, item.getTitle())
                         .setText(R.id.tv_viewCount, String.format("%s", item.getViewCount()))
-                        .setText(R.id.tv_comment, String.format("%s", item.getCommentCount()))
+                        .setText(R.id.tv_video_comment, String.format("%s", item.getCommentCount()))
                         .setText(R.id.tv_nickName, String.format("%s", item.getUser().getNickName()))
                         .setText(R.id.tv_time, TimeUtils.dateYMDHM(item.getTime()));
                 GlideManager.loadImage(mContext, item.getImages().get(0).getUrl(), (ImageView) helper.getView(R.id.iv_img));
@@ -40,7 +40,7 @@ public class DiscoverAdapter extends BaseMultiItemQuickAdapter<DiscoverBean.Data
             case BaseConstant.TYPE_DISCOVER_MULTI_IMG:
                 helper.setText(R.id.tv_disc_title, item.getTitle())
                         .setText(R.id.tv_viewCount, String.format("%s", item.getViewCount()))
-                        .setText(R.id.tv_comment, String.format("%s", item.getCommentCount()))
+                        .setText(R.id.tv_video_comment, String.format("%s", item.getCommentCount()))
                         .setText(R.id.tv_nickName, String.format("%s", item.getUser().getNickName()))
                         .setText(R.id.tv_time, TimeUtils.dateYMDHM(item.getTime()));
                 helper.convertView
@@ -57,7 +57,7 @@ public class DiscoverAdapter extends BaseMultiItemQuickAdapter<DiscoverBean.Data
             case BaseConstant.TYPE_DISCOVER_BIG_IMG:
                 helper.setText(R.id.tv_disc_title, item.getTitle())
                         .setText(R.id.tv_viewCount, String.format("%s", item.getViewCount()))
-                        .setText(R.id.tv_comment, String.format("%s", item.getCommentCount()))
+                        .setText(R.id.tv_video_comment, String.format("%s", item.getCommentCount()))
                         .setText(R.id.tv_nickName, String.format("%s", item.getUser().getNickName()))
                         .setText(R.id.tv_time, TimeUtils.dateYMDHM(item.getTime()));
                 helper.setText(R.id.tv_imgCount, String.format("%s", item.getImageCount()));

@@ -1,12 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/videoplayer"
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:src="@drawable/ic_video_back" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/videoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_14">
+
+            <View
+                android:id="@+id/view_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="330dp"
+                android:layout_height="43dp"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_14">
+
+                <TextView
+                    android:id="@+id/tv_video_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="视频信息"
+                    android:textColor="@color/text_gray_deep"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_video_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_video_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="评论"
+                        android:textColor="@color/text_gray_deep"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_video_comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tv_video_comment"
+                        android:background="@drawable/bg_comment_count"
+                        android:paddingBottom="1dp"
+                        android:paddingLeft="@dimen/dp_6"
+                        android:paddingRight="@dimen/dp_6"
+                        android:paddingTop="1dp"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        tools:text="12" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_video_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</FrameLayout>

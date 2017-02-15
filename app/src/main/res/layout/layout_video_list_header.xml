@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_14"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_16"
+        tools:text="电影名称" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_movie_name"
+        android:layout_marginLeft="@dimen/dp_6"
+        android:layout_toRightOf="@id/tv_movie_name">
+
+        <TextView
+            android:id="@+id/tv_movie_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_yellow"
+            android:textSize="13sp"
+            tools:text="8.8" />
+
+        <TextView
+            android:id="@+id/tv_score_wish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_yellow"
+            android:textSize="11sp"
+            tools:text="分/人想看" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_pub_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_movie_name"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/text_gray_deep"
+        android:textSize="13sp"
+        tools:text="xxxx上映" />
+
+    <TextView
+        android:id="@+id/tv_sale_pre_sell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_22"
+        android:background="@drawable/bg_tv_buy"
+        android:textColor="@color/colorPrimary"
+        tools:text="购票" />
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/tv_pub_time"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@color/divider_normal" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_divider"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginTop="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放列表"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tv_video_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            tools:text="(32)" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

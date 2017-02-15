@@ -24,6 +24,8 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListBean;
+import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoMovieInfoBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
@@ -140,7 +142,7 @@ public interface Api {
 
     //电影奖项
     @GET("mmdb/movie/festival/{festivalId}/feature.json")
-    Observable<AwardsBean> getAwards(@Path("festivalId")int festSessionId);
+    Observable<AwardsBean> getAwards(@Path("festivalId") int festSessionId);
 
     //获奖电影
     @GET("mmdb/movie/festival/session/{festSessionId}/award.json")
@@ -154,44 +156,54 @@ public interface Api {
 
     //电影基本信息
     @GET("mmdb/movie/v5/{movieId}.json")
-    Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId")int movieId);
+    Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId") int movieId);
 
     //演员列表
     @GET("mmdb/v7/movie/{movieId}/celebrities.json")
-    Observable<MovieStarBean> getMovieStarList(@Path("movieId")int movieId);
+    Observable<MovieStarBean> getMovieStarList(@Path("movieId") int movieId);
 
     //票房
     @GET("mmdb/movie/{movieId}/feature/v1/mbox.json")
-    Observable<MovieMoneyBoxBean> getMovieBox(@Path("movieId")int movieId);
+    Observable<MovieMoneyBoxBean> getMovieBox(@Path("movieId") int movieId);
 
     //获奖
     @GET("mmdb/movie/{movieId}/feature/awards.json")
-    Observable<MovieAwardsBean> getMovieAwards(@Path("movieId")int movieId);
+    Observable<MovieAwardsBean> getMovieAwards(@Path("movieId") int movieId);
 
     //影片资料
     @GET("mmdb/movie/{movieId}/feature/v2/list.json")
-    Observable<MovieResourceBean> getMovieResource(@Path("movieId")int movieId);
+    Observable<MovieResourceBean> getMovieResource(@Path("movieId") int movieId);
 
     //短评标签
     //请求写死了20(广州),会做修改,应该根据cityId
     @GET("mmdb/comment/tag/movie/{movieId}.json")
-    Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId")int movieId,
-                                                       @Query("ci")int ci);
+    Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId") int movieId,
+                                                       @Query("ci") int ci);
 
     //热门长评
     @GET("sns/movie/{movieId}/filmReview/top.json")
-    Observable<MovieLongCommentBean> getMovieLongComment(@Path("movieId")int movieId);
+    Observable<MovieLongCommentBean> getMovieLongComment(@Path("movieId") int movieId);
 
     //相关资讯
     @GET("sns/news/v3/type/0/target/{movieId}/top.json")
-    Observable<MovieRelatedInformationBean> getMovieRelatedInformation(@Path("movieId")int movieId);
+    Observable<MovieRelatedInformationBean> getMovieRelatedInformation(@Path("movieId") int movieId);
 
     //相关电影
     @GET("mmdb/movie/{movieId}/feature/relatedFilm.json")
-    Observable<RelatedMovieBean> getRelatedMovie(@Path("movieId")int movieId);
+    Observable<RelatedMovieBean> getRelatedMovie(@Path("movieId") int movieId);
 
     //相关话题
     @GET("sns/0/{movieId}/v2/hotTopics.json")
-    Observable<MovieTopicBean> getMovieTopic(@Path("movieId")int movieId);
+    Observable<MovieTopicBean> getMovieTopic(@Path("movieId") int movieId);
+
+    //视频预告片
+    @GET("mmdb/v1/movie/{movieId}/videos.json")
+    Observable<VideoListBean> getVideoList(@Path("movieId") int movieId,
+                                           @Query("limit") int limit,
+                                           @Query("offset") int offset);
+
+    //电影视频信息
+    @GET("mmdb/movie/{movieId}/videos/movieInfo.json")
+    Observable<VideoMovieInfoBean> getVideoMovieInfo(@Path("movieId") int movieId);
 
 }

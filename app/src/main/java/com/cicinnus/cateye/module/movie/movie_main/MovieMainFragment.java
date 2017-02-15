@@ -31,11 +31,6 @@ public class MovieMainFragment extends BaseFragment {
     }
 
 
-    private HotMovieListFragment hotMovieListFragment;
-    private WaitMovieFragment waitMovieFragment;
-    private FindMovieFragment findMovieFragment;
-
-
     @BindView(R.id.tv_hot_movie)
     TextView tvHotMovie;
     @BindView(R.id.tv_wait_movie)
@@ -57,9 +52,9 @@ public class MovieMainFragment extends BaseFragment {
 
     @Override
     protected void initEventAndData(Bundle saveData) {
-        hotMovieListFragment = HotMovieListFragment.newInstance();
-        waitMovieFragment = WaitMovieFragment.newInstance();
-        findMovieFragment = FindMovieFragment.newInstance();
+        HotMovieListFragment hotMovieListFragment = HotMovieListFragment.newInstance();
+        WaitMovieFragment waitMovieFragment = WaitMovieFragment.newInstance();
+        FindMovieFragment findMovieFragment = FindMovieFragment.newInstance();
         MovieMainAdapter movieMainAdapter = new MovieMainAdapter(getFragmentManager());
         Fragment[] fragments = new Fragment[]{hotMovieListFragment, waitMovieFragment, findMovieFragment};
         String[] titles = new String[]{"热映", "待映", "找片"};

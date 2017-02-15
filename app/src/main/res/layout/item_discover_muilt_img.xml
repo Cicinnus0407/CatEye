@@ -77,7 +77,7 @@
         <TextView
             android:textSize="@dimen/sp_12"
             android:drawablePadding="@dimen/dp_6"
-            android:id="@+id/tv_comment"
+            android:id="@+id/tv_video_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_14"

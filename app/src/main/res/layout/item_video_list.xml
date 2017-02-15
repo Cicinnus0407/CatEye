@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
+
+    <FrameLayout
+        android:id="@+id/fl_video_iv"
+        android:layout_width="104dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        android:padding="1dp">
+
+        <ImageView
+            android:id="@+id/iv_video_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:textSize="11sp"
+            android:id="@+id/tv_video_play_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/dp_4"
+            android:layout_marginRight="@dimen/dp_6"
+            android:textColor="@color/white"
+            tools:text="时长/播放中" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/fl_video_iv"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp" />
+
+        <TextView
+            android:textSize="11sp"
+            android:id="@+id/tv_view_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textColor="@color/text_gray"
+            tools:text="评论与观看人数" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -120,7 +120,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         @BindView(R.id.tv_disc_title)
         TextView tvDiscTitle;
-        @BindView(R.id.tv_comment)
+        @BindView(R.id.tv_video_comment)
         TextView tvComment;
         @BindView(R.id.tv_viewCount)
         TextView tvViewCount;
@@ -143,7 +143,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class MultiImgViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_disc_title)
         TextView tvDiscTitle;
-        @BindView(R.id.tv_comment)
+        @BindView(R.id.tv_video_comment)
         TextView tvComment;
         @BindView(R.id.tv_viewCount)
         TextView tvViewCount;
@@ -167,7 +167,7 @@ public class DiscoverMultiAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class BigImgViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_disc_title)
         TextView tvDiscTitle;
-        @BindView(R.id.tv_comment)
+        @BindView(R.id.tv_video_comment)
         TextView tvComment;
         @BindView(R.id.tv_viewCount)
         TextView tvViewCount;

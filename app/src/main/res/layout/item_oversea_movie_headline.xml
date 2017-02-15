@@ -15,7 +15,7 @@
         android:paddingTop="@dimen/dp_10">
 
         <FrameLayout
-            android:id="@+id/fl_hot_title"
+            android:id="@+id/fl_hot_movie"
             android:layout_width="74dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true">

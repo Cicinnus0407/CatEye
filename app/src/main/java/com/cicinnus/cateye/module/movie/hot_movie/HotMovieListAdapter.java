@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
+import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -87,6 +88,15 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                         .setText(R.id.tv_hot_headline_title2, String.format("%s", item.getHeadLinesVO().get(1).getTitle()));
                 break;
         }
+
+        helper.getView(R.id.fl_hot_movie)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MovieVideoActivity.start(mContext,item.getId(),item.getNm()+" "+item.getVideoName(),item.getVideourl());
+                    }
+                });
+
         helper.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
