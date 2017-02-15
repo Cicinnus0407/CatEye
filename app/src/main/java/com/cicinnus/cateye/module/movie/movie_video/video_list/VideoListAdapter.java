@@ -31,7 +31,7 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
                         String.format("观看: %s 评论: %s", StringUtil.changeNumToCN(item.getCount()), item.getComment()));
 
 
-        if (mData.get(helper.getAdapterPosition()).isSelect) {
+        if (mData.get(helper.getAdapterPosition()-1).isSelect) {
             helper.setText(R.id.tv_video_play_status, "播放中")
                     .setTextColor(R.id.tv_video_title, mContext.getResources().getColor(R.color.colorPrimary))
                     .setBackgroundColor(R.id.fl_video_iv, mContext.getResources().getColor(R.color.colorPrimary));
@@ -44,10 +44,10 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
         helper.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedPos != helper.getAdapterPosition()) {
+                if (selectedPos != helper.getAdapterPosition()-1) {
                     mData.get(selectedPos).isSelect = false;
                     notifyItemChanged(selectedPos);
-                    selectedPos = helper.getAdapterPosition();
+                    selectedPos = helper.getAdapterPosition()-1;
                     mData.get(selectedPos).isSelect = true;
                     notifyItemChanged(selectedPos);
                 }
