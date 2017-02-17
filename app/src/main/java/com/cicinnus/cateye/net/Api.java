@@ -22,6 +22,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListBean;
@@ -159,6 +160,10 @@ public interface Api {
     @GET("mmdb/movie/v5/{movieId}.json")
     Observable<MovieBasicDataBean> getMovieBasicData(@Path("movieId") int movieId);
 
+    //观影贴士
+    @GET("mmdb/movie/tips/{movieId}/list.json")
+    Observable<MovieTipsBean> getMovieTipsBean(@Path("movieId") int movieId);
+
     //演员列表
     @GET("mmdb/v7/movie/{movieId}/celebrities.json")
     Observable<MovieStarBean> getMovieStarList(@Path("movieId") int movieId);
@@ -176,7 +181,7 @@ public interface Api {
     Observable<MovieResourceBean> getMovieResource(@Path("movieId") int movieId);
 
     //短评标签
-    //请求写死了20(广州),会做修改,应该根据cityId
+    //请求写死了ci=20(广州),会做修改,应该根据cityId
     @GET("mmdb/comment/tag/movie/{movieId}.json")
     Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId") int movieId,
                                                        @Query("ci") int ci);

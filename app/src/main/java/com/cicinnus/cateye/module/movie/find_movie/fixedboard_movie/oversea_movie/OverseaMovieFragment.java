@@ -143,6 +143,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
 
     @Override
     public void showError(String errorMsg) {
+        Logger.e(errorMsg);
         pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override
@@ -167,7 +168,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
     }
 
     @Override
-    public void addOverseaComingMovie(List<OverseaComingMovieBean.DataBean.ComingBean> coming) {
+    public void addOverseaComingMovie(final List<OverseaComingMovieBean.DataBean.ComingBean> coming) {
         Observable.from(coming)
                 .map(new Func1<OverseaComingMovieBean.DataBean.ComingBean, OverseaHotMovieBean.DataBean.HotBean>() {
                     @Override
@@ -186,6 +187,7 @@ public class OverseaMovieFragment extends BaseFragment<OverseaMoviePresenter> im
                                 headLineList.add(headLinesVOBean);
                             }
                         }
+                        hotBean.setId(comingBean.getId());
                         hotBean.setImg(comingBean.getImg());
                         hotBean.setHeadLinesVO(headLineList);
                         hotBean.setStar(comingBean.getStar());

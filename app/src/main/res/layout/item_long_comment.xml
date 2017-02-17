@@ -122,10 +122,10 @@
         android:src="@drawable/ic_more_small" />
 
     <View
-        android:background="@color/divider_normal"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/fl_author_iv" />
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:background="@color/divider_normal" />
 
 </RelativeLayout>

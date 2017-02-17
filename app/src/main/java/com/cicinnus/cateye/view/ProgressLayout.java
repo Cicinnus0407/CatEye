@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +40,7 @@ public class ProgressLayout extends LinearLayout {
     private TextView btn_error;
 
     private List<View> contentViews = new ArrayList<>();
+    private RotateAnimation rotateAnimation;
 
     public ProgressLayout(Context context) {
         super(context);
@@ -126,10 +128,13 @@ public class ProgressLayout extends LinearLayout {
             loadingView.setTag(LOADING_TAG);
             layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             ImageView iv_loading = (ImageView) loadingView.findViewById(R.id.iv_loading);
-            RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            rotateAnimation.setDuration(1000);
-            rotateAnimation.setRepeatCount(15);
-            rotateAnimation.startNow();
+            rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            rotateAnimation.setDuration(800);
+            rotateAnimation.setRepeatMode(Animation.RESTART);//重复
+            rotateAnimation.setRepeatCount(Animation.INFINITE);//无限旋转
+            rotateAnimation.start();
+            LinearInterpolator lir = new LinearInterpolator();//线性差值器,一直匀速旋转
+            rotateAnimation.setInterpolator(lir);
             iv_loading.startAnimation(rotateAnimation);
             this.addView(loadingView, layoutParams);
         } else {
@@ -154,6 +159,7 @@ public class ProgressLayout extends LinearLayout {
     private void hideLoadingView() {
         if (loadingView != null && loadingView.getVisibility() != GONE) {
             loadingView.setVisibility(GONE);
+            rotateAnimation.cancel();
         }
     }
 

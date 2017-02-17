@@ -165,7 +165,7 @@ public class OverseaHotMovieBean {
             private String overseaTime;
             private int pn;
             private boolean preShow;
-            private int proScore;
+            private double proScore;
             private int proScoreNum;
             private long pubDate;
             private int pubShowNum;
@@ -354,11 +354,11 @@ public class OverseaHotMovieBean {
                 this.preShow = preShow;
             }
 
-            public int getProScore() {
+            public double getProScore() {
                 return proScore;
             }
 
-            public void setProScore(int proScore) {
+            public void setProScore(double proScore) {
                 this.proScore = proScore;
             }
 

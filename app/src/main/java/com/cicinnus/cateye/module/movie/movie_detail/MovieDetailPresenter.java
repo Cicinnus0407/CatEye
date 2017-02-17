@@ -11,6 +11,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
@@ -37,10 +38,8 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
         //merge操作只支持9个,所以分开两次获取
         addSubscribe(Observable.merge(
                 movieDetailManager.getMovieBasicData(movieId),
-                movieDetailManager.getMovieStarList(movieId),
-                movieDetailManager.getMovieBox(movieId),
-                movieDetailManager.getMovieAwards(movieId),
-                movieDetailManager.getMovieResource(movieId))
+                movieDetailManager.getMovieTips(movieId),
+                movieDetailManager.getMovieStarList(movieId))
                 .compose(SchedulersCompat.applyIoSchedulers())
                 .subscribe(new Subscriber<Object>() {
                     @Override
@@ -56,10 +55,39 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof MovieBasicDataBean) {
-                            mView.addMovieBasicData(((MovieBasicDataBean) o).getData().getMovie());
+//                            mView.addMovieBasicData(((MovieBasicDataBean) o).getData().getMovie());
+                        } else if (o instanceof MovieTipsBean) {
+                            mView.addMovieTips(((MovieTipsBean) o).getData());
                         } else if (o instanceof MovieStarBean) {
                             mView.addMovieStarList(((MovieStarBean) o));
-                        } else if (o instanceof MovieMoneyBoxBean) {
+                        }
+                    }
+                }));
+    }
+
+    @Override
+    public void getMovieSecondData(int movieId) {
+        mView.showLoading();
+        addSubscribe(Observable.merge(movieDetailManager.getMovieBox(movieId),
+                movieDetailManager.getMovieAwards(movieId),
+                movieDetailManager.getMovieResource(movieId))
+                .compose(SchedulersCompat.applyIoSchedulers())
+                .subscribe(new Subscriber<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        mView.showContent();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        if (o instanceof MovieMoneyBoxBean) {
                             mView.addMovieMoneyBox(((MovieMoneyBoxBean) o));
                         } else if (o instanceof MovieAwardsBean) {
                             mView.addMovieAwards(((MovieAwardsBean) o).getData());
@@ -72,6 +100,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
 
     @Override
     public void getMovieMoreData(int movieId) {
+        mView.showLoading();
         addSubscribe(Observable.merge(
                 movieDetailManager.getMovieCommentTag(movieId),
                 movieDetailManager.getMovieLongComment(movieId),
@@ -82,6 +111,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                 .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
+                        mView.showContent();
 
                     }
 
@@ -100,7 +130,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                             mView.addMovieRelatedInformation(((MovieRelatedInformationBean) o).getData().getNewsList());
                         } else if (o instanceof RelatedMovieBean) {
                             mView.addRelatedMovie(((RelatedMovieBean) o).getData());
-                        }else if(o instanceof MovieTopicBean){
+                        } else if (o instanceof MovieTopicBean) {
                             mView.addMovieTopic(((MovieTopicBean) o).getData());
                         }
                     }

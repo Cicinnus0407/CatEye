@@ -144,7 +144,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+                android:textSize="13sp"
+                tools:text="航天博士提醒太空啪啪啪都是骗人滴！" />
         </LinearLayout>
 
 
@@ -190,7 +191,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="航天博士提醒太空啪啪啪都是骗人滴！" />
+                android:textSize="13sp"
+                tools:text="航天博士提醒太空啪啪啪都是骗人滴！" />
         </LinearLayout>
 
 

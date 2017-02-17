@@ -10,6 +10,7 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 
@@ -107,6 +108,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
      */
     @Override
     public void showError(String errorMsg) {
+        Logger.e(errorMsg);
         pullToRefreshListener.refreshDone();
         progressLayout.showError(new View.OnClickListener() {
             @Override

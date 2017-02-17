@@ -35,6 +35,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MoviePhotosBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
@@ -126,6 +127,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      *****************/
     @BindView(R.id.expandText_movie_Desc)
     ExpandTextView expandText_movie_Desc;
+    /******
+     * 观影小贴士
+     ***********/
+    @BindView(R.id.iv_tips)
+    ImageView ivTips;
+    @BindView(R.id.tv_tips)
+    TextView tvTips;
+    @BindView(R.id.ll_tips)
+    LinearLayout llTips;
     /**************
      * 导演,演员
      *****************/
@@ -252,6 +262,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         initStatusBar();
         initListener();
         mPresenter.getMovieData(movieId);
+        mPresenter.getMovieSecondData(movieId);
         mPresenter.getMovieMoreData(movieId);
     }
 
@@ -334,6 +345,43 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     }
 
     /**
+     * 观影小贴士
+     *
+     * @param tips
+     */
+    @Override
+    public void addMovieTips(final MovieTipsBean.DataBean tips) {
+        Observable.just(tips.getTips())
+                .flatMap(new Func1<List<MovieTipsBean.DataBean.TipsBean>, Observable<MovieTipsBean.DataBean.TipsBean>>() {
+                    @Override
+                    public Observable<MovieTipsBean.DataBean.TipsBean> call(List<MovieTipsBean.DataBean.TipsBean> tipsBeen) {
+                        if (tipsBeen != null && tipsBeen.size() > 0) {
+                            return Observable.from(tipsBeen);
+                        }
+                        return Observable.error(new Exception("empty data"));
+                    }
+                })
+                .compose(SchedulersCompat.<MovieTipsBean.DataBean.TipsBean>applyIoSchedulers())
+                .subscribe(new Subscriber<MovieTipsBean.DataBean.TipsBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        llTips.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onNext(MovieTipsBean.DataBean.TipsBean tipsBean) {
+                        GlideManager.loadImage(mContext, tipsBean.getTipImg(), ivTips);
+                        tvTips.setText(tipsBean.getContent());
+                    }
+                });
+    }
+
+    /**
      * 设置电影音乐
      *
      * @param movie
@@ -354,7 +402,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      */
     private void setMoviePhoto(MovieBasicDataBean.DataBean.MovieBean movie) {
         final List<MoviePhotosBean> photosBeanList = new ArrayList<>();
-        if (movie.getVideoImg()!=null) {
+        if (movie.getVideoImg() != null) {
             MoviePhotosBean bean = new MoviePhotosBean();
             bean.setVideo(true);
             bean.setVideoImg(movie.getVideoImg());
@@ -402,6 +450,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return Observable.from(lists);
                     }
                 })
+                //取前两组数据,如果只有1组就取1组
                 .limit(2)
                 .flatMap(new Func1<List<MovieStarBean.DataBean>, Observable<MovieStarBean.DataBean>>() {
                     @Override
@@ -410,6 +459,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
                 })
                 .toList()
+                .compose(SchedulersCompat.<List<MovieStarBean.DataBean>>applyIoSchedulers())
                 .subscribe(new Subscriber<List<MovieStarBean.DataBean>>() {
                     @Override
                     public void onCompleted() {
@@ -591,6 +641,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return Observable.error(new Exception("empty error"));
                     }
                 })
+                .compose(SchedulersCompat.<MovieLongCommentBean.DataBean>applyIoSchedulers())
                 .subscribe(new Action1<MovieLongCommentBean.DataBean>() {
                     @Override
                     public void call(MovieLongCommentBean.DataBean filmReviewsBean) {
@@ -632,6 +683,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
                 })
                 .limit(1)
+                .compose(SchedulersCompat.<MovieRelatedInformationBean.DataBean.NewsListBean>applyIoSchedulers())
                 .subscribe(new Action1<MovieRelatedInformationBean.DataBean.NewsListBean>() {
                     @Override
                     public void call(MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
@@ -668,6 +720,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return Observable.error(new Exception("empty data"));
                     }
                 })
+                .compose(SchedulersCompat.<RelatedMovieBean.DataBean>applyIoSchedulers())
                 .subscribe(new Action1<RelatedMovieBean.DataBean>() {
                     @Override
                     public void call(RelatedMovieBean.DataBean dataBean) {
@@ -703,6 +756,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return Observable.error(new Exception("empty Data"));
                     }
                 })
+                .compose(SchedulersCompat.<MovieTopicBean.DataBean.TopicsBean>applyIoSchedulers())
                 .subscribe(new Subscriber<MovieTopicBean.DataBean.TopicsBean>() {
                     @Override
                     public void onCompleted() {
@@ -754,7 +808,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         flMovieImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieVideoActivity.start(mContext,movie.getId(),0,movie.getNm()+" "+movie.getVideoName(),movie.getVideourl());
+                MovieVideoActivity.start(mContext, movie.getId(), 0, movie.getNm() + " " + movie.getVideoName(), movie.getVideourl());
             }
         });
         if (movie.getAwardUrl().equals("")) {
@@ -765,7 +819,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         tvMovieScore.setText(String.format("%s", movie.getSc()));//评分
         tvSnum.setText(String.format("(%s人评)", StringUtil.changeNumToCN(movie.getSnum())));//评价人数
         tvMovieType.setText(movie.getCat());//电影类型
-        tvSrcDur.setText(String.format("%s/%s分钟", movie.getSrc(), movie.getDur()));//拍摄国家和时长
+        tvSrcDur.setText(String.format("%s%s", movie.getSrc(), movie.getDur() == 0 ? "" : "/" + movie.getDur() + "分钟"));//拍摄国家和时长
         tvPubDesc.setText(movie.getPubDesc());//上映日期
         if (movie.getSc() == 0) {
             tvSnum.setVisibility(View.GONE);

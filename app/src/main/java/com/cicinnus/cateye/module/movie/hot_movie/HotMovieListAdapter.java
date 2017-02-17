@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
+import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.tools.GlideManager;
@@ -37,7 +38,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                 .setText(R.id.tv_hot_desc, String.format("%s", item.getScm()))
                 .setText(R.id.tv_hot_showInfo, String.format("%s", item.getShowInfo()));
         //图片地址不能直接使用，需要进行转换
-        final String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(),".webp@171w_240h_1e_1c_1l");
+        final String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(), ".webp@171w_240h_1e_1c_1l");
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_hot_img));
 
         //显示3D和IMAX的标签
@@ -86,21 +87,35 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                         .setText(R.id.tv_hot_type2, String.format("%s", item.getHeadLinesVO().get(1).getType()))
                         .setText(R.id.tv_hot_headline_title1, String.format("%s", item.getHeadLinesVO().get(0).getTitle()))
                         .setText(R.id.tv_hot_headline_title2, String.format("%s", item.getHeadLinesVO().get(1).getTitle()));
+
+                helper.getView(R.id.tv_hot_headline_title1).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BaseWebViewActivity.start(mContext, item.getHeadLinesVO().get(0).getUrl());
+                    }
+                });
+                helper.getView(R.id.tv_hot_headline_title2).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BaseWebViewActivity.start(mContext, item.getHeadLinesVO().get(1).getUrl());
+                    }
+                });
                 break;
         }
+
 
         helper.getView(R.id.fl_hot_movie)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MovieVideoActivity.start(mContext,item.getId(),item.getVideoId(),item.getNm()+" "+item.getVideoName(),item.getVideourl());
+                        MovieVideoActivity.start(mContext, item.getId(), item.getVideoId(), item.getNm() + " " + item.getVideoName(), item.getVideourl());
                     }
                 });
 
         helper.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieDetailActivity.start(mContext,item.getId());
+                MovieDetailActivity.start(mContext, item.getId());
             }
         });
     }

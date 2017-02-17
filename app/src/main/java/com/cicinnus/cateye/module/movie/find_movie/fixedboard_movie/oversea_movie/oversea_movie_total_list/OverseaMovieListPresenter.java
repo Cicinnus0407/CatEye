@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.cicinnus.cateye.base.BasePresenter;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
+import com.orhanobut.logger.Logger;
 
 import rx.Subscriber;
 
@@ -34,6 +35,7 @@ public class OverseaMovieListPresenter extends BasePresenter<OverseaMovieListCon
 
             @Override
             public void onError(Throwable e) {
+                Logger.e(e.getMessage());
                 mView.showError(e.getMessage());
             }
 
@@ -56,6 +58,7 @@ public class OverseaMovieListPresenter extends BasePresenter<OverseaMovieListCon
 
             @Override
             public void onError(Throwable e) {
+                Logger.e(e.getMessage());
                 mView.showError(e.getMessage());
             }
 
