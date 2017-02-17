@@ -754,7 +754,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         flMovieImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieVideoActivity.start(mContext,movie.getId(),movie.getNm()+" "+movie.getVideoName(),movie.getVideourl());
+                MovieVideoActivity.start(mContext,movie.getId(),0,movie.getNm()+" "+movie.getVideoName(),movie.getVideourl());
             }
         });
         if (movie.getAwardUrl().equals("")) {

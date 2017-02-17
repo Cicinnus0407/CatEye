@@ -112,7 +112,7 @@ public class MovieBasicDataBean {
             private boolean onlinePlay;
             private int pn;
             private boolean preScorePersona;
-            private int proScore;
+            private double proScore;
             private int proScoreNum;
             private String pubDesc;
             private String rt;
@@ -334,11 +334,11 @@ public class MovieBasicDataBean {
                 this.preScorePersona = preScorePersona;
             }
 
-            public int getProScore() {
+            public double getProScore() {
                 return proScore;
             }
 
-            public void setProScore(int proScore) {
+            public void setProScore(double proScore) {
                 this.proScore = proScore;
             }
 

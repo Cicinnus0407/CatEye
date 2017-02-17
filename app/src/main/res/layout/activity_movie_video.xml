@@ -3,7 +3,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/iv_back"
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_14"
         android:src="@drawable/ic_video_back" />
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -25,10 +27,12 @@
 
 
         <FrameLayout
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_14"
-            android:layout_marginRight="@dimen/dp_14">
+            android:paddingLeft="@dimen/dp_14"
+            android:paddingRight="@dimen/dp_14">
 
             <View
                 android:id="@+id/view_indicator"
@@ -74,12 +78,10 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/tv_video_comment"
                         android:background="@drawable/bg_comment_count"
-                        android:paddingBottom="1dp"
                         android:paddingLeft="@dimen/dp_6"
                         android:paddingRight="@dimen/dp_6"
-                        android:paddingTop="1dp"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
+                        android:textSize="8sp"
                         tools:text="12" />
 
 

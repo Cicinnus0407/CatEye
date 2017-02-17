@@ -93,7 +93,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MovieVideoActivity.start(mContext,item.getId(),item.getNm()+" "+item.getVideoName(),item.getVideourl());
+                        MovieVideoActivity.start(mContext,item.getId(),item.getVideoId(),item.getNm()+" "+item.getVideoName(),item.getVideourl());
                     }
                 });
 

@@ -1,11 +1,10 @@
 package com.cicinnus.cateye.module.movie.movie_video.video_list;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
@@ -31,6 +30,16 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     SuperSwipeRefreshLayout swipe;
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
+    @BindView(R.id.tv_movie_name)
+    TextView tvMovieName;
+    @BindView(R.id.tv_movie_score)
+    TextView tvMovieScore;
+    @BindView(R.id.tv_score_wish)
+    TextView tvScoreWish;
+    @BindView(R.id.tv_pub_time)
+    TextView tvPubTime;
+    @BindView(R.id.tv_video_count)
+    TextView tvVideoCount;
 
 
     private VideoListAdapter videoListAdapter;
@@ -41,8 +50,6 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     private int offset;
     private MyPullToRefreshListener pullToRefreshListener;
     private List<VideoListBean.DataBean> videoListBeen;
-    private boolean isFirst = true;
-    private View videoHeader;
 
     public static VideoListFragment newInstance(int movieId) {
 
@@ -69,12 +76,10 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
         videoListBeen = new ArrayList<>();
         videoListAdapter = new VideoListAdapter();
         rvMovieVideo.setLayoutManager(new LinearLayoutManager(mContext));
-        rvMovieVideo.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         rvMovieVideo.setAdapter(videoListAdapter);
 
-        videoHeader = mContext.getLayoutInflater().inflate(R.layout.layout_video_list_header, (ViewGroup) rvMovieVideo.getParent(),false);
-        videoListAdapter.addHeaderView(videoHeader);
 
+        //下拉刷新
         pullToRefreshListener = new MyPullToRefreshListener(mContext, swipe);
         swipe.setOnPullRefreshListener(pullToRefreshListener);
         pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
@@ -84,12 +89,11 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
                 mPresenter.getVideoList(movieId, offset);
             }
         });
-
-
+        //加载更多
         videoListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.getVideoList(movieId, offset);
+                mPresenter.getMoreVideo(movieId, offset);
             }
         });
 
@@ -98,18 +102,52 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
         mPresenter.getVideoMovieInfo(movieId);
     }
 
+    /**
+     * 视频列表
+     * @param data
+     */
     @Override
     public void addVideoList(List<VideoListBean.DataBean> data) {
-        if (data.size() > 0) {
+        offset+=10;
+        videoListBeen.addAll(data);
+        //将第一个数据设为选中状态,因为默认播放第一个视频
+        videoListBeen.get(0).isSelect = true;
+        videoListBeen.set(0, videoListBeen.get(0));
+        videoListAdapter.setNewData(videoListBeen);
+
+    }
+
+    /**
+     * 影片信息
+     * @param info
+     */
+    @Override
+    public void addVideoMovieInfo(VideoMovieInfoBean.DataBean info) {
+        tvMovieName.setText(info.getName());
+        if(info.getScore()==0){
+            tvMovieScore.setText(String.format("%s",info.getWish()));
+            tvScoreWish.setText("人想看");
+        }else {
+            tvMovieScore.setText(String.format("%s",info.getScore()));
+            tvScoreWish.setText("分");
+        }
+        tvPubTime.setText(info.getPubdesc());
+    }
+
+    /**
+     * 视频总数
+     * @param total
+     */
+    @Override
+    public void addTotalCount(int total) {
+        tvVideoCount.setText(String.format("(%s)",total));
+    }
+
+    @Override
+    public void addVideoMoreList(List<VideoListBean.DataBean> videoMoreData) {
+        if (videoMoreData.size() > 0) {
             offset += 10;
-            videoListBeen.addAll(data);
-            if (isFirst) {
-                //将第一个数据设为选中状态,因为默认播放第一个视频
-                videoListBeen.get(0).isSelect = true;
-                videoListBeen.set(0,videoListBeen.get(0));
-                isFirst = false;
-            }
-            videoListAdapter.addData(videoListBeen);
+            videoListAdapter.addData(videoMoreData);
             videoListAdapter.loadMoreComplete();
         } else {
             videoListAdapter.loadMoreEnd();
@@ -117,9 +155,8 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     }
 
     @Override
-    public void addVideoMovieInfo(VideoMovieInfoBean.DataBean videoMovieInfoBeanData) {
-
-
+    public void showLoadMoreError(String message) {
+        videoListAdapter.loadMoreFail();
     }
 
     @Override
@@ -147,4 +184,5 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
             }
         });
     }
+
 }

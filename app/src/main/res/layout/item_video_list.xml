@@ -22,7 +22,6 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            android:textSize="11sp"
             android:id="@+id/tv_video_play_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,6 +29,7 @@
             android:layout_marginBottom="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_6"
             android:textColor="@color/white"
+            android:textSize="11sp"
             tools:text="时长/播放中" />
     </FrameLayout>
 
@@ -49,15 +49,21 @@
             android:textSize="13sp" />
 
         <TextView
-            android:textSize="11sp"
             android:id="@+id/tv_view_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_6"
             android:textColor="@color/text_gray"
+            android:textSize="11sp"
             tools:text="评论与观看人数" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_normal" />
 
 
 </RelativeLayout>

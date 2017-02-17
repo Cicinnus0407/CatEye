@@ -6,10 +6,13 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentPostBean;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.VideoPostBean;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.TimeUtils;
+import com.hwangjr.rxbus.RxBus;
 
 /**
  * Created by Administrator on 2017/2/15.
@@ -31,7 +34,9 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
                         String.format("观看: %s 评论: %s", StringUtil.changeNumToCN(item.getCount()), item.getComment()));
 
 
-        if (mData.get(helper.getAdapterPosition()-1).isSelect) {
+        if (mData.get(helper.getAdapterPosition()).isSelect) {
+            RxBus.get().post(new CommentPostBean(item.getId()));
+
             helper.setText(R.id.tv_video_play_status, "播放中")
                     .setTextColor(R.id.tv_video_title, mContext.getResources().getColor(R.color.colorPrimary))
                     .setBackgroundColor(R.id.fl_video_iv, mContext.getResources().getColor(R.color.colorPrimary));
@@ -44,12 +49,14 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
         helper.convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedPos != helper.getAdapterPosition()-1) {
+                if (selectedPos != helper.getAdapterPosition()) {
                     mData.get(selectedPos).isSelect = false;
                     notifyItemChanged(selectedPos);
-                    selectedPos = helper.getAdapterPosition()-1;
+                    selectedPos = helper.getAdapterPosition();
                     mData.get(selectedPos).isSelect = true;
                     notifyItemChanged(selectedPos);
+                    RxBus.get().post(new VideoPostBean(item.getMovieName()+item.getTl(),item.getUrl()));
+
                 }
             }
         });

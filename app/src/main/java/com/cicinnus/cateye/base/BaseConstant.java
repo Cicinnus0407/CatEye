@@ -51,5 +51,9 @@ public interface BaseConstant {
     int TYPE_MOVIE_DETAIL_VEDIO = 0;
     int TYPE_MOVIE_DETAIL_PHOTO = 1;
 
+    //视频评论
+    int TYPE_VIDEO_COMMENT_REPLY =0;//有回复
+    int TYPE_VIDEO_COMMENT_NO_REPLY=1;//没有回复
+
 }
 

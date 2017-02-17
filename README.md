@@ -4,6 +4,7 @@
   - RxJava+Retrofit+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
   - Glide
+  - [JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer)
   
   
 ###截图

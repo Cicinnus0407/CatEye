@@ -52,4 +52,6 @@ dependencies {
     compile 'com.zhy:flowlayout-lib:1.0.3'
     //jCPlayer
     compile 'fm.jiecao:jiecaovideoplayer:5.4'
+    //RxBus
+    compile 'com.hwangjr.rxbus:rxbus:1.0.5'
 }

@@ -24,6 +24,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoMovieInfoBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
@@ -202,8 +203,15 @@ public interface Api {
                                            @Query("limit") int limit,
                                            @Query("offset") int offset);
 
-    //电影视频信息
+    //视频信息
     @GET("mmdb/movie/{movieId}/videos/movieInfo.json")
     Observable<VideoMovieInfoBean> getVideoMovieInfo(@Path("movieId") int movieId);
+
+    //视频评论
+    @GET("mmdb/comments/feature/v2/{movieId}.json")
+    Observable<VideoCommentListBean> getVideoComment(@Path("movieId") int movieId,
+                                                     @Query("feature")String feature,
+                                                     @Query("limit") int limit,
+                                                     @Query("offset") int offset);
 
 }

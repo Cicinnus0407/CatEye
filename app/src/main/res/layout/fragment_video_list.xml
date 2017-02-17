@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/layout_video_list_header"/>
+
     <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"

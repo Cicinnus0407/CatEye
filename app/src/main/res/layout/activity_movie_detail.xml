@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fitsSystemWindows="true">
-
     <!--clipToPadding = false-->
     <!--令布局可以延伸到状态栏-->
 

@@ -11,8 +11,13 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentCountPostBean;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.VideoPostBean;
+import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListFragment;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListFragment;
 import com.cicinnus.cateye.tools.UiUtils;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,21 +42,26 @@ public class MovieVideoActivity extends BaseActivity {
     TextView tvVideoInfo;
     @BindView(R.id.tv_video_comment)
     TextView tvVideoComment;
+    @BindView(R.id.tv_video_comment_count)
+    TextView tvVideoCommentCount;
     @BindView(R.id.vp_video_comment)
     ViewPager vpVideoComment;
 
 
+
     private FrameLayout.LayoutParams params;
 
-
+    private static final String MOVIE_ID = "movie_id";
     private static final String VIDEO_URL = "video_url";
     private static final String VIDEO_NAME = "video_name";
-    private static final String MOVIE_ID = "movie_id";
+    private static final String VIDEO_ID = "video_id";
+    private int videoId;
     private int movieId;
 
-    public static void start(Context context, int movieId,String videoName, String url) {
+    public static void start(Context context, int movieId,int videoId,String videoName, String url) {
         Intent starter = new Intent(context, MovieVideoActivity.class);
         starter.putExtra(MOVIE_ID, movieId);
+        starter.putExtra(VIDEO_ID, videoId);
         starter.putExtra(VIDEO_NAME, videoName);
         starter.putExtra(VIDEO_URL, url);
         context.startActivity(starter);
@@ -66,11 +76,12 @@ public class MovieVideoActivity extends BaseActivity {
     protected void initEventAndData() {
         String videoUrl = getIntent().getStringExtra(VIDEO_URL);
         String videoName = getIntent().getStringExtra(VIDEO_NAME);
+        videoId = getIntent().getIntExtra(VIDEO_ID,0);
         movieId = getIntent().getIntExtra(MOVIE_ID,0);
         videoplayer.setUp(videoUrl, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, videoName);
-//        videoplayer.startVideo();
 
         setUpViewPager();
+        RxBus.get().register(this);
     }
 
     private void setUpViewPager() {
@@ -82,7 +93,11 @@ public class MovieVideoActivity extends BaseActivity {
 
         final List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(VideoListFragment.newInstance(movieId));
-        fragmentList.add(VideoCommentListFragment.newInstance());
+        fragmentList.add(VideoCommentListFragment.newInstance(videoId));
+
+
+
+
 
         vpVideoComment.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -95,6 +110,9 @@ public class MovieVideoActivity extends BaseActivity {
                 return fragmentList.size();
             }
         });
+
+
+
 
         vpVideoComment.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -147,6 +165,19 @@ public class MovieVideoActivity extends BaseActivity {
         }
     }
 
+    @Subscribe
+    public void ChangeVideo(VideoPostBean videoPostBean){
+        videoplayer.setUp(videoPostBean.getVideoUrl(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, videoPostBean.getVideoName());
+        videoplayer.startVideo();
+
+    }
+
+    @Subscribe
+    public void CommentCount(CommentCountPostBean count){
+        tvVideoCommentCount.setVisibility(View.VISIBLE);
+        tvVideoCommentCount.setText(String.format("%s",count.getCommentCount()));
+    }
+
     @Override
     public void onBackPressed() {
         if (JCVideoPlayer.backPress()) {
@@ -159,5 +190,11 @@ public class MovieVideoActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(this);
     }
 }

@@ -36,6 +36,7 @@ public class VideoListPresenter extends BasePresenter<VideoListContract.IVideoLi
 
                     @Override
                     public void onNext(VideoListBean videoListBean) {
+                        mView.addTotalCount(videoListBean.getPaging().getTotal());
                         mView.addVideoList(videoListBean.getData());
                     }
                 }));
@@ -59,6 +60,26 @@ public class VideoListPresenter extends BasePresenter<VideoListContract.IVideoLi
                     @Override
                     public void onNext(VideoMovieInfoBean videoMovieInfoBean) {
                         mView.addVideoMovieInfo(videoMovieInfoBean.getData());
+                    }
+                }));
+    }
+
+    @Override
+    public void getMoreVideo(int movieId, int offset) {
+        addSubscribe(videoListManager.getVideoList(movieId, offset)
+                .subscribe(new Subscriber<VideoListBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showLoadMoreError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(VideoListBean videoListBean) {
+                        mView.addVideoMoreList(videoListBean.getData());
                     }
                 }));
     }

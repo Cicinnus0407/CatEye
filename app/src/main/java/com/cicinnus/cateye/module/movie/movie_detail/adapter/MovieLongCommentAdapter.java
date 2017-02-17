@@ -22,7 +22,7 @@ public class MovieLongCommentAdapter extends BaseQuickAdapter<MovieLongCommentBe
     @Override
     protected void convert(BaseViewHolder helper, MovieLongCommentBean.DataBean.FilmReviewsBean item) {
         helper.setText(R.id.tv_author_name,item.getAuthor().getNickName())
-                .setText(R.id.tv_comment_title,item.getTitle())
+                .setText(R.id.tv_comment_content,item.getTitle())
                 .setText(R.id.tv_comment_content,item.getText())
                 .setText(R.id.tv_view_count,String.format("%s",item.getViewCount()))
                 .setText(R.id.tv_comment_count,String.format("%s",item.getCommentCount()))

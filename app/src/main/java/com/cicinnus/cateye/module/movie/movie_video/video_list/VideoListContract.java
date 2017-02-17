@@ -13,11 +13,19 @@ public class VideoListContract {
         void addVideoList(List<VideoListBean.DataBean> data);
 
         void addVideoMovieInfo(VideoMovieInfoBean.DataBean videoMovieInfoBeanData);
+
+        void addTotalCount(int total);
+
+        void addVideoMoreList(List<VideoListBean.DataBean> videoMoreData);
+
+        void showLoadMoreError(String message);
     }
 
     public interface IVideoListPresenter{
         void getVideoList(int movieId,int offset);
 
         void getVideoMovieInfo(int movieId);
+
+        void getMoreVideo(int movieId, int offset);
     }
 }
