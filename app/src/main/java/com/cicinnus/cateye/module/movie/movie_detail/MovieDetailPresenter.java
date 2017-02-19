@@ -55,7 +55,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof MovieBasicDataBean) {
-//                            mView.addMovieBasicData(((MovieBasicDataBean) o).getData().getMovie());
+                            mView.addMovieBasicData(((MovieBasicDataBean) o).getData().getMovie());
                         } else if (o instanceof MovieTipsBean) {
                             mView.addMovieTips(((MovieTipsBean) o).getData());
                         } else if (o instanceof MovieStarBean) {
@@ -67,7 +67,6 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
 
     @Override
     public void getMovieSecondData(int movieId) {
-        mView.showLoading();
         addSubscribe(Observable.merge(movieDetailManager.getMovieBox(movieId),
                 movieDetailManager.getMovieAwards(movieId),
                 movieDetailManager.getMovieResource(movieId))
@@ -75,8 +74,6 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                 .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
-                        mView.showContent();
-
 
                     }
 
@@ -100,7 +97,6 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
 
     @Override
     public void getMovieMoreData(int movieId) {
-        mView.showLoading();
         addSubscribe(Observable.merge(
                 movieDetailManager.getMovieCommentTag(movieId),
                 movieDetailManager.getMovieLongComment(movieId),
@@ -111,15 +107,10 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                 .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
-                        mView.showContent();
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
-
                     }
-
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof MovieCommentTagBean) {

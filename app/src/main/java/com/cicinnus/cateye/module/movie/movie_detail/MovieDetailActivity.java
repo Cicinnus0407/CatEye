@@ -287,6 +287,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         //将Title布局往上移动状态栏的高度
         title_params.setMargins(0, -height, 0, 0);
         llTitle.setLayoutParams(title_params);
+
+        FrameLayout.LayoutParams progressLayoutParams = (FrameLayout.LayoutParams) progressLayout.getLayoutParams();
+        progressLayoutParams.setMargins(0,-height,0,0);
+        progressLayout.setLayoutParams(progressLayoutParams);
     }
 
     @OnClick({R.id.rl_back})
@@ -406,6 +410,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             MoviePhotosBean bean = new MoviePhotosBean();
             bean.setVideo(true);
             bean.setVideoImg(movie.getVideoImg());
+            bean.setMovieTitle(movie.getNm()+" "+movie.getVideoName());
+            bean.setUrl(movie.getVideourl());
+            bean.setMovieId(movie.getId());
             bean.setVideoNum(movie.getVnum());
             photosBeanList.add(bean);
         }
@@ -841,10 +848,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return null;
                     }
                 })
-                .filter(new Func1<Bitmap, Boolean>() {
+                .map(new Func1<Bitmap, Bitmap>() {
                     @Override
-                    public Boolean call(Bitmap bitmap) {
-                        return bitmap != null;
+                    public Bitmap call(Bitmap bitmap) {
+                        return FastBlurUtil.doBlur(bitmap, 130, false);
                     }
                 })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
@@ -856,13 +863,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.d(e.getMessage());
+                        Logger.e(e.getMessage());
                     }
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 130, false);
-                        ivBlurBg.setImageBitmap(blurBitmap);
+                        ivBlurBg.setImageBitmap(bitmap);
                     }
                 });
     }

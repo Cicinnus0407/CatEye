@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true">
+
+    <com.cicinnus.cateye.view.ProgressLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/sc_star_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <include layout="@layout/layout_movie_star_name" />
+
+                <include layout="@layout/layout_movie_star_fans" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_14"
+                    android:background="@color/divider_normal" />
+
+
+                <include layout="@layout/layout_movie_star_info" />
+
+
+                <include layout="@layout/layout_movie_star_works" />
+
+
+                <include layout="@layout/layout_movie_star_photos"/>
+
+                <include layout="@layout/layout_movie_star_awards"/>
+
+                <include layout="@layout/layout_movie_star_related_information"/>
+
+                <include layout="@layout/layout_movie_star_related_stars"/>
+
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </com.cicinnus.cateye.view.ProgressLayout>
+
+    <include layout="@layout/layout_movie_star_title" />
+
+
+</FrameLayout>

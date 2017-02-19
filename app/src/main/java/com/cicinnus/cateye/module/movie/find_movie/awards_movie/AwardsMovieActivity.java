@@ -350,6 +350,18 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                         return null;
                     }
                 })
+                .filter(new Func1<Bitmap, Boolean>() {
+                    @Override
+                    public Boolean call(Bitmap bitmap) {
+                        return bitmap!=null;
+                    }
+                })
+                .map(new Func1<Bitmap, Bitmap>() {
+                    @Override
+                    public Bitmap call(Bitmap bitmap) {
+                        return FastBlurUtil.doBlur(bitmap, 9, false);
+                    }
+                })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
                 .subscribe(new Subscriber<Bitmap>() {
                     @Override
@@ -364,10 +376,8 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        if (bitmap != null) {
-                            Bitmap ivBitmap = FastBlurUtil.doBlur(bitmap, 9, false);
-                            ivBlur.setImageBitmap(ivBitmap);
-                        }
+                            ivBlur.setImageBitmap(bitmap);
+
                     }
                 });
     }

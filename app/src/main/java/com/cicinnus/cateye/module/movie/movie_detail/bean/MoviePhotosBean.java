@@ -8,8 +8,10 @@ import com.cicinnus.cateye.base.BaseConstant;
  */
 
 public class MoviePhotosBean implements MultiItemEntity {
+    private int movieId;
     private String url;
     private int videoNum;
+    private String movieTitle;
     private boolean isVideo;
     private String videoImg;
 
@@ -53,5 +55,21 @@ public class MoviePhotosBean implements MultiItemEntity {
 
     public void setVideoImg(String videoImg) {
         this.videoImg = videoImg;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public String getMovieTitle() {
+        return movieTitle;
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
     }
 }

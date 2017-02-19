@@ -25,6 +25,11 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarHonor;
+import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarInfoBean;
+import com.cicinnus.cateye.module.movie.movie_star.bean.RelatedInformationBean;
+import com.cicinnus.cateye.module.movie.movie_star.bean.StarMoviesBean;
+import com.cicinnus.cateye.module.movie.movie_star.bean.StarRelatedPeople;
 import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoMovieInfoBean;
@@ -219,4 +224,26 @@ public interface Api {
                                                      @Query("limit") int limit,
                                                      @Query("offset") int offset);
 
+
+    //影人资料
+    @GET("mmdb/v6/celebrity/{starId}.json")
+    Observable<MovieStarInfoBean> getMovieStarInfoBean(@Path("starId")int starId);
+
+    //影人荣誉
+    @GET("mmdb/celebrity/{starId}/honors.json")
+    Observable<MovieStarHonor> getMovieStarHonors(@Path("starId")int starId);
+
+    //参演电影
+    @GET("mmdb/celebrity/{starId}/rank/movies.json")
+    Observable<StarMoviesBean> getStarMovies(@Path("starId")int starId,
+                                             @Query("limit")int limit,
+                                             @Query("offset")int offset);
+
+    //相关资讯
+    @GET("sns/news/v3/type/1/target/{starId}/top.json")
+    Observable<RelatedInformationBean> getRelatedInformation(@Path("starId")int starId);
+
+    //相关影人
+    @GET("mmdb/celebrity/{starId}/relationship.json")
+    Observable<StarRelatedPeople> getStarRelatedPeople(@Path("starId")int starId);
 }

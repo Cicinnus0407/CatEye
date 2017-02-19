@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="85dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_14"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_related_star"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:scaleType="centerCrop"
+        tools:background="@android:color/black" />
+
+    <TextView
+        android:id="@+id/tv_related_star_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:textColor="@color/text_primary"
+        tools:text="名字" />
+
+    <TextView
+        android:textSize="13sp"
+        android:id="@+id/tv_cooperate_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_4"
+        android:gravity="center"
+        android:textColor="@color/text_gray_deep"
+        tools:text="合作次数" />
+
+</LinearLayout>

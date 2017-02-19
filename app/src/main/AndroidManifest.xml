@@ -66,6 +66,11 @@
             android:name=".module.movie.movie_video.MovieVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <!--影人资料-->
+        <activity
+            android:theme="@style/FullScreenTheme"
+            android:name=".module.movie.movie_star.MovieStarActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

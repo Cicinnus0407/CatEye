@@ -138,6 +138,7 @@ public class ProgressLayout extends LinearLayout {
             iv_loading.startAnimation(rotateAnimation);
             this.addView(loadingView, layoutParams);
         } else {
+            rotateAnimation.start();
             loadingView.setVisibility(VISIBLE);
         }
     }
@@ -148,7 +149,6 @@ public class ProgressLayout extends LinearLayout {
             errorView.setTag(ERROR_TAG);
             btn_error = (TextView) errorView.findViewById(R.id.btn_try);
             layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
             this.addView(errorView, layoutParams);
         } else {
             errorView.setVisibility(VISIBLE);
