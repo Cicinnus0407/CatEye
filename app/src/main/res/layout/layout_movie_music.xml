@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_disk" />
+        android:src="@drawable/ic_disk_small" />
 
     <LinearLayout
         android:layout_width="0dp"

@@ -57,7 +57,7 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
     }
 
     @Override
-    protected void setRefresh() {
+    protected void setPullToRefresh() {
         offset = 0;
         topHundredMovieAdapter.setNewData(new ArrayList<TopHundredMovieBean.DataBean.MoviesBean>());
         ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
@@ -69,7 +69,7 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
     }
 
     @Override
-    protected void resetData() {
+    protected void onErrorResetData() {
         offset = 0;
         ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
 

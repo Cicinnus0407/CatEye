@@ -9,9 +9,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.hwangjr.rxbus.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +48,21 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
 
 
     private static final String MOVIE_ID = "movie_id";
+    private static final String IS_MV = "is_mv";
+    private static final String MV_DATA = "mv_data";
     private int movieId;
     private int offset;
     private MyPullToRefreshListener pullToRefreshListener;
     private List<VideoListBean.DataBean> videoListBeen;
+    private boolean mIsMv = false;
+    private MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean mvData;
 
-    public static VideoListFragment newInstance(int movieId) {
+    public static VideoListFragment newInstance(int movieId, boolean isMv,MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean dataBean) {
 
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movieId);
+        args.putBoolean(IS_MV, isMv);
+        args.putParcelable(MV_DATA,dataBean);
         VideoListFragment fragment = new VideoListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -73,6 +81,11 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
     @Override
     protected void initEventAndData() {
         movieId = getArguments().getInt(MOVIE_ID, 0);
+        mIsMv = getArguments().getBoolean(IS_MV, false);
+        mvData = getArguments().getParcelable(MV_DATA);
+        RxBus.get().register(this);
+
+
         videoListBeen = new ArrayList<>();
         videoListAdapter = new VideoListAdapter();
         rvMovieVideo.setLayoutManager(new LinearLayoutManager(mContext));
@@ -104,31 +117,47 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
 
     /**
      * 视频列表
+     *
      * @param data
      */
     @Override
     public void addVideoList(List<VideoListBean.DataBean> data) {
-        offset+=10;
+        offset += 10;
         videoListBeen.addAll(data);
         //将第一个数据设为选中状态,因为默认播放第一个视频
-        videoListBeen.get(0).isSelect = true;
-        videoListBeen.set(0, videoListBeen.get(0));
+        if (!mIsMv) {
+            videoListBeen.get(0).isSelect = true;
+            videoListBeen.set(0, videoListBeen.get(0));
+        }else {
+            VideoListBean.DataBean newData = new VideoListBean.DataBean();
+            newData.isSelect = true;
+            newData.setCount(mvData.getCount());
+            newData.setImg(mvData.getImg());
+            newData.setMovieId(mvData.getMovieId());
+            newData.setId(mvData.getId());
+            newData.setUrl(mvData.getUrl());
+            newData.setTl(mvData.getTitle());
+            newData.setTm(mvData.getTime());
+            videoListBeen.add(0,newData);
+        }
         videoListAdapter.setNewData(videoListBeen);
 
     }
 
+
     /**
      * 影片信息
+     *
      * @param info
      */
     @Override
     public void addVideoMovieInfo(VideoMovieInfoBean.DataBean info) {
         tvMovieName.setText(info.getName());
-        if(info.getScore()==0){
-            tvMovieScore.setText(String.format("%s",info.getWish()));
+        if (info.getScore() == 0) {
+            tvMovieScore.setText(String.format("%s", info.getWish()));
             tvScoreWish.setText("人想看");
-        }else {
-            tvMovieScore.setText(String.format("%s",info.getScore()));
+        } else {
+            tvMovieScore.setText(String.format("%s", info.getScore()));
             tvScoreWish.setText("分");
         }
         tvPubTime.setText(info.getPubdesc());
@@ -136,11 +165,12 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
 
     /**
      * 视频总数
+     *
      * @param total
      */
     @Override
     public void addTotalCount(int total) {
-        tvVideoCount.setText(String.format("(%s)",total));
+        tvVideoCount.setText(String.format("(%s)", total));
     }
 
     @Override
@@ -185,4 +215,9 @@ public class VideoListFragment extends BaseFragment<VideoListPresenter> implemen
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RxBus.get().unregister(this);
+    }
 }

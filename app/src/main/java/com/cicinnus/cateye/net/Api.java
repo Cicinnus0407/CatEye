@@ -25,6 +25,9 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieAlbumBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarHonor;
 import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarInfoBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.RelatedInformationBean;
@@ -246,4 +249,20 @@ public interface Api {
     //相关影人
     @GET("mmdb/celebrity/{starId}/relationship.json")
     Observable<StarRelatedPeople> getStarRelatedPeople(@Path("starId")int starId);
+
+    //影片专辑
+    @GET("mmdb/movie/{movieId}/feature/album.json")
+    Observable<MovieAlbumBean> getMovieAlbum(@Path("movieId")int movieId);
+
+    //影片原声列表
+    @GET("mmdb/movie/{movieId}/feature/musics.json")
+    Observable<MovieMusicBean> getMovieMusic(@Path("movieId")int movieId);
+
+
+    //影片技术参数
+    @GET("mmdb/movie/{movieId}/feature/v1/technicals.json")
+    Observable<MovieTechnicalsBean> getMovieTechnicals(@Path("movieId")int movieId);
+
+    //
+
 }

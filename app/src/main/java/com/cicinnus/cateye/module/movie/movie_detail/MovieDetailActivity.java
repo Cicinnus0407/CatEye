@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieAwardsAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
@@ -38,6 +39,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
@@ -236,6 +238,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
     private static final String MOVIE_ID = "movie_id";
     private int movieId;//电影Id
+    private String mMovieName;
 
     public static void start(Context context, int movieId) {
         Intent starter = new Intent(context, MovieDetailActivity.class);
@@ -390,12 +393,18 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      *
      * @param movie
      */
-    private void setMovieMusic(MovieBasicDataBean.DataBean.MovieBean movie) {
+    private void setMovieMusic(final MovieBasicDataBean.DataBean.MovieBean movie) {
         if (movie.getMusicNum() != 0) {
             llMovieMusic.setVisibility(View.VISIBLE);
             tvMusicName.setText(movie.getMusicName());
             tvMusicNum.setText(String.format("%s", movie.getMusicNum()));
             GlideManager.loadImage(mContext, movie.getAlbumImg(), ivMovieMusic);
+            llMovieMusic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MovieSoundTrackActivity.start(mContext,movie.getId());
+                }
+            });
         }
     }
 
@@ -495,8 +504,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      * @param moneyBoxBean
      */
     @Override
-    public void addMovieMoneyBox(MovieMoneyBoxBean moneyBoxBean) {
-
+    public void addMovieMoneyBox(final MovieMoneyBoxBean moneyBoxBean) {
+        rlMoneyBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseWebViewActivity.start(mContext,moneyBoxBean.getUrl(),mMovieName);
+            }
+        });
         if (moneyBoxBean.getMbox().getFirstWeekBox() == 0
                 && moneyBoxBean.getMbox().getFirstWeekOverSeaBox() == 0
                 && moneyBoxBean.getMbox().getLastDayRank() == 0
@@ -571,6 +585,11 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      */
     @Override
     public void addMovieResource(List<MovieResourceBean.DataBean> movieResources) {
+        for (int i = 0; i < movieResources.size(); i++) {
+            if(movieResources.get(i).getName().equals("filmMusics")){
+                movieResources.remove(i);
+            }
+        }
         MovieResourceAdapter movieResourceAdapter = new MovieResourceAdapter();
         rvMovieResource.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvMovieResource.setAdapter(movieResourceAdapter);
@@ -801,6 +820,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         tvSubTitle.setTextColor(mContext.getResources().getColor(android.R.color.transparent));
         tvTitle.setText(movie.getNm());//中文主标题
         tvSubTitle.setText(movie.getEnm());//英文副标题
+        mMovieName = movie.getNm();
     }
 
     /**

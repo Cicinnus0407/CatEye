@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -101,6 +102,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     /*****
      * 参演电影
      *****/
+    @BindView(R.id.ll_star_movie)
+    LinearLayout llStarMovie;
     @BindView(R.id.tv_star_movies_count)
     TextView tvStarMoviesCount;
     @BindView(R.id.rv_star_movies)
@@ -108,6 +111,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     /***
      * 照片
      ***/
+    @BindView(R.id.ll_star_photos)
+    LinearLayout llStarPhotos;
     @BindView(R.id.tv_star_photos_count)
     TextView tvStarPhotosCount;
     @BindView(R.id.rv_star_photos)
@@ -126,14 +131,18 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     @BindView(R.id.tv_award_content)
     TextView tvAwardContent;
 
-    /*****相关资讯********/
+    /*****
+     * 相关资讯
+     ********/
     @BindView(R.id.ll_related_information)
     LinearLayout llRelatedInformation;
     @BindView(R.id.iv_related_information)
     ImageView ivRelatedInformation;
     @BindView(R.id.tv_related_information_content)
     TextView tvRelatedInformationContent;
-    /*******相关影人**********/
+    /*******
+     * 相关影人
+     **********/
     @BindView(R.id.ll_related_stars)
     LinearLayout llRelatedStars;
     @BindView(R.id.rv_related_stars)
@@ -212,6 +221,16 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
 
     }
 
+    @OnClick({R.id.rl_back})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+        }
+    }
+
+
     /**
      * 影人资料
      *
@@ -229,12 +248,13 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
         //照片
         setPhotos(info);
     }
+
     /**
      * 标题栏
      *
      * @param info
      */
-    private void setTitle(MovieStarInfoBean.DataBean info){
+    private void setTitle(MovieStarInfoBean.DataBean info) {
         tvTitle.setTextColor(mContext.getResources().getColor(android.R.color.transparent));
         tvSubTitle.setTextColor(mContext.getResources().getColor(android.R.color.transparent));
         tvTitle.setText(info.getCnm());//中文主标题
@@ -243,22 +263,23 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
 
     /**
      * 头部的照片和姓名
+     *
      * @param info
      */
     private void setStarImg(MovieStarInfoBean.DataBean info) {
-        if (info.getBgImg()!=null) {
+        if (info.getBgImg() != null) {
             tvStarName.setText(info.getCnm());
             tvStarEName.setText(info.getEnm());
             llStarName.setVisibility(View.VISIBLE);
             llStarName2.setVisibility(View.INVISIBLE);
             String imgUrl = ImgSizeUtil.resetPicUrl(info.getBgImg(), "@2250w_1380h_1e_1l");
             GlideManager.loadImage(mContext, imgUrl, ivStarBg);
-        }else {
+        } else {
             tvStarName2.setText(info.getCnm());
             tvStarEName2.setText(info.getEnm());
             llStarName2.setVisibility(View.VISIBLE);
             llStarName.setVisibility(View.INVISIBLE);
-            String avatarUrl = ImgSizeUtil.resetPicUrl(info.getAvatar(),"");
+            String avatarUrl = ImgSizeUtil.resetPicUrl(info.getAvatar(), "");
             GlideManager.loadImage(mContext, avatarUrl, ivStarAvatar);
             Observable.just(avatarUrl)
                     .map(new Func1<String, Bitmap>() {
@@ -276,13 +297,13 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                     .filter(new Func1<Bitmap, Boolean>() {
                         @Override
                         public Boolean call(Bitmap bitmap) {
-                            return bitmap!=null;
+                            return bitmap != null;
                         }
                     })
                     .map(new Func1<Bitmap, Bitmap>() {
                         @Override
                         public Bitmap call(Bitmap bitmap) {
-                            return FastBlurUtil.doBlur(bitmap,130,false);
+                            return FastBlurUtil.doBlur(bitmap, 130, false);
                         }
                     })
                     .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
@@ -300,11 +321,16 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
      * 照片
      */
     private void setPhotos(MovieStarInfoBean.DataBean info) {
-        tvStarPhotosCount.setText(String.format("全部(%s)", info.getPhotoNum()));
-        StarPhotosAdapter starPhotosAdapter = new StarPhotosAdapter();
-        rvStarPhotos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        rvStarPhotos.setAdapter(starPhotosAdapter);
-        starPhotosAdapter.setNewData(info.getPhotos());
+        if(info.getPhotos().size()==0){
+            llStarPhotos.setVisibility(View.GONE);
+        }else {
+            tvStarPhotosCount.setText(String.format("全部(%s)", info.getPhotoNum()));
+            StarPhotosAdapter starPhotosAdapter = new StarPhotosAdapter();
+            rvStarPhotos.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            rvStarPhotos.setAdapter(starPhotosAdapter);
+            starPhotosAdapter.setNewData(info.getPhotos());
+        }
+
     }
 
     /**
@@ -314,8 +340,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
      */
     private void setStarInfo(MovieStarInfoBean.DataBean info) {
         tvStarTitle.setText(info.getTitles());
-        tvStarBirthday.setText(String.format("生日:%s", info.getBirthday()));
-        tvStarInfoDesc.setText(String.format("简介:%s", info.getDesc()));
+        tvStarBirthday.setText(String.format("生日:%s", info.getBirthday().equals("")?"暂无":info.getBirthday()));
+        tvStarInfoDesc.setText(String.format("简介:%s", info.getDesc().equals("")?"暂无":info.getDesc()));
     }
 
     /**
@@ -331,18 +357,23 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
             tvStarMajorMovieBox.setText(StringUtil.changeMillionIntoBillion(info.getSumBox()));
 
         }
-        tvStarRank.setText(String.format("%s", info.getRank()));
+        tvStarRank.setText(String.format("%s", info.getRank()==-1?"1000+":info.getFollowCount()));
         tvFansCount.setText(String.format("%s", info.getFollowCount()));
     }
 
+    /**
+     * 影人荣誉
+     *
+     * @param honors
+     */
     @Override
     public void addMovieStarHonor(MovieStarHonor honors) {
         Observable.just(honors)
                 .flatMap(new Func1<MovieStarHonor, Observable<MovieStarHonor.DataBean>>() {
                     @Override
                     public Observable<MovieStarHonor.DataBean> call(MovieStarHonor movieStarHonor) {
-                        if (movieStarHonor.getData().getAward()!=null) {
-                            Observable.just(movieStarHonor.getData());
+                        if (movieStarHonor.getData().getAward() != null) {
+                            return Observable.just(movieStarHonor.getData());
                         }
                         return Observable.error(new Exception("empty data"));
                     }
@@ -365,21 +396,36 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
 
     @Override
     public void addStarMovies(StarMoviesBean.DataBean moviesData) {
-        tvStarMoviesCount.setText(String.format("全部(%s)", moviesData.getPaging().getTotal()));
-        rvStarMovies.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        StarMoviesAdapter starMoviesAdapter = new StarMoviesAdapter();
-        rvStarMovies.setAdapter(starMoviesAdapter);
-        starMoviesAdapter.setNewData(moviesData.getMovies());
+        if (moviesData.getMovies().size() == 0) {
+            llStarMovie.setVisibility(View.GONE);
+        } else {
+            tvStarMoviesCount.setText(String.format("全部(%s)", moviesData.getPaging().getTotal()));
+            rvStarMovies.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            StarMoviesAdapter starMoviesAdapter = new StarMoviesAdapter();
+            rvStarMovies.setAdapter(starMoviesAdapter);
+            starMoviesAdapter.setNewData(moviesData.getMovies());
+        }
+
 
     }
 
+    /**
+     * 相关资讯
+     * @param relatedInformationBean
+     */
     @Override
     public void addRelatedInformation(RelatedInformationBean relatedInformationBean) {
+        llRelatedInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 资讯页
+            }
+        });
         Observable.just(relatedInformationBean)
                 .flatMap(new Func1<RelatedInformationBean, Observable<RelatedInformationBean.DataBean.NewsListBean>>() {
                     @Override
                     public Observable<RelatedInformationBean.DataBean.NewsListBean> call(RelatedInformationBean relatedInformationBean) {
-                        if (relatedInformationBean.getData().getNewsList().size()>0) {
+                        if (relatedInformationBean.getData().getNewsList().size() > 0) {
                             return Observable.from(relatedInformationBean.getData().getNewsList());
                         }
                         return Observable.error(new Exception("empty data"));
@@ -399,19 +445,23 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
 
                     @Override
                     public void onNext(RelatedInformationBean.DataBean.NewsListBean newsListBean) {
-                        GlideManager.loadImage(mContext,newsListBean.getPreviewImages().get(0).getUrl(),ivRelatedInformation);
+                        GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
                         tvRelatedInformationContent.setText(newsListBean.getTitle());
                     }
                 });
     }
 
+    /**
+     * 相关影人
+     * @param relatedPeople
+     */
     @Override
     public void addStarRelatedPeople(StarRelatedPeople relatedPeople) {
         Observable.just(relatedPeople)
                 .flatMap(new Func1<StarRelatedPeople, Observable<StarRelatedPeople.DataBean>>() {
                     @Override
                     public Observable<StarRelatedPeople.DataBean> call(StarRelatedPeople starRelatedPeople) {
-                        if (starRelatedPeople.getData().getRelations().size()>0) {
+                        if (starRelatedPeople.getData().getRelations().size() > 0) {
                             return Observable.just(starRelatedPeople.getData());
                         }
                         return Observable.error(new Exception("empty data"));
@@ -421,7 +471,7 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                     @Override
                     public void call(StarRelatedPeople.DataBean dataBean) {
                         StarRelatedPeopleAdapter starRelatedPeopleAdapter = new StarRelatedPeopleAdapter();
-                        rvRelatedStars.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+                        rvRelatedStars.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         rvRelatedStars.setAdapter(starRelatedPeopleAdapter);
                         starRelatedPeopleAdapter.setNewData(dataBean.getRelations());
                     }

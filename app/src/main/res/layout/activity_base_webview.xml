@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_normal_back_title" />
 
     <WebView
         android:id="@+id/webView"

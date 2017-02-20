@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#2c2928"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="192dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="@dimen/dp_14">
+
+        <ImageView
+            android:id="@+id/iv_movie_album"
+            android:layout_width="140dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/iv_movie_album"
+            android:src="@drawable/ic_music_disk_big" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_14"
+        android:gravity="center_vertical">
+
+        <TextView
+            tools:text="music_name"
+            android:id="@+id/tv_movie_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_marginTop="@dimen/dp_10"
+            tools:text="singer"
+            android:textColor="@color/text_gray_light"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/tv_movie_album_singer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

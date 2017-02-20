@@ -71,6 +71,9 @@
             android:theme="@style/FullScreenTheme"
             android:name=".module.movie.movie_star.MovieStarActivity"
             android:screenOrientation="portrait" />
+        <!--电影原声-->
+        <activity android:name=".module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -15,6 +15,10 @@ public class ImgSizeUtil {
             String origin = url.substring(0, url.indexOf("@"));
             return origin.replace("/w.h/", "/") + size;
         }
+        if (!url.contains("/w.h/")) {
+            return url + size;
+        }
+
         return url.replace("/w.h/", "/") + size;
     }
 

@@ -59,7 +59,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
         pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
             @Override
             public void refresh() {
-                setRefresh();
+                setPullToRefresh();
             }
         });
         swipe.setOnPullRefreshListener(pullToRefreshListener);
@@ -69,7 +69,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
     /**
      * 下拉刷新
      */
-    protected abstract void setRefresh();
+    protected abstract void setPullToRefresh();
 
     /**
      * @return 标题
@@ -79,7 +79,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
     /**
      * 失败重试
      */
-    protected abstract void resetData();
+    protected abstract void onErrorResetData();
 
     /**
      * 显示Loading
@@ -113,7 +113,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetData();
+                onErrorResetData();
             }
         });
     }

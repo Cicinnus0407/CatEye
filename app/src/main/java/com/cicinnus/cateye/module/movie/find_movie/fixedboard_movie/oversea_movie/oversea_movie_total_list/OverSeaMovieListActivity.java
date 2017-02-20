@@ -79,7 +79,7 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
 
 
     @Override
-    protected void setRefresh() {
+    protected void setPullToRefresh() {
         offset = 0;
         switch (type){
             case HOT:
@@ -112,7 +112,7 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
     }
 
     @Override
-    protected void resetData() {
+    protected void onErrorResetData() {
         offset = 0;
         switch (type){
             case HOT:

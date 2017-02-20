@@ -10,7 +10,6 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,7 +22,9 @@ public class BaseWebViewActivity extends BaseActivity {
 
     private static final String TARGET_ID = "id";
     private static final String URL = "url";
+    private static final String TITLE = "title";
     private String mUrl;
+    private String mTitle;
 
     public static void start(Context context, int id) {
         Intent starter = new Intent(context, BaseWebViewActivity.class);
@@ -37,12 +38,18 @@ public class BaseWebViewActivity extends BaseActivity {
         context.startActivity(starter);
     }
 
+    public static void start(Context context, String url,String title) {
+        Intent starter = new Intent(context, BaseWebViewActivity.class);
+        starter.putExtra(URL, url);
+        starter.putExtra(TITLE, title);
+        context.startActivity(starter);
+    }
+
 
     @BindView(R.id.webView)
     WebView webView;
     @BindView(R.id.tv_title)
-    TextView tv_title;
-
+     TextView tvTitle;
     @Override
     protected int getLayout() {
         return R.layout.activity_base_webview;
@@ -52,15 +59,20 @@ public class BaseWebViewActivity extends BaseActivity {
     protected void initEventAndData() {
         int id = getIntent().getIntExtra(TARGET_ID, 0);
         mUrl = getIntent().getStringExtra(URL);
+        mTitle = getIntent().getStringExtra(TITLE);
         setUpWebView();
         if (id != 0) {
             String url = "http://m.maoyan.com/topic/" + id + "?_v_=yes&f=android";
             webView.loadUrl(url);
         }
+        if(mTitle!=null){
+            tvTitle.setText(mTitle);
+        }
+
         if (mUrl != null) {
-            String realUrl = mUrl.substring(mUrl.indexOf("=") + 1);
-            Logger.d(realUrl);
-            webView.loadUrl(realUrl);
+//            String realUrl = mUrl.substring(mUrl.indexOf("=") + 1);
+//            Logger.d(realUrl);
+            webView.loadUrl(mUrl);
         }
 
     }
@@ -98,7 +110,7 @@ public class BaseWebViewActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @OnClick(R.id.ib_back)
+    @OnClick(R.id.rl_back)
     void onClick() {
         finish();
     }

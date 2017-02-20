@@ -2,6 +2,7 @@ package com.cicinnus.cateye.module.movie.movie_video;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentCountPostBean;
 import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.VideoPostBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListFragment;
@@ -55,8 +57,12 @@ public class MovieVideoActivity extends BaseActivity {
     private static final String VIDEO_URL = "video_url";
     private static final String VIDEO_NAME = "video_name";
     private static final String VIDEO_ID = "video_id";
+    private static final String IS_MV = "is_mv";
+    private static final String MV_DATA = "mv_data";
     private int videoId;
     private int movieId;
+    private boolean mIsMv = false;
+    private MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean videoBean;
 
     public static void start(Context context, int movieId,int videoId,String videoName, String url) {
         Intent starter = new Intent(context, MovieVideoActivity.class);
@@ -64,6 +70,19 @@ public class MovieVideoActivity extends BaseActivity {
         starter.putExtra(VIDEO_ID, videoId);
         starter.putExtra(VIDEO_NAME, videoName);
         starter.putExtra(VIDEO_URL, url);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, int movieId,int videoId,String videoName, String url,boolean isMV,MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean dataBean) {
+        Intent starter = new Intent(context, MovieVideoActivity.class);
+        starter.putExtra(MOVIE_ID, movieId);
+        starter.putExtra(VIDEO_ID, videoId);
+        starter.putExtra(VIDEO_NAME, videoName);
+        starter.putExtra(VIDEO_URL, url);
+        starter.putExtra(IS_MV, isMV);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MV_DATA,dataBean);
+        starter.putExtra("bundle",bundle);
         context.startActivity(starter);
     }
 
@@ -78,6 +97,10 @@ public class MovieVideoActivity extends BaseActivity {
         String videoName = getIntent().getStringExtra(VIDEO_NAME);
         videoId = getIntent().getIntExtra(VIDEO_ID,0);
         movieId = getIntent().getIntExtra(MOVIE_ID,0);
+        mIsMv = getIntent().getBooleanExtra(IS_MV,false);
+        if (getIntent().getBundleExtra("bundle") != null) {
+            videoBean = getIntent().getBundleExtra("bundle").getParcelable(MV_DATA);
+        }
         videoplayer.setUp(videoUrl, JCVideoPlayer.SCREEN_LAYOUT_NORMAL, videoName);
 
         setUpViewPager();
@@ -92,7 +115,7 @@ public class MovieVideoActivity extends BaseActivity {
         view.setLayoutParams(params);
 
         final List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(VideoListFragment.newInstance(movieId));
+        fragmentList.add(VideoListFragment.newInstance(movieId,mIsMv,videoBean));
         fragmentList.add(VideoCommentListFragment.newInstance(videoId));
 
 
