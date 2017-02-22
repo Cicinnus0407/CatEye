@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/divider_normal"
+    android:orientation="vertical">
+
+    <TextView
+        android:paddingLeft="@dimen/dp_14"
+        android:id="@+id/tv_movie_related_companies_title"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</LinearLayout>

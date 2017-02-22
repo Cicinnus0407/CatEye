@@ -39,6 +39,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.net.SchedulersCompat;
@@ -591,6 +592,31 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             }
         }
         MovieResourceAdapter movieResourceAdapter = new MovieResourceAdapter();
+        movieResourceAdapter.setMovieResourceClickListener(new MovieResourceAdapter.IMovieResourceClickListener() {
+            @Override
+            public void onClick(String type) {
+                switch (type){
+                    case "behindScene":
+
+                        break;
+                    case "highlights":
+                        MovieResourceActivity.start(mContext,movieId,"highlights");
+                        break;
+                    case "technicals":
+                        MovieResourceActivity.start(mContext,movieId,"technicals");
+                        break;
+                    case "dialogues":
+                        MovieResourceActivity.start(mContext,movieId,"dialogues");
+                        break;
+                    case "relatedCompanies":
+                        MovieResourceActivity.start(mContext,movieId,"relatedCompanies");
+                        break;
+                    case "parentguidances":
+                        MovieResourceActivity.start(mContext,movieId,"parentguidances");
+                        break;
+                }
+            }
+        });
         rvMovieResource.setLayoutManager(new GridLayoutManager(mContext, 2));
         rvMovieResource.setAdapter(movieResourceAdapter);
         rvMovieResource.setNestedScrollingEnabled(false);

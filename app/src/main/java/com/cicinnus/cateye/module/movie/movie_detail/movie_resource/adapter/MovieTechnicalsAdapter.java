@@ -16,5 +16,7 @@ public class MovieTechnicalsAdapter extends BaseQuickAdapter<MovieTechnicalsBean
 
     @Override
     protected void convert(BaseViewHolder helper, MovieTechnicalsBean.DataBean.ItemsBean item) {
+        helper.setText(R.id.tv_technicals_title,item.getTitle())
+                .setText(R.id.tv_technicals_content,item.getDesc());
     }
 }

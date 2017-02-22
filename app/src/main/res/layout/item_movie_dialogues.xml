@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
+
+
+    <TextView
+        android:id="@+id/tv_dialogues_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/dp_6"
+        android:textColor="@color/text_primary"
+        tools:text="内容" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:gravity="center_vertical">
+
+        <com.cicinnus.cateye.view.CircleImageView
+            android:id="@+id/civ_username"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            tools:src="@drawable/icon_default" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_gray_deep"
+            android:textSize="@dimen/sp_12"
+            tools:text="发布者" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/divider_normal" />
+
+</LinearLayout>

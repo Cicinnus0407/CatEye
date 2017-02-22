@@ -25,7 +25,11 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieDialoguesBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHighLightsBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieAlbumBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarHonor;
@@ -258,11 +262,24 @@ public interface Api {
     @GET("mmdb/movie/{movieId}/feature/musics.json")
     Observable<MovieMusicBean> getMovieMusic(@Path("movieId")int movieId);
 
+    //幕后花絮
+    @GET("mmdb/movie/{movieId}/feature/highlights.json")
+    Observable<MovieHighLightsBean> getMovieHighLights(@Path("movieId")int movieId);
 
     //影片技术参数
     @GET("mmdb/movie/{movieId}/feature/v1/technicals.json")
     Observable<MovieTechnicalsBean> getMovieTechnicals(@Path("movieId")int movieId);
 
-    //
+    //经典台词
+    @GET("mmdb/movie/{movieId}/feature/dialogues.json")
+    Observable<MovieDialoguesBean> getMovieDialogues(@Path("movieId")int movieId);
+
+    //出品发行
+    @GET("mmdb/movie/{movieId}/feature/relatedCompanies.json")
+    Observable<MovieRelatedCompanies> getMovieRelatedCompanies(@Path("movieId")int movieId);
+
+    //家长指引
+    @GET("mmdb/movie/{movieId}/feature/v1/parentguidances.json")
+    Observable<MovieParentGuidancesBean> getMovieParentGuidances(@Path("movieId")int movieId);
 
 }

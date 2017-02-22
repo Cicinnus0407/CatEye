@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
+
+    <TextView
+        android:id="@+id/tv_technicals_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/sp_12"
+        tools:text="时长" />
+
+    <TextView
+        android:id="@+id/tv_technicals_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textColor="@color/text_primary"
+        tools:text="1小时40分钟" />
+
+    <View
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/divider_normal"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 
 </LinearLayout>

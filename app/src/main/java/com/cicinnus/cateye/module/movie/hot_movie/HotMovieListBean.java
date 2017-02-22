@@ -12,8 +12,6 @@ import java.util.List;
 public class HotMovieListBean {
 
 
-
-
     private DataBean data;
 
     public DataBean getData() {
@@ -90,7 +88,7 @@ public class HotMovieListBean {
             this.movies = movies;
         }
 
-        public static class HotBean implements MultiItemEntity{
+        public static class HotBean implements MultiItemEntity {
             /**
              * boxInfo : 上映12天，累计票房26263万
              * cat : 爱情,冒险,科幻
@@ -577,11 +575,12 @@ public class HotMovieListBean {
 
             @Override
             public int getItemType() {
-                if(getHeadLinesVO()==null){
-                    return BaseConstant.TYPE_HOT_NORMAL;
-                }else {
+                if (getHeadLinesVO() != null && getHeadLinesVO().size() > 0) {
+
                     return BaseConstant.TYPE_HOT_HEADLINE;
                 }
+                return BaseConstant.TYPE_HOT_NORMAL;
+
             }
 
             public static class HeadLinesVOBean {
@@ -750,6 +749,7 @@ public class HotMovieListBean {
             private int weight;
             private int wish;
             private int wishst;
+
             public String getBoxInfo() {
                 return boxInfo;
             }
