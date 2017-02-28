@@ -62,6 +62,12 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
 
         View view_search_header = mContext.getLayoutInflater().inflate(R.layout.layout_search, (ViewGroup) rvHotMovieList.getParent(), false);
         ((TextView) view_search_header.findViewById(R.id.tv_search_content)).setText("找影片、影人、影院");
+        view_search_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 跳转搜索
+            }
+        });
         hotMovieListAdapter.addHeaderView(view_search_header);
 
         //下拉刷新

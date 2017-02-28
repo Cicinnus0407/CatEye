@@ -35,7 +35,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
     @Override
     public void getMovieData(int movieId) {
         mView.showLoading();
-        //merge操作只支持9个,所以分开两次获取
+        //merge操作只支持9个,所以分开获取
         addSubscribe(Observable.merge(
                 movieDetailManager.getMovieBasicData(movieId),
                 movieDetailManager.getMovieTips(movieId),

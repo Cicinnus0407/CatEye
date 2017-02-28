@@ -25,6 +25,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieDialoguesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHighLightsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
@@ -281,5 +282,11 @@ public interface Api {
     //家长指引
     @GET("mmdb/movie/{movieId}/feature/v1/parentguidances.json")
     Observable<MovieParentGuidancesBean> getMovieParentGuidances(@Path("movieId")int movieId);
+
+    //电影资讯
+    @GET("sns/news/v3/type/0/target/{movieId}.json")
+    Observable<MovieInformationBean> getMovieInformation(@Path("movieId")int movieId,
+                                                         @Query("limit")int limit,
+                                                         @Query("offset")int offset);
 
 }

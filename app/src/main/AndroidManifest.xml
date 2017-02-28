@@ -79,6 +79,8 @@
         <activity
             android:name=".module.movie.movie_detail.movie_resource.MovieResourceActivity"
             android:screenOrientation="portrait" />
+        <!--电影资讯-->
+        <activity android:name=".module.movie.movie_detail.movie_information.MovieInformationActivity" />
     </application>
 
 </manifest>

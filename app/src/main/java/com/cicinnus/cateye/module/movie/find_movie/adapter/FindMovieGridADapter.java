@@ -19,8 +19,8 @@ import com.cicinnus.cateye.tools.GlideManager;
  * Created by Cicinnus on 2017/2/2.
  */
 
-public class FindMovieGridAdapter extends BaseQuickAdapter<GridMovieBean.DataBean, BaseViewHolder> {
-    public FindMovieGridAdapter() {
+public class FindMovieGridADapter extends BaseQuickAdapter<GridMovieBean.DataBean, BaseViewHolder> {
+    public FindMovieGridADapter() {
         super(R.layout.item_grid_movie, null);
     }
 
@@ -48,7 +48,6 @@ public class FindMovieGridAdapter extends BaseQuickAdapter<GridMovieBean.DataBea
 
         }
         tv_type.setTextColor(color);
-
 
         String originalUrl0 = item.getMovieImgs().get(0);
         String imgUrl0 = originalUrl0.replace("/w.h/", "/") + ".webp@129w_183h_1e_1c_1l";

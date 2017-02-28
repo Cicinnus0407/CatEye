@@ -39,6 +39,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
@@ -204,6 +205,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      *************/
     @BindView(R.id.ll_related_information)
     LinearLayout llRelatedInformation;
+    @BindView(R.id.ll_related_information_content)
+    LinearLayout llRelatedInformationContent;
+    @BindView(R.id.ll_all_related_information)
+    LinearLayout llAllRelatedInformation;
     @BindView(R.id.iv_related_information)
     ImageView ivRelatedInformation;
     @BindView(R.id.tv_related_information_title)
@@ -240,6 +245,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     private static final String MOVIE_ID = "movie_id";
     private int movieId;//电影Id
     private String mMovieName;
+    private String mTitle;
 
     public static void start(Context context, int movieId) {
         Intent starter = new Intent(context, MovieDetailActivity.class);
@@ -738,7 +744,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 .compose(SchedulersCompat.<MovieRelatedInformationBean.DataBean.NewsListBean>applyIoSchedulers())
                 .subscribe(new Action1<MovieRelatedInformationBean.DataBean.NewsListBean>() {
                     @Override
-                    public void call(MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
+                    public void call(final MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
                         tvRelatedInformationTitle.setText(newsListBean.getTitle());
                         tvRelatedInformationAuthor.setText(newsListBean.getSource());
                         tvRelatedInformationViewCount.setText(String.format("%s", newsListBean.getViewCount()));
@@ -746,6 +752,18 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
                         GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
 
+                        llRelatedInformationContent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                BaseWebViewActivity.start(mContext,StringUtil.getRealUrl(newsListBean.getUrl()));
+                            }
+                        });
+                        llAllRelatedInformation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MovieInformationActivity.start(mContext,movieId,mTitle);
+                            }
+                        });
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -753,6 +771,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         llRelatedInformation.setVisibility(View.GONE);
                     }
                 });
+
     }
 
     /**
@@ -844,7 +863,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     private void setTitle(MovieBasicDataBean.DataBean.MovieBean movie) {
         tvTitle.setTextColor(mContext.getResources().getColor(android.R.color.transparent));
         tvSubTitle.setTextColor(mContext.getResources().getColor(android.R.color.transparent));
-        tvTitle.setText(movie.getNm());//中文主标题
+        mTitle = movie.getNm();
+        tvTitle.setText(mTitle);//中文主标题
         tvSubTitle.setText(movie.getEnm());//英文副标题
         mMovieName = movie.getNm();
     }
@@ -941,7 +961,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mPresenter.getMovieData(movieId);
+                mPresenter.getMovieMoreData(movieId);
+                mPresenter.getMovieSecondData(movieId);
             }
         });
     }

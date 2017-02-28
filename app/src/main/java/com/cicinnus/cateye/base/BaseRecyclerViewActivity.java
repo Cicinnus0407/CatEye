@@ -15,7 +15,8 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 
 /**
- * Created by Cicinnus on 2017/2/5.
+ * 简单显示一个列表的Activity
+ * 子类需实现相关的抽象方法和编写adapter
  */
 
 public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends BaseActivity implements ILoadingView {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
+import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.module.movie.movie_star.adapter.StarMoviesAdapter;
 import com.cicinnus.cateye.module.movie.movie_star.adapter.StarPhotosAdapter;
 import com.cicinnus.cateye.module.movie.movie_star.adapter.StarRelatedPeopleAdapter;
@@ -414,13 +415,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
      * @param relatedInformationBean
      */
     @Override
-    public void addRelatedInformation(RelatedInformationBean relatedInformationBean) {
-        llRelatedInformation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 资讯页
-            }
-        });
+    public void addRelatedInformation(final RelatedInformationBean relatedInformationBean) {
+
         Observable.just(relatedInformationBean)
                 .flatMap(new Func1<RelatedInformationBean, Observable<RelatedInformationBean.DataBean.NewsListBean>>() {
                     @Override
@@ -444,9 +440,15 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                     }
 
                     @Override
-                    public void onNext(RelatedInformationBean.DataBean.NewsListBean newsListBean) {
+                    public void onNext(final RelatedInformationBean.DataBean.NewsListBean newsListBean) {
                         GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
                         tvRelatedInformationContent.setText(newsListBean.getTitle());
+                        llRelatedInformation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                BaseWebViewActivity.start(mContext,StringUtil.getRealUrl(newsListBean.getUrl()));
+                            }
+                        });
                     }
                 });
     }

@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -26,7 +27,7 @@ public class ClassifySearchListAdapter extends BaseMultiItemQuickAdapter<Classif
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ClassifySearchBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, final ClassifySearchBean.ListBean item) {
         String imgUrl = ImgSizeUtil.resetPicUrl(item.getImg(), ".webp@210w_285h_1e_1c_1l");
         GlideManager.loadImage(mContext, imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
         helper.setText(R.id.tv_movie_name, item.getNm())
@@ -70,5 +71,11 @@ public class ClassifySearchListAdapter extends BaseMultiItemQuickAdapter<Classif
                 }
                 break;
         }
+        helper.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getId());
+            }
+        });
     }
 }

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.AwardsMovieAdapter;
-import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieGridAdapter;
+import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieGridADapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieNationAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMoviePeriodAdapter;
 import com.cicinnus.cateye.module.movie.find_movie.adapter.FindMovieTypeAdapter;
@@ -62,7 +62,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
     private FindMovieTypeAdapter findMovieTypeAdapter;
     private FindMovieNationAdapter findMovieNationAdapter;
     private FindMoviePeriodAdapter findMoviePeriodAdapter;
-    private FindMovieGridAdapter findMovieGridAdapter;
+    private FindMovieGridADapter findMovieGridADapter;
     private AwardsMovieAdapter awardsMovieAdapter;
 
     private boolean isFirst = true;
@@ -141,8 +141,8 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         //表格RecyclerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
         rvFindMovieGrid.setLayoutManager(gridLayoutManager);
-        findMovieGridAdapter = new FindMovieGridAdapter();
-        rvFindMovieGrid.setAdapter(findMovieGridAdapter);
+        findMovieGridADapter = new FindMovieGridADapter();
+        rvFindMovieGrid.setAdapter(findMovieGridADapter);
         rvFindMovieGrid.setNestedScrollingEnabled(false);//禁止滑动
 
         //获奖电影
@@ -171,7 +171,7 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
 
     @Override
     public void addMovieGrid(List<GridMovieBean.DataBean> data) {
-        findMovieGridAdapter.setNewData(data);
+        findMovieGridADapter.setNewData(data);
     }
 
     @Override
