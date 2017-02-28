@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
+
+    <TextView
+        android:id="@+id/tv_movie_topic_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:id="@+id/iv_movie_topic_img1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_movie_topic_img2"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_weight="1"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_movie_topic_img3"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_weight="1"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:id="@+id/fl_author_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+
+            <com.cicinnus.cateye.view.CircleImageView
+                android:id="@+id/civ_author"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/iv_user_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                tools:src="@drawable/ic_lv1" />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_movie_topic_author"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:textSize="@dimen/sp_12"
+            tools:text="名字" />
+
+        <TextView
+            android:id="@+id/tv_movie_topic_date"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_12"
+            tools:text="日期" />
+
+
+        <TextView
+            android:id="@+id/tv_movie_topic_up_count"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_good"
+            android:drawablePadding="@dimen/dp_6"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12"
+            tools:text="赞" />
+
+
+        <TextView
+            android:id="@+id/tv_movie_topic_comment_count"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/dp_6"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12"
+            tools:text="回复" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/dp_14"
+        android:background="@color/divider_normal" />
+
+
+</LinearLayout>

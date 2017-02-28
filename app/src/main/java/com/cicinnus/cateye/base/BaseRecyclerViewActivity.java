@@ -48,7 +48,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
 
     @Override
     protected void initEventAndData() {
-        tvTitle.setText(getTitleText());
+        tvTitle.setText(getTitleText()==null?"":getTitleText());
         rlBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -255,6 +255,7 @@
                         android:layout_height="1px"
                         android:background="@color/divider_normal" />
 
+                    <!--长评论-->
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_long_comment"
                         android:layout_width="match_parent"
@@ -265,18 +266,16 @@
                         android:layout_height="@dimen/dp_14"
                         android:background="@color/divider_normal" />
 
+                    <!--电影资讯-->
                     <include layout="@layout/layout_movie_related_information" />
-
-
+                    <!--相关话题-->
+                    <include layout="@layout/layout_movie_related_topic" />
+                    <!--相关电影-->
                     <include layout="@layout/layout_related_movie" />
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_14"
-                        android:background="@color/divider_normal" />
 
-                    <include layout="@layout/layout_movie_related_topic" />
+
 
                 </LinearLayout>
 

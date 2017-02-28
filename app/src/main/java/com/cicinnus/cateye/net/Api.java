@@ -28,11 +28,12 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieDialoguesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHighLightsBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
-import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieAlbumBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicListBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarHonor;
 import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarInfoBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.RelatedInformationBean;
@@ -288,5 +289,11 @@ public interface Api {
     Observable<MovieInformationBean> getMovieInformation(@Path("movieId")int movieId,
                                                          @Query("limit")int limit,
                                                          @Query("offset")int offset);
+
+    //电影话题
+    @GET("sns/group/{groupId}/normalTopics.json")
+    Observable<MovieTopicListBean> getMovieTopicList(@Path("groupId")int movieId,
+                                                 @Query("limit")int limit,
+                                                 @Query("offset")int offset);
 
 }

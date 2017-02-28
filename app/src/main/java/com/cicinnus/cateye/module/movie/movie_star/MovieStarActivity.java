@@ -45,7 +45,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 
 /**
- * Created by Cicinnus on 2017/2/18.
+ * 影人界面
  */
 
 public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implements MovieStarContract.IMovieStarView {

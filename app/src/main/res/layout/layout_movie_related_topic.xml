@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_14"
+        android:background="@color/divider_normal" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="43dp"

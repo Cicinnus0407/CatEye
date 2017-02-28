@@ -58,5 +58,11 @@ public interface BaseConstant {
     //电影资讯
     int TYPE_MOVIE_INFORMATION_ONE_IMG = 0;
     int TYPE_MOVIE_INFORMATION_MULTI_IMG = 1;
+
+    //电影话题
+    int TYPE_MOVIE_TOPIC_ONE_IMG= 0;
+    int TYPE_MOVIE_TOPIC_MULTI_IMG= 1;
+    int TYPE_MOVIE_TOPIC_NO_IMG =2;
+
 }
 

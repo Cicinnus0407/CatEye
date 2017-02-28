@@ -42,6 +42,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
@@ -231,6 +232,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      ************/
     @BindView(R.id.ll_related_topic)
     LinearLayout llRelatedTopic;
+    @BindView(R.id.ll_all_related_topic)
+    LinearLayout llALlRelatedTopic;
     @BindView(R.id.iv_related_topic)
     ImageView ivRelatedTopic;
     @BindView(R.id.tv_related_topic_title)
@@ -840,7 +843,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
 
                     @Override
-                    public void onNext(MovieTopicBean.DataBean.TopicsBean topicsBean) {
+                    public void onNext(final MovieTopicBean.DataBean.TopicsBean topicsBean) {
                         if (topicsBean.getPreviews().get(0).getUrl() != null) {
                             GlideManager.loadImage(mContext, topicsBean.getPreviews().get(0).getUrl(), ivRelatedTopic);
                         } else {
@@ -850,6 +853,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         tvRelatedTopicAuthor.setText(topicsBean.getAuthor().getNickName());
                         tvRelatedTopicViewCount.setText(String.format("%s", topicsBean.getViewCount()));
                         tvRelatedTopicCommentCount.setText(String.format("%s", topicsBean.getCommentCount()));
+                        llALlRelatedTopic.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MovieTopicActivity.start(mContext, topicsBean.getGroupId());
+                            }
+                        });
+
                     }
                 });
     }

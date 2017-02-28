@@ -15,7 +15,7 @@ public class TimeUtils {
     }
 
     public static String dateYMD(long time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         return format.format(time);
     }
 
