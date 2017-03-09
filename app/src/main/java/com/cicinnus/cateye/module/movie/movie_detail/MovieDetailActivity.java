@@ -24,8 +24,10 @@ import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieAwardsAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieProCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieResourceAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieStarListAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieTipsAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.RelatedMovieAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieAwardsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
@@ -33,6 +35,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MoviePhotosBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
@@ -135,12 +138,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     /******
      * 观影小贴士
      ***********/
-    @BindView(R.id.iv_tips)
-    ImageView ivTips;
-    @BindView(R.id.tv_tips)
-    TextView tvTips;
     @BindView(R.id.ll_tips)
     LinearLayout llTips;
+    @BindView(R.id.rv_movie_tips)
+    RecyclerView rvMovieTips;
     /**************
      * 导演,演员
      *****************/
@@ -187,6 +188,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      **********/
     @BindView(R.id.rv_movie_resource)
     RecyclerView rvMovieResource;
+    /***
+     * 专业评论
+     */
+    @BindView(R.id.ll_pro_comment)
+    LinearLayout llProComment;
+    @BindView(R.id.rv_movie_pro_comment)
+    RecyclerView rvMovieProComment;
     /*************
      * 评论tag
      **********/
@@ -302,7 +310,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         llTitle.setLayoutParams(title_params);
 
         FrameLayout.LayoutParams progressLayoutParams = (FrameLayout.LayoutParams) progressLayout.getLayoutParams();
-        progressLayoutParams.setMargins(0,-height,0,0);
+        progressLayoutParams.setMargins(0, -height, 0, 0);
         progressLayout.setLayoutParams(progressLayoutParams);
     }
 
@@ -378,8 +386,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return Observable.error(new Exception("empty data"));
                     }
                 })
-                .compose(SchedulersCompat.<MovieTipsBean.DataBean.TipsBean>applyIoSchedulers())
-                .subscribe(new Subscriber<MovieTipsBean.DataBean.TipsBean>() {
+                .toList()
+                .compose(SchedulersCompat.<List<MovieTipsBean.DataBean.TipsBean>>applyIoSchedulers())
+                .subscribe(new Subscriber<List<MovieTipsBean.DataBean.TipsBean>>() {
                     @Override
                     public void onCompleted() {
 
@@ -391,9 +400,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
 
                     @Override
-                    public void onNext(MovieTipsBean.DataBean.TipsBean tipsBean) {
-                        GlideManager.loadImage(mContext, tipsBean.getTipImg(), ivTips);
-                        tvTips.setText(tipsBean.getContent());
+                    public void onNext(List<MovieTipsBean.DataBean.TipsBean> tipsBeanList) {
+                        MovieTipsAdapter movieTipsAdapter = new MovieTipsAdapter();
+                        rvMovieTips.setLayoutManager(new LinearLayoutManager(mContext));
+                        rvMovieTips.setNestedScrollingEnabled(false);
+                        rvMovieTips.setAdapter(movieTipsAdapter);
+                        movieTipsAdapter.setNewData(tipsBeanList);
                     }
                 });
     }
@@ -412,7 +424,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             llMovieMusic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MovieSoundTrackActivity.start(mContext,movie.getId());
+                    MovieSoundTrackActivity.start(mContext, movie.getId());
                 }
             });
         }
@@ -429,7 +441,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             MoviePhotosBean bean = new MoviePhotosBean();
             bean.setVideo(true);
             bean.setVideoImg(movie.getVideoImg());
-            bean.setMovieTitle(movie.getNm()+" "+movie.getVideoName());
+            bean.setMovieTitle(movie.getNm() + " " + movie.getVideoName());
             bean.setUrl(movie.getVideourl());
             bean.setMovieId(movie.getId());
             bean.setVideoNum(movie.getVnum());
@@ -518,7 +530,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         rlMoneyBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseWebViewActivity.start(mContext,moneyBoxBean.getUrl(),mMovieName);
+                BaseWebViewActivity.start(mContext, moneyBoxBean.getUrl(), mMovieName);
             }
         });
         if (moneyBoxBean.getMbox().getFirstWeekBox() == 0
@@ -596,7 +608,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addMovieResource(List<MovieResourceBean.DataBean> movieResources) {
         for (int i = 0; i < movieResources.size(); i++) {
-            if(movieResources.get(i).getName().equals("filmMusics")){
+            if (movieResources.get(i).getName().equals("filmMusics")) {
                 movieResources.remove(i);
             }
         }
@@ -604,24 +616,24 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         movieResourceAdapter.setMovieResourceClickListener(new MovieResourceAdapter.IMovieResourceClickListener() {
             @Override
             public void onClick(String type) {
-                switch (type){
+                switch (type) {
                     case "behindScene":
 
                         break;
                     case "highlights":
-                        MovieResourceActivity.start(mContext,movieId,"highlights");
+                        MovieResourceActivity.start(mContext, movieId, "highlights");
                         break;
                     case "technicals":
-                        MovieResourceActivity.start(mContext,movieId,"technicals");
+                        MovieResourceActivity.start(mContext, movieId, "technicals");
                         break;
                     case "dialogues":
-                        MovieResourceActivity.start(mContext,movieId,"dialogues");
+                        MovieResourceActivity.start(mContext, movieId, "dialogues");
                         break;
                     case "relatedCompanies":
-                        MovieResourceActivity.start(mContext,movieId,"relatedCompanies");
+                        MovieResourceActivity.start(mContext, movieId, "relatedCompanies");
                         break;
                     case "parentguidances":
-                        MovieResourceActivity.start(mContext,movieId,"parentguidances");
+                        MovieResourceActivity.start(mContext, movieId, "parentguidances");
                         break;
                 }
             }
@@ -758,13 +770,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         llRelatedInformationContent.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                BaseWebViewActivity.start(mContext,StringUtil.getRealUrl(newsListBean.getUrl()));
+                                BaseWebViewActivity.start(mContext, StringUtil.getRealUrl(newsListBean.getUrl()));
                             }
                         });
                         llAllRelatedInformation.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MovieInformationActivity.start(mContext,movieId,mTitle);
+                                MovieInformationActivity.start(mContext, movieId, mTitle);
                             }
                         });
                     }
@@ -862,6 +874,20 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
                     }
                 });
+    }
+
+    @Override
+    public void addMovieProComment(List<MovieProCommentBean.DataBean> data) {
+        if (data.size() == 0) {
+            llProComment.setVisibility(View.GONE);
+            return;
+        }
+        rvMovieProComment.setLayoutManager(new LinearLayoutManager(mContext));
+        rvMovieProComment.setNestedScrollingEnabled(false);
+        MovieProCommentAdapter movieProCommentAdapter = new MovieProCommentAdapter();
+        rvMovieProComment.setAdapter(movieProCommentAdapter);
+        movieProCommentAdapter.setNewData(data);
+
     }
 
 

@@ -8,6 +8,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
@@ -15,6 +16,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.net.SchedulersCompat;
+import com.orhanobut.logger.Logger;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -100,6 +102,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
         addSubscribe(Observable.merge(
                 movieDetailManager.getMovieCommentTag(movieId),
                 movieDetailManager.getMovieLongComment(movieId),
+                movieDetailManager.getMovieProComment(movieId),
                 movieDetailManager.getMovieRelatedInformation(movieId),
                 movieDetailManager.getRelatedMovie(movieId),
                 movieDetailManager.getMovieTopic(movieId))
@@ -108,13 +111,18 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                     @Override
                     public void onCompleted() {
                     }
+
                     @Override
                     public void onError(Throwable e) {
+                        Logger.e(e.getMessage());
                     }
+
                     @Override
                     public void onNext(Object o) {
                         if (o instanceof MovieCommentTagBean) {
                             mView.addMovieCommentTag(((MovieCommentTagBean) o).getData());
+                        } else if (o instanceof MovieProCommentBean) {
+                            mView.addMovieProComment(((MovieProCommentBean) o).getData());
                         } else if (o instanceof MovieLongCommentBean) {
                             mView.addMovieLongComment(((MovieLongCommentBean) o).getData());
                         } else if (o instanceof MovieRelatedInformationBean) {

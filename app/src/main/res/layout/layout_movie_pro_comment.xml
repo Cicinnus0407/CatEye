@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/ll_tips"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_pro_comment"
+    android:background="@color/white"
     android:orientation="vertical">
 
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_14"
-        android:text="观影小贴士"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/sp_16" />
+        android:text="专业评论"
+        android:textColor="@color/text_primary" />
 
     <View
         android:layout_width="match_parent"
@@ -20,14 +20,14 @@
         android:background="@color/divider_normal" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_movie_tips"
+        android:id="@+id/rv_movie_pro_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <View
-        android:background="@color/divider_normal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_14"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_14"
+        android:background="@color/divider_normal" />
 
 </LinearLayout>

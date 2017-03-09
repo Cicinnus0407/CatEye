@@ -19,6 +19,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
@@ -204,6 +205,12 @@ public interface Api {
     @GET("sns/movie/{movieId}/filmReview/top.json")
     Observable<MovieLongCommentBean> getMovieLongComment(@Path("movieId") int movieId);
 
+    //专业评论
+    @GET("mmdb/comments/pro/movie/{movieId}.json")
+    Observable<MovieProCommentBean> getMovieProComment(@Path("movieId") int movieId,
+                                                       @Query("offset") int offset,
+                                                       @Query("limit") int limit);
+
     //相关资讯
     @GET("sns/news/v3/type/0/target/{movieId}/top.json")
     Observable<MovieRelatedInformationBean> getMovieRelatedInformation(@Path("movieId") int movieId);
@@ -229,71 +236,71 @@ public interface Api {
     //视频评论
     @GET("mmdb/comments/feature/v2/{movieId}.json")
     Observable<VideoCommentListBean> getVideoComment(@Path("movieId") int movieId,
-                                                     @Query("feature")String feature,
+                                                     @Query("feature") String feature,
                                                      @Query("limit") int limit,
                                                      @Query("offset") int offset);
 
 
     //影人资料
     @GET("mmdb/v6/celebrity/{starId}.json")
-    Observable<MovieStarInfoBean> getMovieStarInfoBean(@Path("starId")int starId);
+    Observable<MovieStarInfoBean> getMovieStarInfoBean(@Path("starId") int starId);
 
     //影人荣誉
     @GET("mmdb/celebrity/{starId}/honors.json")
-    Observable<MovieStarHonor> getMovieStarHonors(@Path("starId")int starId);
+    Observable<MovieStarHonor> getMovieStarHonors(@Path("starId") int starId);
 
     //参演电影
     @GET("mmdb/celebrity/{starId}/rank/movies.json")
-    Observable<StarMoviesBean> getStarMovies(@Path("starId")int starId,
-                                             @Query("limit")int limit,
-                                             @Query("offset")int offset);
+    Observable<StarMoviesBean> getStarMovies(@Path("starId") int starId,
+                                             @Query("limit") int limit,
+                                             @Query("offset") int offset);
 
     //相关资讯
     @GET("sns/news/v3/type/1/target/{starId}/top.json")
-    Observable<RelatedInformationBean> getRelatedInformation(@Path("starId")int starId);
+    Observable<RelatedInformationBean> getRelatedInformation(@Path("starId") int starId);
 
     //相关影人
     @GET("mmdb/celebrity/{starId}/relationship.json")
-    Observable<StarRelatedPeople> getStarRelatedPeople(@Path("starId")int starId);
+    Observable<StarRelatedPeople> getStarRelatedPeople(@Path("starId") int starId);
 
     //影片专辑
     @GET("mmdb/movie/{movieId}/feature/album.json")
-    Observable<MovieAlbumBean> getMovieAlbum(@Path("movieId")int movieId);
+    Observable<MovieAlbumBean> getMovieAlbum(@Path("movieId") int movieId);
 
     //影片原声列表
     @GET("mmdb/movie/{movieId}/feature/musics.json")
-    Observable<MovieMusicBean> getMovieMusic(@Path("movieId")int movieId);
+    Observable<MovieMusicBean> getMovieMusic(@Path("movieId") int movieId);
 
     //幕后花絮
     @GET("mmdb/movie/{movieId}/feature/highlights.json")
-    Observable<MovieHighLightsBean> getMovieHighLights(@Path("movieId")int movieId);
+    Observable<MovieHighLightsBean> getMovieHighLights(@Path("movieId") int movieId);
 
     //影片技术参数
     @GET("mmdb/movie/{movieId}/feature/v1/technicals.json")
-    Observable<MovieTechnicalsBean> getMovieTechnicals(@Path("movieId")int movieId);
+    Observable<MovieTechnicalsBean> getMovieTechnicals(@Path("movieId") int movieId);
 
     //经典台词
     @GET("mmdb/movie/{movieId}/feature/dialogues.json")
-    Observable<MovieDialoguesBean> getMovieDialogues(@Path("movieId")int movieId);
+    Observable<MovieDialoguesBean> getMovieDialogues(@Path("movieId") int movieId);
 
     //出品发行
     @GET("mmdb/movie/{movieId}/feature/relatedCompanies.json")
-    Observable<MovieRelatedCompanies> getMovieRelatedCompanies(@Path("movieId")int movieId);
+    Observable<MovieRelatedCompanies> getMovieRelatedCompanies(@Path("movieId") int movieId);
 
     //家长指引
     @GET("mmdb/movie/{movieId}/feature/v1/parentguidances.json")
-    Observable<MovieParentGuidancesBean> getMovieParentGuidances(@Path("movieId")int movieId);
+    Observable<MovieParentGuidancesBean> getMovieParentGuidances(@Path("movieId") int movieId);
 
     //电影资讯
     @GET("sns/news/v3/type/0/target/{movieId}.json")
-    Observable<MovieInformationBean> getMovieInformation(@Path("movieId")int movieId,
-                                                         @Query("limit")int limit,
-                                                         @Query("offset")int offset);
+    Observable<MovieInformationBean> getMovieInformation(@Path("movieId") int movieId,
+                                                         @Query("limit") int limit,
+                                                         @Query("offset") int offset);
 
     //电影话题
     @GET("sns/group/{groupId}/normalTopics.json")
-    Observable<MovieTopicListBean> getMovieTopicList(@Path("groupId")int movieId,
-                                                 @Query("limit")int limit,
-                                                 @Query("offset")int offset);
+    Observable<MovieTopicListBean> getMovieTopicList(@Path("groupId") int movieId,
+                                                     @Query("limit") int limit,
+                                                     @Query("offset") int offset);
 
 }

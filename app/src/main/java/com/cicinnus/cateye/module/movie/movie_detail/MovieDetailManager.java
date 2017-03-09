@@ -5,6 +5,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
@@ -111,6 +112,18 @@ public class MovieDetailManager {
                 .getInstance()
                 .api()
                 .getMovieLongComment(movieId);
+    }
+
+    /**
+     * 获取专业影评
+     * @param movieId
+     * @return
+     */
+    public Observable<MovieProCommentBean> getMovieProComment(int movieId){
+        return RetrofitClient
+                .getInstance()
+                .api()
+                .getMovieProComment(movieId,0,3);
     }
 
     /**

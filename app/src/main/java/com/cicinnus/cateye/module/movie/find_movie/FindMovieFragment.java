@@ -144,7 +144,6 @@ public class FindMovieFragment extends BaseFragment<FindMoviePresenter> implemen
         findMovieGridADapter = new FindMovieGridADapter();
         rvFindMovieGrid.setAdapter(findMovieGridADapter);
         rvFindMovieGrid.setNestedScrollingEnabled(false);//禁止滑动
-
         //获奖电影
         awardsMovieAdapter = new AwardsMovieAdapter();
         rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
