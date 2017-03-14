@@ -382,8 +382,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                 .subscribe(new Action1<MovieStarHonor.DataBean>() {
                     @Override
                     public void call(MovieStarHonor.DataBean dataBean) {
-                        tvWinAwardTimes.setText(String.format("%s", dataBean.getAwardCount()));
-                        tvNominateTimes.setText(String.format("%s", dataBean.getNomCount()));
+                        tvWinAwardTimes.setText(String.format("%s", dataBean.getAwardCount()==null?"0":dataBean.getAwardCount()));
+                        tvNominateTimes.setText(String.format("%s", dataBean.getNomCount()==null?"0":dataBean.getNomCount()));
                         tvAwardTitle.setText(dataBean.getFestivalName());
                         tvAwardContent.setText(dataBean.getPrizeDesc());
                     }

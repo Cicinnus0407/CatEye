@@ -122,7 +122,7 @@ public class MovieDetailPresenter extends BasePresenter<MovieDetailContract.IMov
                         if (o instanceof MovieCommentTagBean) {
                             mView.addMovieCommentTag(((MovieCommentTagBean) o).getData());
                         } else if (o instanceof MovieProCommentBean) {
-                            mView.addMovieProComment(((MovieProCommentBean) o).getData());
+                            mView.addMovieProComment(((MovieProCommentBean) o));
                         } else if (o instanceof MovieLongCommentBean) {
                             mView.addMovieLongComment(((MovieLongCommentBean) o).getData());
                         } else if (o instanceof MovieRelatedInformationBean) {

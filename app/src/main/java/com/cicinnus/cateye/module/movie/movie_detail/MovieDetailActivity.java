@@ -43,6 +43,8 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
@@ -617,9 +619,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             @Override
             public void onClick(String type) {
                 switch (type) {
-                    case "behindScene":
-
-                        break;
                     case "highlights":
                         MovieResourceActivity.start(mContext, movieId, "highlights");
                         break;
@@ -726,6 +725,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvLongComment.getParent(), false);
                         footer.setBackgroundResource(R.color.white);
                         ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条长评论", filmReviewsBean.getTotal()));
+                        footer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MovieLongCommentActivity.start(mContext,movieId,mTitle);
+                            }
+                        });
                         movieLongCommentAdapter.addFooterView(footer);
                     }
                 }, new Action1<Throwable>() {
@@ -876,9 +881,13 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 });
     }
 
+    /**
+     * 专业影评
+     * @param movieProCommentBean 数据
+     */
     @Override
-    public void addMovieProComment(List<MovieProCommentBean.DataBean> data) {
-        if (data.size() == 0) {
+    public void addMovieProComment(MovieProCommentBean movieProCommentBean) {
+        if (movieProCommentBean.getData().size() == 0) {
             llProComment.setVisibility(View.GONE);
             return;
         }
@@ -886,7 +895,17 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         rvMovieProComment.setNestedScrollingEnabled(false);
         MovieProCommentAdapter movieProCommentAdapter = new MovieProCommentAdapter();
         rvMovieProComment.setAdapter(movieProCommentAdapter);
-        movieProCommentAdapter.setNewData(data);
+        View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvLongComment.getParent(), false);
+        footer.setBackgroundResource(R.color.white);
+        ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条专业评论", movieProCommentBean.getPaging().getTotal()));
+        footer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieProCommentActivity.start(mContext,movieId,mTitle);
+            }
+        });
+        movieProCommentAdapter.addFooterView(footer);
+        movieProCommentAdapter.setNewData(movieProCommentBean.getData());
 
     }
 

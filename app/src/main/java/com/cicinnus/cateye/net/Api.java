@@ -27,6 +27,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment.MovieLongCommentBeanList;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieDialoguesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHighLightsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
@@ -303,4 +304,9 @@ public interface Api {
                                                      @Query("limit") int limit,
                                                      @Query("offset") int offset);
 
+    //全部热门长评
+    @GET("sns/movie/{movieId}/filmReviews.json")
+    Observable<MovieLongCommentBeanList> getMovieLongCommentList(@Path("movieId")int movieId,
+                                                                 @Query("limit")int limit,
+                                                                 @Query("offset")int offset);
 }

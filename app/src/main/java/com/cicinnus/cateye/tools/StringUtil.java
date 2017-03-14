@@ -48,6 +48,14 @@ public class StringUtil {
                 String id = url.substring(url.indexOf("id=") + 3);
                 return "http://m.maoyan.com/information/" + id + "?_v_=yes";
             }
+        }else if(url.contains("ID=")){
+            if(url.contains("&")) {
+                String id = url.substring(url.indexOf("ID=") + 3, url.indexOf("&"));
+                return "http://m.maoyan.com/topic/" + id + "?_v_=yes";
+            }else {
+                String id = url.substring(url.indexOf("ID=") + 3);
+                return "http://m.maoyan.com/topic/" + id + "?_v_=yes";
+            }
         }
         return new Exception("Error Url").toString();
 

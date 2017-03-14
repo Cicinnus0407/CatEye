@@ -44,7 +44,7 @@ public class MovieDetailContract {
 
         void addMovieTopic(MovieTopicBean.DataBean movieTopicBean);
 
-        void addMovieProComment(List<MovieProCommentBean.DataBean> data);
+        void addMovieProComment(MovieProCommentBean data);
     }
 
     public interface IMoviePresenter {

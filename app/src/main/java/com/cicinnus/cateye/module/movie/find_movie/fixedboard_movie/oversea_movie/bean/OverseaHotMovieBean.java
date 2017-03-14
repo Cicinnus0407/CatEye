@@ -565,8 +565,8 @@ public class OverseaHotMovieBean {
                 switch (getShowst()) {
                     case 1:
                         return BaseConstant.TYPE_OVERSEA_NORMAL;
-                    case 3:
-                        return BaseConstant.TYPE_OVERSEA_BUY;
+//                    case 3:
+//                        return BaseConstant.TYPE_OVERSEA_BUY;
                     case 4:
                         return BaseConstant.TYPE_OVERSEA_PRESALE;
                     default:

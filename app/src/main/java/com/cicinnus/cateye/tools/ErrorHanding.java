@@ -3,7 +3,7 @@ package com.cicinnus.cateye.tools;
 import com.cicinnus.cateye.application.BaseApplication;
 
 /**
- * Created by Administrator on 2016/9/19.
+ * 网络异常
  */
 
 public class ErrorHanding {

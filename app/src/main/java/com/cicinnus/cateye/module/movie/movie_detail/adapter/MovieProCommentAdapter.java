@@ -24,7 +24,7 @@ public class MovieProCommentAdapter extends BaseQuickAdapter<MovieProCommentBean
                 .setText(R.id.tv_author_title,item.getAuthInfo())
                 .setText(R.id.tv_comment_content,item.getContent())
                 .setText(R.id.tv_createDate, TimeUtils.dateYMD(item.getCreated()))
-                .setText(R.id.tv_score,String.format("%s",(int)item.getScore()));
+                .setText(R.id.tv_score,String.format("%s",(int)(item.getScore()*2)));
         String imgUrl = item.getAvatarurl();
         imgUrl.replace("avatar","180.180/avatar");
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.civ_author));

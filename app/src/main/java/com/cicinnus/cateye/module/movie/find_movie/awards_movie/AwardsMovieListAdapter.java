@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
@@ -24,7 +25,13 @@ public class AwardsMovieListAdapter extends BaseMultiItemQuickAdapter<AwardsMovi
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, AwardsMovieListBean.DataBean.AwardsBean item) {
+    protected void convert(BaseViewHolder helper, final AwardsMovieListBean.DataBean.AwardsBean item) {
+        helper.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getMovieId());
+            }
+        });
         switch (item.getWinnerType()){
             case 1:
                 //提名

@@ -84,6 +84,7 @@
         android:textSize="@dimen/sp_12" />
 
     <LinearLayout
+        android:layout_toRightOf="@id/fl_author_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_comment_content"

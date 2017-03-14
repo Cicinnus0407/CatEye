@@ -85,6 +85,10 @@
         <!--电影话题-->
         <activity android:name=".module.movie.movie_detail.movie_topic.MovieTopicActivity"
             android:screenOrientation="portrait"/>
+        <!--所有长评-->
+        <activity android:name=".module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity" />
+        <!--所有专业评论-->
+        <activity android:name=".module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity" />
     </application>
 
 </manifest>
