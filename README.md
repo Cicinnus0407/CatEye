@@ -1,4 +1,10 @@
-# CatEye
+# CatEye  I'll be back soon!
+
+### what's the next?
+  - RxJava2 
+  - GreenDao3
+  - bug fix 
+  - etc...
 ## 高仿猫眼App
 #### 主要使用技术：
   - RxJava+Retrofit+MVP
