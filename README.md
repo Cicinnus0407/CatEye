@@ -1,13 +1,16 @@
-# CatEye
+# CatEye v2
 ## 高仿猫眼App
+
+#### 
+   - NOTICE: v1停止更新,如需源码请clone v2 branch.
 #### 主要使用技术：
-  - RxJava+Retrofit+MVP
+  - RxJava2+Retrofit+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
   - Glide
   - [JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer)
+  - and More..
   
-  
-###截图
+### 截图
 ![热映](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231055.png)
 ![找片](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231254.png)
 ![分类查找](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231356.png)

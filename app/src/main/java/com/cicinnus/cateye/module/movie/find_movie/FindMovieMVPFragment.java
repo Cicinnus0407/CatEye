@@ -95,7 +95,7 @@ public class FindMovieMVPFragment extends BaseMVPFragment<FindMovieMVPPresenter>
     @Override
     protected void lazyLoadEveryTime() {
         if (isFirst) {
-//            mPresenter.getFindMovieData();
+            mPresenter.getFindMovieData();
             isFirst = false;
         }
 

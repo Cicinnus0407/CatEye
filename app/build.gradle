@@ -40,7 +40,7 @@ dependencies {
     //BaseRecyclerViewAdapterHelper
     compile rootProject.ext.dependencies["BRVAH"]
     //Glide图片加载
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile rootProject.ext.dependencies["glide"]
     //日志
     compile 'com.orhanobut:logger:1.15'
     //内存泄漏检测

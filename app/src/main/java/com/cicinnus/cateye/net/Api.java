@@ -22,6 +22,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieShortCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
@@ -202,6 +203,9 @@ public interface Api {
     Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId") int movieId,
                                                        @Query("ci") int ci);
 
+    @GET("/mmdb/comments/movie/v3/{movieId}.json")
+    Observable<MovieShortCommentBean> getMovieShortComment(@Path("movieId") int movieId);
+
     //热门长评
     @GET("sns/movie/{movieId}/filmReview/top.json")
     Observable<MovieLongCommentBean> getMovieLongComment(@Path("movieId") int movieId);
@@ -306,7 +310,7 @@ public interface Api {
 
     //全部热门长评
     @GET("sns/movie/{movieId}/filmReviews.json")
-    Observable<MovieLongCommentBeanList> getMovieLongCommentList(@Path("movieId")int movieId,
-                                                                 @Query("limit")int limit,
-                                                                 @Query("offset")int offset);
+    Observable<MovieLongCommentBeanList> getMovieLongCommentList(@Path("movieId") int movieId,
+                                                                 @Query("limit") int limit,
+                                                                 @Query("offset") int offset);
 }

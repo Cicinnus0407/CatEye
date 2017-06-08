@@ -65,8 +65,7 @@ public class DiscoverPresenter extends BaseMVPPresenter<DiscoverContract.IDiscov
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-//                        mView.showError("获取顶部栏目失败");
-
+                        mView.showError("获取顶部栏目失败");
                     }
                 }));
     }

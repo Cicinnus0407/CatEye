@@ -17,11 +17,11 @@ import io.reactivex.functions.Consumer;
  * Created by Cicinnus on 2017/1/24.
  */
 
-public class HotMovieListMVPPresenter extends BaseMVPPresenter<HotMovieListContract.IHotMovieListView> implements HotMovieListContract.IHotMoviePresenter {
+public class HotMovieListPresenter extends BaseMVPPresenter<HotMovieListContract.IHotMovieListView> implements HotMovieListContract.IHotMoviePresenter {
 
     private final HotMovieListManager hotMovieListManager;
 
-    public HotMovieListMVPPresenter(Activity activity, HotMovieListContract.IHotMovieListView view) {
+    public HotMovieListPresenter(Activity activity, HotMovieListContract.IHotMovieListView view) {
         super(activity, view);
         hotMovieListManager = new HotMovieListManager();
     }

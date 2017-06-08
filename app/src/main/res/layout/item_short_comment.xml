@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_14">
+
+
+    <FrameLayout
+        android:id="@+id/fl_author_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp">
+
+        <com.cicinnus.cateye.view.CircleImageView
+            android:id="@+id/civ_author"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_user_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            tools:src="@drawable/ic_lv1" />
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/fl_author_iv"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/fl_author_iv">
+
+        <TextView
+            android:id="@+id/tv_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:src="@drawable/ic_vip" />
+
+    </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/rb_score"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_author_name"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/fl_author_iv" />
+
+    <TextView
+        tools:text="asdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        android:id="@+id/tv_comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rb_score"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_16" />
+
+
+    <LinearLayout
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_comment_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6">
+
+        <TextView
+            android:id="@+id/tv_pub_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_approve_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_good"
+            android:drawablePadding="@dimen/dp_6" />
+
+
+        <TextView
+            android:id="@+id/tv_reply_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/dp_6" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_14"
+        android:src="@drawable/ic_more_small" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:background="@color/divider_normal" />
+
+</RelativeLayout>

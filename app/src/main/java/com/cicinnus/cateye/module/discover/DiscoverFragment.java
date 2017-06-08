@@ -83,7 +83,7 @@ public class DiscoverFragment extends BaseMVPFragment<DiscoverPresenter> impleme
         discoverAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-//                mPresenter.getDiscoverData(offset, limit);
+                mPresenter.getDiscoverData(offset, limit);
             }
         },rvDiscover);
 
@@ -93,7 +93,7 @@ public class DiscoverFragment extends BaseMVPFragment<DiscoverPresenter> impleme
     protected void lazyLoadEveryTime() {
         if (isFirst) {
             mPresenter.getDiscoverData(offset, limit);
-//            mPresenter.getDiscoverHeader("7.8.0");
+            mPresenter.getDiscoverHeader("7.8.0");
             isFirst = false;
         }
     }
@@ -103,10 +103,10 @@ public class DiscoverFragment extends BaseMVPFragment<DiscoverPresenter> impleme
         Logger.d(feeds.size());
         if (feeds.size() > 0) {
             offset += 10;
-//            discoverAdapter.addData(feeds);
-//            discoverAdapter.loadMoreComplete();
+            discoverAdapter.addData(feeds);
+            discoverAdapter.loadMoreComplete();
         } else {
-//            discoverAdapter.loadMoreEnd();
+            discoverAdapter.loadMoreEnd();
         }
     }
 

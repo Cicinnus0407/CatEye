@@ -8,6 +8,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieShortCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
@@ -36,6 +37,8 @@ public class MovieDetailContract {
 
         void addMovieCommentTag(List<MovieCommentTagBean.DataBean> commentTags);
 
+        void addMovieShortComment(MovieShortCommentBean movieShortCommentBean);
+
         void addMovieLongComment(MovieLongCommentBean.DataBean movieLongComments);
 
         void addMovieRelatedInformation(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBean);
@@ -45,6 +48,7 @@ public class MovieDetailContract {
         void addMovieTopic(MovieTopicBean.DataBean movieTopicBean);
 
         void addMovieProComment(MovieProCommentBean data);
+
     }
 
     public interface IMoviePresenter {

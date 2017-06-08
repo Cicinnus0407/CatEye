@@ -8,6 +8,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieMoneyBoxBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieShortCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
@@ -101,6 +102,14 @@ public class MovieDetailManager {
                 //20为广州,暂时写死
                 .getMovieCommentTag(movieId,20);
     }
+
+    public ObservableSource<MovieShortCommentBean> getMovieShortCommentBean(int movieId){
+        return RetrofitClient
+                .getInstance()
+                .api()
+                .getMovieShortComment(movieId);
+    }
+
 
     /**
      * 热门长评

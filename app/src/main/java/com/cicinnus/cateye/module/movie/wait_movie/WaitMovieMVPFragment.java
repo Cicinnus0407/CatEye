@@ -104,9 +104,9 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
     @Override
     protected void lazyLoadEveryTime() {
         if(isFirst){
-//            mPresenter.getTrailerRecommendMovie();
-//            mPresenter.getRecentExpect(0, 50);
-//            mPresenter.getWaitMovieList(20, 12);
+            mPresenter.getTrailerRecommendMovie();
+            mPresenter.getRecentExpect(0, 50);
+            mPresenter.getWaitMovieList(20, 12);
             isFirst = false;
         }
 

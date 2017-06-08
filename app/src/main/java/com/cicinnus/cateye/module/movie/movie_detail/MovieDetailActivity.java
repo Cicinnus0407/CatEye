@@ -26,6 +26,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAda
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieProCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieResourceAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieShortCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieStarListAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieTipsAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.RelatedMovieAdapter;
@@ -38,6 +39,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MoviePhotosBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieRelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieResourceBean;
+import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieShortCommentBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
@@ -80,7 +82,7 @@ import io.reactivex.functions.Predicate;
  * 电影详情页
  */
 
-public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> implements MovieDetailContract.IMovieDetailView {
+public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> implements MovieDetailContract.IMovieDetailView {
     @BindView(R.id.sc_movie_detail)
     NestedScrollView scMovieDetail;
     @BindView(R.id.progressLayout)
@@ -204,6 +206,17 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
      **********/
     @BindView(R.id.flowLayout)
     TagFlowLayout tagFlowLayout;
+
+    /**
+     * 热门短平
+     */
+    @BindView(R.id.rv_short_comment)
+    RecyclerView rvShortComment;
+    @BindView(R.id.tv_no_short_comment)
+    TextView tvNoShortComment;
+    @BindView(R.id.tv_short_comment)
+    TextView tvShortComment;
+
     /*******
      * 长评
      ************/
@@ -274,8 +287,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
     }
 
     @Override
-    protected MovieDetailMVPPresenter getPresenter() {
-        return new MovieDetailMVPPresenter(mContext, this);
+    protected MovieDetailPresenter getPresenter() {
+        return new MovieDetailPresenter(mContext, this);
     }
 
     @Override
@@ -286,6 +299,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
             @Override
             public void onRefresh() {
                 mPresenter.getMovieData(movieId);
+                mPresenter.getMovieSecondData(movieId);
+                mPresenter.getMovieMoreData(movieId);
+
             }
         });
         initSwipe();
@@ -642,50 +658,56 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
     @Override
     public void addMovieCommentTag(List<MovieCommentTagBean.DataBean> commentTags) {
         commentTags.add(0, new MovieCommentTagBean.DataBean(0, movieId, 0, "全部"));
+        List<String> tags = new ArrayList<>();
+        if (commentTags.size() > 1) {
+            for (int i = 0; i < commentTags.size(); i++) {
+                if (commentTags.get(i).getCount() == 0) {
+                    tags.add(commentTags.get(i).getTagName());
+                } else {
+                    tags.add(commentTags.get(i).getTagName() + " " + commentTags.get(i).getCount());
+                }
+            }
+        }
+        tagFlowLayout.setAdapter(new TagAdapter<String>(tags) {
+            @Override
+            public View getView(FlowLayout parent, int position, String s) {
+                TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_flow_tv, tagFlowLayout, false);
+                tv.setText(s);
+                return tv;
+            }
+        });
 
-        Observable
-                .just(commentTags)
-                .flatMap(new Function<List<MovieCommentTagBean.DataBean>, ObservableSource<MovieCommentTagBean.DataBean>>() {
-                    @Override
-                    public ObservableSource<MovieCommentTagBean.DataBean> apply(@NonNull List<MovieCommentTagBean.DataBean> dataBean) throws Exception {
-                        if (dataBean.size() > 1) {
-                            return Observable.fromIterable(dataBean);
-                        }
-                        return Observable.error(new Exception("empty data"));
-                    }
+    }
 
-                })
-                .map(new Function<MovieCommentTagBean.DataBean, String>() {
-                    @Override
-                    public String apply(MovieCommentTagBean.DataBean dataBean) {
-                        if (dataBean.getCount() == 0) {
-                            return dataBean.getTagName();
-                        } else {
-                            return dataBean.getTagName() + " " + dataBean.getCount();
-                        }
-                    }
-                })
-                .compose(SchedulersCompat.<String>applyIoSchedulers())
-                .toList()
-                .subscribe(new Consumer<List<String>>() {
-                    @Override
-                    public void accept(@NonNull List<String> strings) throws Exception {
-                        tagFlowLayout.setAdapter(new TagAdapter<String>(strings) {
-                            @Override
-                            public View getView(FlowLayout parent, int position, String s) {
-                                TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_flow_tv, tagFlowLayout, false);
-                                tv.setText(s);
-                                return tv;
-                            }
-                        });
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Logger.e(throwable.getMessage());
-                    }
-                });
 
+    /**
+     * 短评
+     *
+     * @param movieShortCommentBean
+     */
+    @Override
+    public void addMovieShortComment(final MovieShortCommentBean movieShortCommentBean) {
+
+        if (movieShortCommentBean.getData().getHcmts().size() > 0) {
+            MovieShortCommentAdapter movieShortCommentAdapter = new MovieShortCommentAdapter();
+            rvShortComment.setLayoutManager(new LinearLayoutManager(mContext));
+            rvShortComment.setAdapter(movieShortCommentAdapter);
+            rvShortComment.setNestedScrollingEnabled(false);
+            movieShortCommentAdapter.setNewData(movieShortCommentBean.getData().getHcmts().subList(0, 3));
+            View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvShortComment.getParent(), false);
+            footer.setBackgroundResource(R.color.white);
+            ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条短评论", movieShortCommentBean.getPaging().getTotal()));
+            footer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 所有短评
+                }
+            });
+            movieShortCommentAdapter.addFooterView(footer);
+        } else {
+            tvShortComment.setVisibility(View.INVISIBLE);
+            tvNoShortComment.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -695,45 +717,26 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
      */
     @Override
     public void addMovieLongComment(MovieLongCommentBean.DataBean movieLongComments) {
-        Observable
-                .just(movieLongComments)
-                .flatMap(new Function<MovieLongCommentBean.DataBean, Observable<MovieLongCommentBean.DataBean>>() {
-                    @Override
-                    public Observable<MovieLongCommentBean.DataBean> apply(MovieLongCommentBean.DataBean dataBean) {
-                        if (dataBean.getFilmReviews().size() > 0) {
-                            return Observable.just(dataBean);
-                        }
-                        return Observable.error(new Exception("empty error"));
-                    }
-                })
-                .compose(SchedulersCompat.<MovieLongCommentBean.DataBean>applyIoSchedulers())
-                .subscribe(new Consumer<MovieLongCommentBean.DataBean>() {
-                    @Override
-                    public void accept(MovieLongCommentBean.DataBean filmReviewsBean) {
-                        MovieLongCommentAdapter movieLongCommentAdapter = new MovieLongCommentAdapter();
-                        rvLongComment.setLayoutManager(new LinearLayoutManager(mContext));
-                        rvLongComment.setAdapter(movieLongCommentAdapter);
-                        rvLongComment.setNestedScrollingEnabled(false);
-                        movieLongCommentAdapter.setNewData(filmReviewsBean.getFilmReviews());
-                        View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvLongComment.getParent(), false);
-                        footer.setBackgroundResource(R.color.white);
-                        ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条长评论", filmReviewsBean.getTotal()));
-                        footer.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MovieLongCommentActivity.start(mContext, movieId, mTitle);
-                            }
-                        });
-                        movieLongCommentAdapter.addFooterView(footer);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        tvLongComment.setVisibility(View.INVISIBLE);
-                        tvNoLongComment.setVisibility(View.VISIBLE);
-                    }
-                });
-
+        if (movieLongComments.getFilmReviews().size() > 0) {
+            MovieLongCommentAdapter movieLongCommentAdapter = new MovieLongCommentAdapter();
+            rvLongComment.setLayoutManager(new LinearLayoutManager(mContext));
+            rvLongComment.setAdapter(movieLongCommentAdapter);
+            rvLongComment.setNestedScrollingEnabled(false);
+            movieLongCommentAdapter.setNewData(movieLongComments.getFilmReviews());
+            View footer = getLayoutInflater().inflate(R.layout.item_normal_list_footer, (ViewGroup) rvLongComment.getParent(), false);
+            footer.setBackgroundResource(R.color.white);
+            ((TextView) footer.findViewById(R.id.tv_footer)).setText(String.format("查看全部%s条长评论", movieLongComments.getTotal()));
+            footer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MovieLongCommentActivity.start(mContext, movieId, mTitle);
+                }
+            });
+            movieLongCommentAdapter.addFooterView(footer);
+        } else {
+            tvLongComment.setVisibility(View.INVISIBLE);
+            tvNoLongComment.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -742,48 +745,31 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
      * @param newsListBean
      */
     @Override
-    public void addMovieRelatedInformation(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBean) {
-        Observable.just(newsListBean)
-                .flatMap(new Function<List<MovieRelatedInformationBean.DataBean.NewsListBean>, Observable<MovieRelatedInformationBean.DataBean.NewsListBean>>() {
-                    @Override
-                    public Observable<MovieRelatedInformationBean.DataBean.NewsListBean> apply(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBeen) {
-                        if (newsListBeen.size() > 0) {
-                            return Observable.fromIterable(newsListBeen);
-                        }
-                        return Observable.error(new Exception("empty data"));
-                    }
-                })
-                .take(1)
-                .compose(SchedulersCompat.<MovieRelatedInformationBean.DataBean.NewsListBean>applyIoSchedulers())
-                .subscribe(new Consumer<MovieRelatedInformationBean.DataBean.NewsListBean>() {
-                    @Override
-                    public void accept(final MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
-                        tvRelatedInformationTitle.setText(newsListBean.getTitle());
-                        tvRelatedInformationAuthor.setText(newsListBean.getSource());
-                        tvRelatedInformationViewCount.setText(String.format("%s", newsListBean.getViewCount()));
-                        tvRelatedInformationCommentCount.setText(String.format("%s", newsListBean.getCommentCount()));
+    public void addMovieRelatedInformation(final List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBean) {
+        if (newsListBean.size() > 0) {
+            tvRelatedInformationTitle.setText(newsListBean.get(0).getTitle());
+            tvRelatedInformationAuthor.setText(newsListBean.get(0).getSource());
+            tvRelatedInformationViewCount.setText(String.format("%s", newsListBean.get(0).getViewCount()));
+            tvRelatedInformationCommentCount.setText(String.format("%s", newsListBean.get(0).getCommentCount()));
 
-                        GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
+            GlideManager.loadImage(mContext, newsListBean.get(0).getPreviewImages().get(0).getUrl(), ivRelatedInformation);
 
-                        llRelatedInformationContent.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                BaseWebViewActivity.start(mContext, StringUtil.getRealUrl(newsListBean.getUrl()));
-                            }
-                        });
-                        llAllRelatedInformation.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MovieInformationActivity.start(mContext, movieId, mTitle);
-                            }
-                        });
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        llRelatedInformation.setVisibility(View.GONE);
-                    }
-                });
+            llRelatedInformationContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BaseWebViewActivity.start(mContext, StringUtil.getRealUrl(newsListBean.get(0).getUrl()));
+                }
+            });
+            llAllRelatedInformation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MovieInformationActivity.start(mContext, movieId, mTitle);
+                }
+            });
+        } else {
+            llRelatedInformation.setVisibility(View.GONE);
+
+        }
 
     }
 
@@ -794,31 +780,15 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
      */
     @Override
     public void addRelatedMovie(List<RelatedMovieBean.DataBean> relatedMovies) {
-        Observable.just(relatedMovies)
-                .flatMap(new Function<List<RelatedMovieBean.DataBean>, Observable<RelatedMovieBean.DataBean>>() {
-                    @Override
-                    public Observable<RelatedMovieBean.DataBean> apply(List<RelatedMovieBean.DataBean> dataBeen) {
-                        if (dataBeen.get(0).getItems().size() > 0) {
-                            return Observable.just(dataBeen.get(0));
-                        }
-                        return Observable.error(new Exception("empty data"));
-                    }
-                })
-                .compose(SchedulersCompat.<RelatedMovieBean.DataBean>applyIoSchedulers())
-                .subscribe(new Consumer<RelatedMovieBean.DataBean>() {
-                    @Override
-                    public void accept(RelatedMovieBean.DataBean dataBean) {
-                        RelatedMovieAdapter relatedMovieAdapter = new RelatedMovieAdapter();
-                        rvRelatedMovie.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-                        rvRelatedMovie.setAdapter(relatedMovieAdapter);
-                        relatedMovieAdapter.setNewData(dataBean.getItems());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        llRelatedMovie.setVisibility(View.GONE);
-                    }
-                });
+        if (relatedMovies.size() > 0) {
+            RelatedMovieAdapter relatedMovieAdapter = new RelatedMovieAdapter();
+            rvRelatedMovie.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            rvRelatedMovie.setAdapter(relatedMovieAdapter);
+            relatedMovieAdapter.setNewData(relatedMovies.get(0).getItems());
+        } else {
+            llRelatedMovie.setVisibility(View.GONE);
+
+        }
 
     }
 
@@ -829,44 +799,31 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> i
      */
     @Override
     public void addMovieTopic(final MovieTopicBean.DataBean movieTopicBean) {
-        Observable
-                .just(movieTopicBean)
-                .flatMap(new Function<MovieTopicBean.DataBean, Observable<MovieTopicBean.DataBean.TopicsBean>>() {
+        if (movieTopicBean.getTopics().size() > 0) {
+            for (int i = 0; i < movieTopicBean.getTopics().size(); i++) {
+                if (movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl() != null) {
+                    Logger.d(movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl());
+                    GlideManager.loadImage(mContext, movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl(), ivRelatedTopic);
+                } else {
+                    ivRelatedTopic.setVisibility(View.GONE);
+                }
+                tvRelatedTopicTitle.setText(movieTopicBean.getTopics().get(i).getTitle());
+                tvRelatedTopicAuthor.setText(movieTopicBean.getTopics().get(i).getAuthor().getNickName());
+                tvRelatedTopicViewCount.setText(String.format("%s", movieTopicBean.getTopics().get(i).getViewCount()));
+                tvRelatedTopicCommentCount.setText(String.format("%s", movieTopicBean.getTopics().get(i).getCommentCount()));
+                final int finalI = i;
+                llALlRelatedTopic.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public Observable<MovieTopicBean.DataBean.TopicsBean> apply(MovieTopicBean.DataBean dataBean) {
-                        if (dataBean.getTopics().size() > 0) {
-                            return Observable.fromIterable(dataBean.getTopics());
-                        }
-                        return Observable.error(new Exception("empty Data"));
-                    }
-                })
-                .compose(SchedulersCompat.<MovieTopicBean.DataBean.TopicsBean>applyIoSchedulers())
-                .subscribe(new Consumer<MovieTopicBean.DataBean.TopicsBean>() {
-                    @Override
-                    public void accept(@NonNull final MovieTopicBean.DataBean.TopicsBean topicsBean) throws Exception {
-                        if (topicsBean.getPreviews().get(0).getUrl() != null) {
-                            GlideManager.loadImage(mContext, topicsBean.getPreviews().get(0).getUrl(), ivRelatedTopic);
-                        } else {
-                            ivRelatedTopic.setVisibility(View.GONE);
-                        }
-                        tvRelatedTopicTitle.setText(topicsBean.getTitle());
-                        tvRelatedTopicAuthor.setText(topicsBean.getAuthor().getNickName());
-                        tvRelatedTopicViewCount.setText(String.format("%s", topicsBean.getViewCount()));
-                        tvRelatedTopicCommentCount.setText(String.format("%s", topicsBean.getCommentCount()));
-                        llALlRelatedTopic.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MovieTopicActivity.start(mContext, topicsBean.getGroupId());
-                            }
-                        });
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Logger.e(throwable.getMessage());
-                        llRelatedTopic.setVisibility(View.GONE);
+                    public void onClick(View v) {
+                        MovieTopicActivity.start(mContext, movieTopicBean.getTopics().get(finalI).getGroupId());
                     }
                 });
+            }
+        } else {
+            llRelatedTopic.setVisibility(View.GONE);
+
+        }
+
     }
 
     /**

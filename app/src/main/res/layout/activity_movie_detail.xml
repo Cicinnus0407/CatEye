@@ -176,12 +176,26 @@
                         android:background="@color/white">
 
                         <TextView
+                            android:id="@+id/tv_short_comment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dp_14"
                             android:text="短评"
                             android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tv_no_short_comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_14"
+                            android:drawableLeft="@drawable/ic_add_long_comment"
+                            android:drawablePadding="@dimen/dp_6"
+                            android:text="暂无评论,我来说两句"
+                            android:textColor="@color/text_gray" />
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -207,11 +221,17 @@
                         android:background="@color/white"
                         android:padding="@dimen/dp_14"
                         app:max_select="1" />
+                    <!--短评论-->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_short_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_14"
                         android:background="@color/divider_normal" />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"

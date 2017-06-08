@@ -22,7 +22,7 @@ import butterknife.BindView;
  * Created by Cicinnus on 2017/1/22.
  */
 
-public class HotMovieListFragment extends BaseMVPFragment<HotMovieListMVPPresenter> implements HotMovieListContract.IHotMovieListView {
+public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter> implements HotMovieListContract.IHotMovieListView {
 
     private HotMovieListAdapter hotMovieListAdapter;
     private int groupCount;
@@ -48,8 +48,8 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListMVPPresent
     }
 
     @Override
-    protected HotMovieListMVPPresenter getPresenter() {
-        return new HotMovieListMVPPresenter(mContext, this);
+    protected HotMovieListPresenter getPresenter() {
+        return new HotMovieListPresenter(mContext, this);
     }
 
     @Override
