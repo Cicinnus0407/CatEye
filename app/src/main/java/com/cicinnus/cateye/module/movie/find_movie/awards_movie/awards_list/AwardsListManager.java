@@ -1,9 +1,9 @@
 package com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list;
 
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 
 /**

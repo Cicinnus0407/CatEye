@@ -1,7 +1,7 @@
 package com.cicinnus.cateye.module.movie.search_movie;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class SearchMovieContract {
-    public interface ISearchMovieView extends ILoadingView{
+    public interface ISearchMovieView extends ICoreLoadingView {
         void addMovieType(List<MovieTypeBean.DataBean.TagListBean> tagList);
 
         void addMovieNation(List<MovieTypeBean.DataBean.TagListBean> tagList);

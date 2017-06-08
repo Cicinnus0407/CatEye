@@ -6,9 +6,9 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MoviePa
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 
 /**

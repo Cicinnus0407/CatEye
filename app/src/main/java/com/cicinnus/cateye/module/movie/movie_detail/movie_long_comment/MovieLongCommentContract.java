@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class MovieLongCommentContract {
-    public interface IMovieLongCommentView extends ILoadingView{
+    public interface IMovieLongCommentView extends ICoreLoadingView {
 
         void addMovieLongComment(List<MovieLongCommentBeanList.DataBean.FilmReviewsBean> filmReviews);
 

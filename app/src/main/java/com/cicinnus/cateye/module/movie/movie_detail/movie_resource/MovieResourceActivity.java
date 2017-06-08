@@ -19,14 +19,15 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTe
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by Administrator on 2017/2/20.
  */
 
-public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourcePresenter> implements MovieResourceContract.IMovieResourceView {
+public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourceMVPPresenter> implements MovieResourceContract.IMovieResourceView {
 
 
     private static final String MOVIE_ID = "movie_id";
@@ -49,8 +50,8 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
     private MovieHighLightsAdapter highLightsAdapter;//幕后花絮
 
     @Override
-    protected MovieResourcePresenter getMPresenter() {
-        return new MovieResourcePresenter(mContext, this);
+    protected MovieResourceMVPPresenter getMPresenter() {
+        return new MovieResourceMVPPresenter(mContext, this);
     }
 
     @Override
@@ -85,11 +86,11 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
 
     @Override
     public void addMovieDialogues(List<MovieDialoguesBean.DataBean> movieDialoguesBeanData) {
-        Observable.from(movieDialoguesBeanData)
-                .limit(1)
-                .subscribe(new Action1<MovieDialoguesBean.DataBean>() {
+        Observable.fromIterable(movieDialoguesBeanData)
+                .take(1)
+                .subscribe(new Consumer<MovieDialoguesBean.DataBean>() {
                     @Override
-                    public void call(MovieDialoguesBean.DataBean dataBean) {
+                    public void accept(MovieDialoguesBean.DataBean dataBean) {
                         movieDialoguesAdapter.setNewData(dataBean.getItems());
                     }
                 });
@@ -115,11 +116,11 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
 
     @Override
     public void addMovieHighLights(List<MovieHighLightsBean.DataBean> movieHighLightsBeanData) {
-        Observable.from(movieHighLightsBeanData)
-                .limit(1)
-                .subscribe(new Action1<MovieHighLightsBean.DataBean>() {
+        Observable.fromIterable(movieHighLightsBeanData)
+                .take(1)
+                .subscribe(new Consumer<MovieHighLightsBean.DataBean>() {
                     @Override
-                    public void call(MovieHighLightsBean.DataBean dataBean) {
+                    public void accept(MovieHighLightsBean.DataBean dataBean) {
                         highLightsAdapter.setNewData(dataBean.getItems());
                     }
                 });
@@ -136,7 +137,7 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
                     highLightsAdapter = new MovieHighLightsAdapter();
                     rvBaseRecyclerView.setAdapter(highLightsAdapter);
                 }
-                ((MovieResourcePresenter) mPresenter).getMovieHighLights(movieId);
+                ((MovieResourceMVPPresenter) mPresenter).getMovieHighLights(movieId);
                 break;
             case "technicals":
                 mTitle = "技术参数";
@@ -144,7 +145,7 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
                     technicalsAdapter = new MovieTechnicalsAdapter();
                     rvBaseRecyclerView.setAdapter(technicalsAdapter);
                 }
-                ((MovieResourcePresenter) mPresenter).getMovieTechnicals(movieId);
+                ((MovieResourceMVPPresenter) mPresenter).getMovieTechnicals(movieId);
                 break;
             case "dialogues":
                 mTitle = "经典台词";
@@ -152,7 +153,7 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
                     movieDialoguesAdapter = new MovieDialoguesAdapter();
                     rvBaseRecyclerView.setAdapter(movieDialoguesAdapter);
                 }
-                ((MovieResourcePresenter) mPresenter).getMovieDialogues(movieId);
+                ((MovieResourceMVPPresenter) mPresenter).getMovieDialogues(movieId);
                 break;
             case "relatedCompanies":
                 mTitle = "出品发行";
@@ -160,7 +161,7 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
                     relatedCompaniesAdapter = new MovieRelatedCompaniesAdapter();
                     rvBaseRecyclerView.setAdapter(relatedCompaniesAdapter);
                 }
-                ((MovieResourcePresenter) mPresenter).getMovieRelatedCompanies(movieId);
+                ((MovieResourceMVPPresenter) mPresenter).getMovieRelatedCompanies(movieId);
                 break;
             case "parentguidances":
                 mTitle = "家长指引";
@@ -168,7 +169,7 @@ public class MovieResourceActivity extends BaseRecyclerViewActivity<MovieResourc
                     parentGuidancesAdapter = new MovieParentGuidancesAdapter();
                     rvBaseRecyclerView.setAdapter(parentGuidancesAdapter);
                 }
-                ((MovieResourcePresenter) mPresenter).getMovieParentGuidances(movieId);
+                ((MovieResourceMVPPresenter) mPresenter).getMovieParentGuidances(movieId);
                 break;
         }
     }

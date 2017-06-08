@@ -1,9 +1,9 @@
 package com.cicinnus.cateye.module.movie.wait_movie;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public class WaitMovieFragmentContract {
-    public interface IWaitMovieView extends ILoadingView {
+    public interface IWaitMovieView extends ICoreLoadingView {
         void addTrailerRecommendMovieList(List<TrailerRecommendBean.DataBean> data);
 
         void addRecentExpectMovieList(List<ExpectMovieBean.DataBean.ComingBean> coming);

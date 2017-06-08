@@ -1,11 +1,11 @@
 package com.cicinnus.cateye.module.movie.movie_detail.movie_resource;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieDialoguesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHighLightsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class MovieResourceContract {
-    public interface IMovieResourceView extends ILoadingView {
+    public interface IMovieResourceView extends ICoreLoadingView {
 
         void addMovieTechnicals(MovieTechnicalsBean.DataBean technicalsBeanData);
 

@@ -13,7 +13,6 @@ import com.cicinnus.cateye.module.movie.find_movie.awards_movie.AwardsMovieActiv
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/2/7.
  */
 
-public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implements AwardsListContract.IAwardsListView {
+public class AwardsListActivity extends BaseActivity<AwardsListMVPPresenter> implements AwardsListContract.IAwardsListView {
 
 
     @BindView(R.id.tv_title)
@@ -56,8 +55,8 @@ public class AwardsListActivity extends BaseActivity<AwardsListPresenter> implem
     }
 
     @Override
-    protected AwardsListPresenter getPresenter() {
-        return new AwardsListPresenter(mContext, this);
+    protected AwardsListMVPPresenter getPresenter() {
+        return new AwardsListMVPPresenter(mContext, this);
     }
 
     @Override

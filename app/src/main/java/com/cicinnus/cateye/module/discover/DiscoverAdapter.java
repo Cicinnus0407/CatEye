@@ -43,7 +43,7 @@ public class DiscoverAdapter extends BaseMultiItemQuickAdapter<DiscoverBean.Data
                         .setText(R.id.tv_video_comment, String.format("%s", item.getCommentCount()))
                         .setText(R.id.tv_nickName, String.format("%s", item.getUser().getNickName()))
                         .setText(R.id.tv_time, TimeUtils.dateYMDHM(item.getTime()));
-                helper.convertView
+                helper.itemView
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

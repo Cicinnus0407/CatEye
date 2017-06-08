@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AwardsListContract {
 
-    public interface IAwardsListView extends ILoadingView{
+    public interface IAwardsListView extends ICoreLoadingView {
         void addAwardsList(List<AwardsListBean.DataBean> data);
     }
 

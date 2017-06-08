@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.cicinnus.retrofitlib.base.BaseMVPFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/1/18.
  */
 
-public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView {
+public class DiscoverFragment extends BaseMVPFragment<DiscoverPresenter> implements DiscoverContract.IDiscoverView {
 
 
     @BindView(R.id.progressLayout)
@@ -82,9 +83,9 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
         discoverAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mPresenter.getDiscoverData(offset, limit);
+//                mPresenter.getDiscoverData(offset, limit);
             }
-        });
+        },rvDiscover);
 
     }
 
@@ -92,19 +93,20 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
     protected void lazyLoadEveryTime() {
         if (isFirst) {
             mPresenter.getDiscoverData(offset, limit);
-            mPresenter.getDiscoverHeader("7.8.0");
+//            mPresenter.getDiscoverHeader("7.8.0");
             isFirst = false;
         }
     }
 
     @Override
     public void addDiscoverData(List<DiscoverBean.DataBean.FeedsBean> feeds) {
+        Logger.d(feeds.size());
         if (feeds.size() > 0) {
             offset += 10;
-            discoverAdapter.addData(feeds);
-            discoverAdapter.loadMoreComplete();
+//            discoverAdapter.addData(feeds);
+//            discoverAdapter.loadMoreComplete();
         } else {
-            discoverAdapter.loadMoreEnd();
+//            discoverAdapter.loadMoreEnd();
         }
     }
 
@@ -148,6 +150,7 @@ public class DiscoverFragment extends BaseFragment<DiscoverPresenter> implements
 
     @Override
     public void showError(String errorMsg) {
+        Logger.e(errorMsg);
         pullToRefreshListener.refreshDone();
         discoverAdapter.loadMoreEnd();
         progressLayout.showError(new View.OnClickListener() {

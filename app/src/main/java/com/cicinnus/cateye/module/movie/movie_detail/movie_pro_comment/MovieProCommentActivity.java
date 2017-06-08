@@ -14,7 +14,7 @@ import java.util.List;
  * 专业影评
  */
 
-public class MovieProCommentActivity extends BaseRecyclerViewActivity<MovieProCommentPresenter> implements MovieProCommentContract.IMovieProCommentView {
+public class MovieProCommentActivity extends BaseRecyclerViewActivity<MovieProCommentMVPPresenter> implements MovieProCommentContract.IMovieProCommentView {
 
 
     private int movieId;
@@ -38,11 +38,11 @@ public class MovieProCommentActivity extends BaseRecyclerViewActivity<MovieProCo
         movieProCommentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ((MovieProCommentPresenter) mPresenter).getMoreMovieProComment(movieId,offset);
+                ((MovieProCommentMVPPresenter) mPresenter).getMoreMovieProComment(movieId,offset);
             }
-        });
+        },rvBaseRecyclerView);
         rvBaseRecyclerView.setAdapter(movieProCommentAdapter);
-        ((MovieProCommentPresenter) mPresenter).getMovieProComment(movieId,offset);
+        ((MovieProCommentMVPPresenter) mPresenter).getMovieProComment(movieId,offset);
 
     }
 
@@ -62,14 +62,14 @@ public class MovieProCommentActivity extends BaseRecyclerViewActivity<MovieProCo
     }
 
     @Override
-    protected MovieProCommentPresenter getMPresenter() {
-        return new MovieProCommentPresenter(mContext,this);
+    protected MovieProCommentMVPPresenter getMPresenter() {
+        return new MovieProCommentMVPPresenter(mContext,this);
     }
 
     @Override
     protected void setPullToRefresh() {
         offset =0;
-        ((MovieProCommentPresenter) mPresenter).getMovieProComment(movieId,offset);
+        ((MovieProCommentMVPPresenter) mPresenter).getMovieProComment(movieId,offset);
     }
 
     @Override
@@ -80,6 +80,6 @@ public class MovieProCommentActivity extends BaseRecyclerViewActivity<MovieProCo
     @Override
     protected void onErrorResetData() {
         offset =0;
-        ((MovieProCommentPresenter) mPresenter).getMovieProComment(movieId,offset);
+        ((MovieProCommentMVPPresenter) mPresenter).getMovieProComment(movieId,offset);
     }
 }

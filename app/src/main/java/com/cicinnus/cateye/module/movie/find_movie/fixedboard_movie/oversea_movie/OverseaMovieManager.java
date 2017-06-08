@@ -4,7 +4,7 @@ import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movi
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
 import com.cicinnus.cateye.net.RetrofitClient;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Cicinnus on 2017/2/5.

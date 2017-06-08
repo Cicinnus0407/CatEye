@@ -3,9 +3,9 @@ package com.cicinnus.cateye.module.movie.find_movie.awards_movie;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Administrator on 2017/2/6.

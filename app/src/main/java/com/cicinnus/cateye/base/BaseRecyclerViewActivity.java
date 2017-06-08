@@ -10,6 +10,8 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
+import com.cicinnus.retrofitlib.base.ICorePresenter;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -19,7 +21,7 @@ import butterknife.BindView;
  * 子类需实现相关的抽象方法和编写adapter
  */
 
-public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends BaseActivity implements ILoadingView {
+public abstract class BaseRecyclerViewActivity<T extends ICorePresenter> extends BaseActivity implements ICoreLoadingView {
 
 
     @BindView(R.id.rl_back)
@@ -40,7 +42,7 @@ public abstract class BaseRecyclerViewActivity<T extends IPresenter> extends Bas
     }
 
     @Override
-    protected IPresenter getPresenter() {
+    protected ICorePresenter getPresenter() {
         return getMPresenter();
     }
 

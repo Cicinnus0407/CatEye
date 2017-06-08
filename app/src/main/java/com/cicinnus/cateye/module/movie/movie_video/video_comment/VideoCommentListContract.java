@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.movie_video.video_comment;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class VideoCommentListContract {
-    public interface IVideoCommentListView extends ILoadingView{
+    public interface IVideoCommentListView extends ICoreLoadingView {
 
         void addVideoCommentList(List<VideoCommentListBean.DataBean.CommentsBean> comments);
 

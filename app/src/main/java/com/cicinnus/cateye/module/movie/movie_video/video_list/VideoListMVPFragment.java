@@ -1,0 +1,220 @@
+package com.cicinnus.cateye.module.movie.movie_video.video_list;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
+import com.cicinnus.cateye.view.MyPullToRefreshListener;
+import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.cicinnus.retrofitlib.base.BaseMVPFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+
+/**
+ * Created by Administrator on 2017/2/15.
+ */
+
+public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter> implements VideoListContract.IVideoListView {
+
+    @BindView(R.id.rv_movie_video)
+    RecyclerView rvMovieVideo;
+    @BindView(R.id.swipe)
+    SuperSwipeRefreshLayout swipe;
+    @BindView(R.id.progressLayout)
+    ProgressLayout progressLayout;
+    @BindView(R.id.tv_movie_name)
+    TextView tvMovieName;
+    @BindView(R.id.tv_movie_score)
+    TextView tvMovieScore;
+    @BindView(R.id.tv_score_wish)
+    TextView tvScoreWish;
+    @BindView(R.id.tv_pub_time)
+    TextView tvPubTime;
+    @BindView(R.id.tv_video_count)
+    TextView tvVideoCount;
+
+
+    private VideoListAdapter videoListAdapter;
+
+
+    private static final String MOVIE_ID = "movie_id";
+    private static final String IS_MV = "is_mv";
+    private static final String MV_DATA = "mv_data";
+    private int movieId;
+    private int offset;
+    private MyPullToRefreshListener pullToRefreshListener;
+    private List<VideoListBean.DataBean> videoListBeen;
+    private boolean mIsMv = false;
+    private MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean mvData;
+
+    public static VideoListMVPFragment newInstance(int movieId, boolean isMv, MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean dataBean) {
+
+        Bundle args = new Bundle();
+        args.putInt(MOVIE_ID, movieId);
+        args.putBoolean(IS_MV, isMv);
+        args.putParcelable(MV_DATA,dataBean);
+        VideoListMVPFragment fragment = new VideoListMVPFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_video_list;
+    }
+
+    @Override
+    protected VideoListMVPPresenter getPresenter() {
+        return new VideoListMVPPresenter(mContext, this);
+    }
+
+    @Override
+    protected void initEventAndData() {
+        movieId = getArguments().getInt(MOVIE_ID, 0);
+        mIsMv = getArguments().getBoolean(IS_MV, false);
+        mvData = getArguments().getParcelable(MV_DATA);
+
+
+        videoListBeen = new ArrayList<>();
+        videoListAdapter = new VideoListAdapter();
+        rvMovieVideo.setLayoutManager(new LinearLayoutManager(mContext));
+        rvMovieVideo.setAdapter(videoListAdapter);
+
+
+        //下拉刷新
+        pullToRefreshListener = new MyPullToRefreshListener(mContext, swipe);
+        swipe.setOnPullRefreshListener(pullToRefreshListener);
+        pullToRefreshListener.setOnRefreshListener(new MyPullToRefreshListener.OnRefreshListener() {
+            @Override
+            public void refresh() {
+                offset = 0;
+                mPresenter.getVideoList(movieId, offset);
+            }
+        });
+        //加载更多
+        videoListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.getMoreVideo(movieId, offset);
+            }
+        },rvMovieVideo);
+
+
+        mPresenter.getVideoList(movieId, offset);
+        mPresenter.getVideoMovieInfo(movieId);
+    }
+
+    /**
+     * 视频列表
+     *
+     * @param data
+     */
+    @Override
+    public void addVideoList(List<VideoListBean.DataBean> data) {
+        offset += 10;
+        videoListBeen.addAll(data);
+        //将第一个数据设为选中状态,因为默认播放第一个视频
+        if (!mIsMv) {
+            videoListBeen.get(0).isSelect = true;
+            videoListBeen.set(0, videoListBeen.get(0));
+        }else {
+            VideoListBean.DataBean newData = new VideoListBean.DataBean();
+            newData.isSelect = true;
+            newData.setCount(mvData.getCount());
+            newData.setImg(mvData.getImg());
+            newData.setMovieId(mvData.getMovieId());
+            newData.setId(mvData.getId());
+            newData.setUrl(mvData.getUrl());
+            newData.setTl(mvData.getTitle());
+            newData.setTm(mvData.getTime());
+            videoListBeen.add(0,newData);
+        }
+        videoListAdapter.setNewData(videoListBeen);
+
+    }
+
+
+    /**
+     * 影片信息
+     *
+     * @param info
+     */
+    @Override
+    public void addVideoMovieInfo(VideoMovieInfoBean.DataBean info) {
+        tvMovieName.setText(info.getName());
+        if (info.getScore() == 0) {
+            tvMovieScore.setText(String.format("%s", info.getWish()));
+            tvScoreWish.setText("人想看");
+        } else {
+            tvMovieScore.setText(String.format("%s", info.getScore()));
+            tvScoreWish.setText("分");
+        }
+        tvPubTime.setText(info.getPubdesc());
+    }
+
+    /**
+     * 视频总数
+     *
+     * @param total
+     */
+    @Override
+    public void addTotalCount(int total) {
+        tvVideoCount.setText(String.format("(%s)", total));
+    }
+
+    @Override
+    public void addVideoMoreList(List<VideoListBean.DataBean> videoMoreData) {
+        if (videoMoreData.size() > 0) {
+            offset += 10;
+            videoListAdapter.addData(videoMoreData);
+            videoListAdapter.loadMoreComplete();
+        } else {
+            videoListAdapter.loadMoreEnd();
+        }
+    }
+
+    @Override
+    public void showLoadMoreError(String message) {
+        videoListAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void showLoading() {
+        if (!progressLayout.isContent()) {
+            progressLayout.showLoading();
+        }
+    }
+
+    @Override
+    public void showContent() {
+        if (!progressLayout.isContent()) {
+            progressLayout.showContent();
+        }
+        pullToRefreshListener.refreshDone();
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        pullToRefreshListener.refreshDone();
+        progressLayout.showError(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.getVideoList(movieId, offset);
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+}

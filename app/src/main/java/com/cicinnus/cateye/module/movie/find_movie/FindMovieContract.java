@@ -1,9 +1,9 @@
 package com.cicinnus.cateye.module.movie.find_movie;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.find_movie.bean.AwardsMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.GridMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class FindMovieContract {
 
-    public interface IFindMovieView extends ILoadingView {
+    public interface IFindMovieView extends ICoreLoadingView {
         void addMovieType(List<MovieTypeBean.DataBean.TagListBean> tagList);
 
         void addMovieNation(List<MovieTypeBean.DataBean.TagListBean> tagList);

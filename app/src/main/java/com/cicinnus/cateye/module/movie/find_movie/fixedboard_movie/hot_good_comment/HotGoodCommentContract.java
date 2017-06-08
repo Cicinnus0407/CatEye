@@ -1,13 +1,13 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 /**
  * Created by Cicinnus on 2017/2/3.
  */
 
 public class HotGoodCommentContract {
-    public interface IHotGoodCommentView extends ILoadingView{
+    public interface IHotGoodCommentView extends ICoreLoadingView {
         void addHotGoodCommentList(HotGoodCommentBean data);
 
         void addTitle(String title);

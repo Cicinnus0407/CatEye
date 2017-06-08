@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.movie_video.video_list;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class VideoListContract {
-    public interface IVideoListView extends ILoadingView{
+    public interface IVideoListView extends ICoreLoadingView {
         void addVideoList(List<VideoListBean.DataBean> data);
 
         void addVideoMovieInfo(VideoMovieInfoBean.DataBean videoMovieInfoBeanData);

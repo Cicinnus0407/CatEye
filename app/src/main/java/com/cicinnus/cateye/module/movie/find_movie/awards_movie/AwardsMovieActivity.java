@@ -18,7 +18,6 @@ import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
-import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.UiUtils;
@@ -27,6 +26,7 @@ import com.cicinnus.cateye.view.FloatingItemDecoration;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
@@ -37,15 +37,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
- * Created by Administrator on 2017/2/6.
+ * 获奖电影
  */
 
-public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> implements AwardsMovieContract.IAwardsMovieView {
+public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> implements AwardsMovieContract.IAwardsMovieView {
 
 
     private static final String FESTIVAL_ID = "festivalId";//从adapter点击拿到的Id
@@ -116,8 +118,8 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
 
 
     @Override
-    protected AwardsMoviePresenter getPresenter() {
-        return new AwardsMoviePresenter(mContext, this);
+    protected AwardsMovieMVPPresenter getPresenter() {
+        return new AwardsMovieMVPPresenter(mContext, this);
     }
 
     @Override
@@ -146,7 +148,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
             public void onLoadMoreRequested() {
                 mPresenter.getMoreAwardsMovie(festSessionId, 10, offset);
             }
-        });
+        },rvAwardsMovie);
         awardsList = new ArrayList<>();
         if (isComeFromFindMovie) {
             festivalId = getIntent().getIntExtra(ID, 0);
@@ -338,9 +340,9 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
         tvAwardContent.setText(data.getIntro());
         GlideManager.loadImage(mContext, data.getIcon(), cirAwardImg);
         Observable.just(data.getIcon())
-                .map(new Func1<String, Bitmap>() {
+                .map(new Function<String, Bitmap>() {
                     @Override
-                    public Bitmap call(String s) {
+                    public Bitmap apply(String s) {
                         try {
                             URL url = new URL(s);
                             return BitmapFactory.decodeStream(url.openStream());
@@ -350,33 +352,29 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMoviePresenter> impl
                         return null;
                     }
                 })
-                .filter(new Func1<Bitmap, Boolean>() {
+                .filter(new Predicate<Bitmap>() {
                     @Override
-                    public Boolean call(Bitmap bitmap) {
+                    public boolean test(@NonNull Bitmap bitmap) throws Exception {
                         return bitmap!=null;
                     }
                 })
-                .map(new Func1<Bitmap, Bitmap>() {
+                .map(new Function<Bitmap, Bitmap>() {
                     @Override
-                    public Bitmap call(Bitmap bitmap) {
+                    public Bitmap apply(Bitmap bitmap) {
                         return FastBlurUtil.doBlur(bitmap, 9, false);
                     }
                 })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
-                .subscribe(new Subscriber<Bitmap>() {
+                .subscribe(new Consumer<Bitmap>() {
                     @Override
-                    public void onCompleted() {
+                    public void accept(@NonNull Bitmap bitmap) throws Exception {
+                        ivBlur.setImageBitmap(bitmap);
 
                     }
-
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void onError(Throwable e) {
-                        Logger.e(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Bitmap bitmap) {
-                            ivBlur.setImageBitmap(bitmap);
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
 
                     }
                 });

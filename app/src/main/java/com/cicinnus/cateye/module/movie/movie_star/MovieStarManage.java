@@ -7,7 +7,8 @@ import com.cicinnus.cateye.module.movie.movie_star.bean.StarMoviesBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.StarRelatedPeople;
 import com.cicinnus.cateye.net.RetrofitClient;
 
-import rx.Observable;
+import io.reactivex.ObservableSource;
+
 
 /**
  * Created by Cicinnus on 2017/2/18.
@@ -21,7 +22,7 @@ public class MovieStarManage {
      * @param starId
      * @return
      */
-    public Observable<MovieStarInfoBean> getMovieStarInfo(int starId) {
+    public ObservableSource<MovieStarInfoBean> getMovieStarInfo(int starId) {
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -34,7 +35,7 @@ public class MovieStarManage {
      * @param starId
      * @return
      */
-    public Observable<StarMoviesBean> getStarMovies(int starId) {
+    public ObservableSource<StarMoviesBean> getStarMovies(int starId) {
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -47,7 +48,7 @@ public class MovieStarManage {
      * @param starId
      * @return
      */
-    public Observable<MovieStarHonor> getMovieStarHonor(int starId) {
+    public ObservableSource<MovieStarHonor> getMovieStarHonor(int starId) {
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -59,14 +60,14 @@ public class MovieStarManage {
      * @param starId
      * @return
      */
-    public Observable<RelatedInformationBean> getRelatedInformation(int starId){
+    public ObservableSource<RelatedInformationBean> getRelatedInformation(int starId){
         return RetrofitClient
                 .getInstance()
                 .api()
                 .getRelatedInformation(starId);
     }
 
-    public Observable<StarRelatedPeople> getStarRelatedPeople(int starId){
+    public ObservableSource<StarRelatedPeople> getStarRelatedPeople(int starId){
         return RetrofitClient
                 .getInstance()
                 .api()

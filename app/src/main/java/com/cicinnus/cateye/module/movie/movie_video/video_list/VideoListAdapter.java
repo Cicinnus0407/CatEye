@@ -6,13 +6,11 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentPostBean;
-import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.VideoPostBean;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.TimeUtils;
-import com.hwangjr.rxbus.RxBus;
+
 
 /**
  * Created by Administrator on 2017/2/15.
@@ -35,7 +33,8 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
 
 
         if (mData.get(helper.getAdapterPosition()).isSelect) {
-            RxBus.get().post(new CommentPostBean(item.getId()));
+            //TODO 发送消息通知
+//            RxBus.get().post(new CommentPostBean(item.getId()));
 
             helper.setText(R.id.tv_video_play_status, "播放中")
                     .setTextColor(R.id.tv_video_title, mContext.getResources().getColor(R.color.colorPrimary))
@@ -55,7 +54,8 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
                     selectedPos = helper.getAdapterPosition();
                     mData.get(selectedPos).isSelect = true;
                     notifyItemChanged(selectedPos);
-                    RxBus.get().post(new VideoPostBean(item.getMovieName()+item.getTl(),item.getUrl()));
+                    //TODO 发送消息
+//                    RxBus.get().post(new VideoPostBean(item.getMovieName()+item.getTl(),item.getUrl()));
 
                 }
             }

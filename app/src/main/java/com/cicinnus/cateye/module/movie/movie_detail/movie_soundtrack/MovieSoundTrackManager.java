@@ -4,7 +4,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.Movie
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.net.RetrofitClient;
 
-import rx.Observable;
+import io.reactivex.ObservableSource;
 
 /**
  * Created by Administrator on 2017/2/20.
@@ -18,7 +18,7 @@ public class MovieSoundTrackManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieAlbumBean> getMovieAlbum(int movieId){
+    public ObservableSource<MovieAlbumBean> getMovieAlbum(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -30,7 +30,7 @@ public class MovieSoundTrackManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieMusicBean> getMovieMusic(int movieId){
+    public ObservableSource<MovieMusicBean> getMovieMusic(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()

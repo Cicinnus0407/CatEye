@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/2/4.
  */
 
-public class MostExpectMovieActivity extends BaseActivity<MostExpectPresenter> implements MostExpectMovieContract.IRecentExpectMovieView {
+public class MostExpectMovieActivity extends BaseActivity<MostExpectMVPPresenter> implements MostExpectMovieContract.IRecentExpectMovieView {
 
 
     private MyPullToRefreshListener pullToRefreshListener;
@@ -56,8 +56,8 @@ public class MostExpectMovieActivity extends BaseActivity<MostExpectPresenter> i
     }
 
     @Override
-    protected MostExpectPresenter getPresenter() {
-        return new MostExpectPresenter(mContext, this);
+    protected MostExpectMVPPresenter getPresenter() {
+        return new MostExpectMVPPresenter(mContext, this);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MostExpectMovieActivity extends BaseActivity<MostExpectPresenter> i
             public void onLoadMoreRequested() {
                 mPresenter.getRecentExpectMovie(offset);
             }
-        });
+        },rvRecentExpect);
 
         pullToRefreshListener = new MyPullToRefreshListener(mContext, swipe);
         swipe.setOnPullRefreshListener(pullToRefreshListener);

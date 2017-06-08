@@ -13,7 +13,7 @@ import java.util.List;
  * 长评列表
  */
 
-public class MovieLongCommentActivity extends BaseRecyclerViewActivity<MovieLongCommentPresenter> implements MovieLongCommentContract.IMovieLongCommentView {
+public class MovieLongCommentActivity extends BaseRecyclerViewActivity<MovieLongCommentMVPPresenter> implements MovieLongCommentContract.IMovieLongCommentView {
 
 
     private static final String MOVIE_ID = "movie_id";
@@ -42,11 +42,11 @@ public class MovieLongCommentActivity extends BaseRecyclerViewActivity<MovieLong
         movieLongCommentListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ((MovieLongCommentPresenter) mPresenter).getMoreMovieLongComment(movieId, offset);
+                ((MovieLongCommentMVPPresenter) mPresenter).getMoreMovieLongComment(movieId, offset);
             }
-        });
+        },rvBaseRecyclerView);
         rvBaseRecyclerView.setAdapter(movieLongCommentListAdapter);
-        ((MovieLongCommentPresenter) mPresenter).getMovieLongComment(movieId, offset);
+        ((MovieLongCommentMVPPresenter) mPresenter).getMovieLongComment(movieId, offset);
 
     }
 
@@ -67,15 +67,15 @@ public class MovieLongCommentActivity extends BaseRecyclerViewActivity<MovieLong
     }
 
     @Override
-    protected MovieLongCommentPresenter getMPresenter() {
-        return new MovieLongCommentPresenter(mContext, this);
+    protected MovieLongCommentMVPPresenter getMPresenter() {
+        return new MovieLongCommentMVPPresenter(mContext, this);
     }
 
     @Override
     protected void setPullToRefresh() {
         offset = 0;
         movieLongCommentListAdapter.setNewData(new ArrayList<MovieLongCommentBeanList.DataBean.FilmReviewsBean>());
-        ((MovieLongCommentPresenter) mPresenter).getMovieLongComment(movieId, offset);
+        ((MovieLongCommentMVPPresenter) mPresenter).getMovieLongComment(movieId, offset);
     }
 
     @Override
@@ -88,6 +88,6 @@ public class MovieLongCommentActivity extends BaseRecyclerViewActivity<MovieLong
     @Override
     protected void onErrorResetData() {
         offset = 0;
-        ((MovieLongCommentPresenter) mPresenter).getMovieLongComment(movieId, offset);
+        ((MovieLongCommentMVPPresenter) mPresenter).getMovieLongComment(movieId, offset);
     }
 }

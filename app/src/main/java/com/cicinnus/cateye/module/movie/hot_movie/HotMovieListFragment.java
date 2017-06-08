@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.base.BaseFragment;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
+import com.cicinnus.retrofitlib.base.BaseMVPFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +22,14 @@ import butterknife.BindView;
  * Created by Cicinnus on 2017/1/22.
  */
 
-public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> implements HotMovieListContract.IHotMovieListView {
+public class HotMovieListFragment extends BaseMVPFragment<HotMovieListMVPPresenter> implements HotMovieListContract.IHotMovieListView {
 
     private HotMovieListAdapter hotMovieListAdapter;
     private int groupCount;
     private MyPullToRefreshListener pullToRefreshListener;
 
     public static HotMovieListFragment newInstance() {
-
-        HotMovieListFragment fragment = new HotMovieListFragment();
-        return fragment;
+        return new HotMovieListFragment();
     }
 
     @BindView(R.id.progressLayout)
@@ -50,8 +48,8 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
     }
 
     @Override
-    protected HotMovieListPresenter getPresenter() {
-        return new HotMovieListPresenter(mContext, this);
+    protected HotMovieListMVPPresenter getPresenter() {
+        return new HotMovieListMVPPresenter(mContext, this);
     }
 
     @Override
@@ -101,7 +99,7 @@ public class HotMovieListFragment extends BaseFragment<HotMovieListPresenter> im
                     hotMovieListAdapter.loadMoreEnd();
                 }
             }
-        });
+        },rvHotMovieList);
         mPresenter.getHotMovieList(20, 12);
 
     }

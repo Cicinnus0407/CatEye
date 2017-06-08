@@ -1,9 +1,9 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.hot_good_comment;
 
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Cicinnus on 2017/2/3.

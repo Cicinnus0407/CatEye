@@ -4,9 +4,9 @@ import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Cicinnus on 2017/1/25.

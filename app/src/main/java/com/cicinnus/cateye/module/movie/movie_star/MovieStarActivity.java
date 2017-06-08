@@ -25,13 +25,13 @@ import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarInfoBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.RelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.StarMoviesBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.StarRelatedPeople;
-import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
@@ -39,16 +39,18 @@ import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+
 
 /**
  * 影人界面
  */
 
-public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implements MovieStarContract.IMovieStarView {
+public class MovieStarActivity extends BaseActivity<MovieStarMVPPresenter> implements MovieStarContract.IMovieStarView {
 
     @BindView(R.id.progressLayout)
     ProgressLayout progressLayout;
@@ -166,8 +168,8 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     }
 
     @Override
-    protected MovieStarPresenter getPresenter() {
-        return new MovieStarPresenter(mContext, this);
+    protected MovieStarMVPPresenter getPresenter() {
+        return new MovieStarMVPPresenter(mContext, this);
     }
 
     @Override
@@ -283,9 +285,9 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
             String avatarUrl = ImgSizeUtil.resetPicUrl(info.getAvatar(), "");
             GlideManager.loadImage(mContext, avatarUrl, ivStarAvatar);
             Observable.just(avatarUrl)
-                    .map(new Func1<String, Bitmap>() {
+                    .map(new Function<String, Bitmap>() {
                         @Override
-                        public Bitmap call(String s) {
+                        public Bitmap apply(String s) {
                             try {
                                 URL url = new URL(s);
                                 return BitmapFactory.decodeStream(url.openStream());
@@ -295,22 +297,22 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                             return null;
                         }
                     })
-                    .filter(new Func1<Bitmap, Boolean>() {
+                    .filter(new Predicate<Bitmap>() {
                         @Override
-                        public Boolean call(Bitmap bitmap) {
+                        public boolean test(@NonNull Bitmap bitmap) throws Exception {
                             return bitmap != null;
                         }
                     })
-                    .map(new Func1<Bitmap, Bitmap>() {
+                    .map(new Function<Bitmap, Bitmap>() {
                         @Override
-                        public Bitmap call(Bitmap bitmap) {
+                        public Bitmap apply(Bitmap bitmap) {
                             return FastBlurUtil.doBlur(bitmap, 130, false);
                         }
                     })
                     .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
-                    .subscribe(new Action1<Bitmap>() {
+                    .subscribe(new Consumer<Bitmap>() {
                         @Override
-                        public void call(Bitmap bitmap) {
+                        public void accept(Bitmap bitmap) {
                             ivStarBg.setImageBitmap(bitmap);
                         }
                     });
@@ -370,26 +372,26 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     @Override
     public void addMovieStarHonor(MovieStarHonor honors) {
         Observable.just(honors)
-                .flatMap(new Func1<MovieStarHonor, Observable<MovieStarHonor.DataBean>>() {
+                .flatMap(new Function<MovieStarHonor, Observable<MovieStarHonor.DataBean>>() {
                     @Override
-                    public Observable<MovieStarHonor.DataBean> call(MovieStarHonor movieStarHonor) {
+                    public Observable<MovieStarHonor.DataBean> apply(MovieStarHonor movieStarHonor) {
                         if (movieStarHonor.getData().getAward() != null) {
                             return Observable.just(movieStarHonor.getData());
                         }
                         return Observable.error(new Exception("empty data"));
                     }
                 })
-                .subscribe(new Action1<MovieStarHonor.DataBean>() {
+                .subscribe(new Consumer<MovieStarHonor.DataBean>() {
                     @Override
-                    public void call(MovieStarHonor.DataBean dataBean) {
+                    public void accept(MovieStarHonor.DataBean dataBean) {
                         tvWinAwardTimes.setText(String.format("%s", dataBean.getAwardCount()==null?"0":dataBean.getAwardCount()));
                         tvNominateTimes.setText(String.format("%s", dataBean.getNomCount()==null?"0":dataBean.getNomCount()));
                         tvAwardTitle.setText(dataBean.getFestivalName());
                         tvAwardContent.setText(dataBean.getPrizeDesc());
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         llHonor.setVisibility(View.GONE);
                     }
                 });
@@ -418,29 +420,19 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     public void addRelatedInformation(final RelatedInformationBean relatedInformationBean) {
 
         Observable.just(relatedInformationBean)
-                .flatMap(new Func1<RelatedInformationBean, Observable<RelatedInformationBean.DataBean.NewsListBean>>() {
+                .flatMap(new Function<RelatedInformationBean, Observable<RelatedInformationBean.DataBean.NewsListBean>>() {
                     @Override
-                    public Observable<RelatedInformationBean.DataBean.NewsListBean> call(RelatedInformationBean relatedInformationBean) {
+                    public Observable<RelatedInformationBean.DataBean.NewsListBean> apply(RelatedInformationBean relatedInformationBean) {
                         if (relatedInformationBean.getData().getNewsList().size() > 0) {
-                            return Observable.from(relatedInformationBean.getData().getNewsList());
+                            return Observable.fromIterable(relatedInformationBean.getData().getNewsList());
                         }
                         return Observable.error(new Exception("empty data"));
                     }
                 })
-                .limit(1)
-                .subscribe(new Subscriber<RelatedInformationBean.DataBean.NewsListBean>() {
+                .take(1)
+                .subscribe(new Consumer<RelatedInformationBean.DataBean.NewsListBean>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        llRelatedInformation.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onNext(final RelatedInformationBean.DataBean.NewsListBean newsListBean) {
+                    public void accept(@NonNull final RelatedInformationBean.DataBean.NewsListBean newsListBean) throws Exception {
                         GlideManager.loadImage(mContext, newsListBean.getPreviewImages().get(0).getUrl(), ivRelatedInformation);
                         tvRelatedInformationContent.setText(newsListBean.getTitle());
                         llRelatedInformation.setOnClickListener(new View.OnClickListener() {
@@ -449,6 +441,11 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
                                 BaseWebViewActivity.start(mContext,StringUtil.getRealUrl(newsListBean.getUrl()));
                             }
                         });
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        llRelatedInformation.setVisibility(View.GONE);
                     }
                 });
     }
@@ -460,26 +457,26 @@ public class MovieStarActivity extends BaseActivity<MovieStarPresenter> implemen
     @Override
     public void addStarRelatedPeople(StarRelatedPeople relatedPeople) {
         Observable.just(relatedPeople)
-                .flatMap(new Func1<StarRelatedPeople, Observable<StarRelatedPeople.DataBean>>() {
+                .flatMap(new Function<StarRelatedPeople, Observable<StarRelatedPeople.DataBean>>() {
                     @Override
-                    public Observable<StarRelatedPeople.DataBean> call(StarRelatedPeople starRelatedPeople) {
+                    public Observable<StarRelatedPeople.DataBean> apply(StarRelatedPeople starRelatedPeople) {
                         if (starRelatedPeople.getData().getRelations().size() > 0) {
                             return Observable.just(starRelatedPeople.getData());
                         }
                         return Observable.error(new Exception("empty data"));
                     }
                 })
-                .subscribe(new Action1<StarRelatedPeople.DataBean>() {
+                .subscribe(new Consumer<StarRelatedPeople.DataBean>() {
                     @Override
-                    public void call(StarRelatedPeople.DataBean dataBean) {
+                    public void accept(StarRelatedPeople.DataBean dataBean) {
                         StarRelatedPeopleAdapter starRelatedPeopleAdapter = new StarRelatedPeopleAdapter();
                         rvRelatedStars.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         rvRelatedStars.setAdapter(starRelatedPeopleAdapter);
                         starRelatedPeopleAdapter.setNewData(dataBean.getRelations());
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         llRelatedStars.setVisibility(View.GONE);
                     }
                 });

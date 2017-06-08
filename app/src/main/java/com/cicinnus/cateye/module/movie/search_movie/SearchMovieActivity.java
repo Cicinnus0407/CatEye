@@ -25,15 +25,16 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 /**
  * Created by Administrator on 2017/2/3.
  */
 
-public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> implements SearchMovieContract.ISearchMovieView {
+public class SearchMovieActivity extends BaseActivity<SearchMovieMVPPresenter> implements SearchMovieContract.ISearchMovieView {
 
 
     private static final String TYPE_ID = "type_id";
@@ -113,8 +114,8 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
     }
 
     @Override
-    protected SearchMoviePresenter getPresenter() {
-        return new SearchMoviePresenter(mContext, this);
+    protected SearchMovieMVPPresenter getPresenter() {
+        return new SearchMovieMVPPresenter(mContext, this);
     }
 
     @Override
@@ -247,7 +248,7 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
             public void onLoadMoreRequested() {
                 mPresenter.getClassifySearchList(offset, catId, sourceId, yearId, sortId);
             }
-        });
+        },rvSearchList);
 
         pullToRefreshListener = new MyPullToRefreshListener(mContext,swipe);
         swipe.setOnPullRefreshListener(pullToRefreshListener);
@@ -284,10 +285,10 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
         choiceBeanList.add(0, singleChoiceBean);
 
         Observable
-                .from(tagList)
-                .map(new Func1<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
+                .fromIterable(tagList)
+                .map(new Function<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
                     @Override
-                    public BaseSingleChoiceBean call(MovieTypeBean.DataBean.TagListBean tagListBean) {
+                    public BaseSingleChoiceBean apply(MovieTypeBean.DataBean.TagListBean tagListBean) {
                         BaseSingleChoiceBean bean = new BaseSingleChoiceBean();
                         bean.id = tagListBean.getTagId();
                         bean.content = tagListBean.getTagName();
@@ -297,23 +298,19 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
                     }
                 })
                 .toList()
-                .subscribe(new Subscriber<List<BaseSingleChoiceBean>>() {
+                .subscribe(new Consumer<List<BaseSingleChoiceBean>>() {
                     @Override
-                    public void onCompleted() {
-                        singleChoiceAdapter1.addData(choiceBeanList);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<BaseSingleChoiceBean> baseSingleChoiceBeen) {
+                    public void accept(@NonNull List<BaseSingleChoiceBean> baseSingleChoiceBeen) throws Exception {
                         choiceBeanList.addAll(baseSingleChoiceBeen);
+                        singleChoiceAdapter1.addData(choiceBeanList);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+
                     }
                 });
-
     }
 
     @Override
@@ -327,10 +324,10 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
         choiceBeanList2.add(0, singleChoiceBean);
 
         Observable
-                .from(tagList)
-                .map(new Func1<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
+                .fromIterable(tagList)
+                .map(new Function<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
                     @Override
-                    public BaseSingleChoiceBean call(MovieTypeBean.DataBean.TagListBean tagListBean) {
+                    public BaseSingleChoiceBean apply(MovieTypeBean.DataBean.TagListBean tagListBean) {
                         BaseSingleChoiceBean bean = new BaseSingleChoiceBean();
                         bean.id = tagListBean.getTagId();
                         bean.content = tagListBean.getTagName();
@@ -340,23 +337,13 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
                     }
                 })
                 .toList()
-                .subscribe(new Subscriber<List<BaseSingleChoiceBean>>() {
+                .subscribe(new Consumer<List<BaseSingleChoiceBean>>() {
                     @Override
-                    public void onCompleted() {
+                    public void accept(@NonNull List<BaseSingleChoiceBean> baseSingleChoiceBeen) throws Exception {
+                        choiceBeanList2.addAll(baseSingleChoiceBeen);
                         singleChoiceAdapter2.addData(choiceBeanList2);
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<BaseSingleChoiceBean> baseSingleChoiceBeen) {
-                        choiceBeanList2.addAll(baseSingleChoiceBeen);
-                    }
                 });
-
     }
 
     @Override
@@ -369,10 +356,10 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
         choiceBeanList3.add(0, singleChoiceBean);
 
         Observable
-                .from(tagList)
-                .map(new Func1<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
+                .fromIterable(tagList)
+                .map(new Function<MovieTypeBean.DataBean.TagListBean, BaseSingleChoiceBean>() {
                     @Override
-                    public BaseSingleChoiceBean call(MovieTypeBean.DataBean.TagListBean tagListBean) {
+                    public BaseSingleChoiceBean apply(MovieTypeBean.DataBean.TagListBean tagListBean) {
                         BaseSingleChoiceBean bean = new BaseSingleChoiceBean();
                         bean.id = tagListBean.getTagId();
                         bean.content = tagListBean.getTagName();
@@ -381,23 +368,20 @@ public class SearchMovieActivity extends BaseActivity<SearchMoviePresenter> impl
                     }
                 })
                 .toList()
-                .subscribe(new Subscriber<List<BaseSingleChoiceBean>>() {
+                .subscribe(new Consumer<List<BaseSingleChoiceBean>>() {
                     @Override
-                    public void onCompleted() {
-                        singleChoiceAdapter3.addData(choiceBeanList3);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<BaseSingleChoiceBean> baseSingleChoiceBeen) {
+                    public void accept(@NonNull List<BaseSingleChoiceBean> baseSingleChoiceBeen) throws Exception {
                         choiceBeanList3.addAll(baseSingleChoiceBeen);
+
+                        singleChoiceAdapter3.addData(choiceBeanList3);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+
                     }
                 });
-
     }
 
     @Override

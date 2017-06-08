@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.top_100;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TopHundredMovieContract {
 
-    public interface ITopHundredMovieView extends ILoadingView{
+    public interface ITopHundredMovieView extends ICoreLoadingView {
         void addTopHundredMovie(List<TopHundredMovieBean.DataBean.MoviesBean> movies);
 
         void addContent(String created, String content);

@@ -6,9 +6,11 @@ import com.cicinnus.cateye.tools.UiUtils;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * Created by Administrator on 2017/2/4.
@@ -45,15 +47,18 @@ public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRe
     public void refreshDone() {
         //延迟700毫秒停止动画
         Observable.timer(700, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .map(new Func1<Long, Void>() {
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public Void call(Long aLong) {
+                    public void accept(@NonNull Long aLong) throws Exception {
                         refreshView.stopAnimate();
                         mSwipeRefreshLayout.setRefreshing(false);
-                        return null;
                     }
-                })
-                .subscribe();
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+
+                    }
+                });
     }
 
 

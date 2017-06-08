@@ -49,7 +49,6 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourc
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
-import com.cicinnus.cateye.net.SchedulersCompat;
 import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
@@ -57,6 +56,7 @@ import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ExpandTextView;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.cicinnus.retrofitlib.rx.SchedulersCompat;
 import com.orhanobut.logger.Logger;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -69,16 +69,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 /**
  * 电影详情页
  */
 
-public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> implements MovieDetailContract.IMovieDetailView {
+public class MovieDetailActivity extends BaseActivity<MovieDetailMVPPresenter> implements MovieDetailContract.IMovieDetailView {
     @BindView(R.id.sc_movie_detail)
     NestedScrollView scMovieDetail;
     @BindView(R.id.progressLayout)
@@ -272,6 +274,11 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     }
 
     @Override
+    protected MovieDetailMVPPresenter getPresenter() {
+        return new MovieDetailMVPPresenter(mContext, this);
+    }
+
+    @Override
     protected void initEventAndData() {
         movieId = getIntent().getIntExtra(MOVIE_ID, 0);
 
@@ -352,11 +359,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
 
     @Override
-    protected MovieDetailPresenter getPresenter() {
-        return new MovieDetailPresenter(mContext, this);
-    }
-
-    @Override
     public void addMovieBasicData(MovieBasicDataBean.DataBean.MovieBean movie) {
         //标题栏
         setTitle(movie);
@@ -374,40 +376,36 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     /**
      * 观影小贴士
      *
-     * @param tips
+     * @param
      */
     @Override
     public void addMovieTips(final MovieTipsBean.DataBean tips) {
         Observable.just(tips.getTips())
-                .flatMap(new Func1<List<MovieTipsBean.DataBean.TipsBean>, Observable<MovieTipsBean.DataBean.TipsBean>>() {
+                .flatMap(new Function<List<MovieTipsBean.DataBean.TipsBean>, ObservableSource<MovieTipsBean.DataBean.TipsBean>>() {
                     @Override
-                    public Observable<MovieTipsBean.DataBean.TipsBean> call(List<MovieTipsBean.DataBean.TipsBean> tipsBeen) {
+                    public ObservableSource<MovieTipsBean.DataBean.TipsBean> apply(@NonNull List<MovieTipsBean.DataBean.TipsBean> tipsBeen) throws Exception {
                         if (tipsBeen != null && tipsBeen.size() > 0) {
-                            return Observable.from(tipsBeen);
+                            return Observable.fromIterable(tipsBeen);
                         }
                         return Observable.error(new Exception("empty data"));
                     }
                 })
+                .compose(SchedulersCompat.<MovieTipsBean.DataBean.TipsBean>applyIoSchedulers())
                 .toList()
-                .compose(SchedulersCompat.<List<MovieTipsBean.DataBean.TipsBean>>applyIoSchedulers())
-                .subscribe(new Subscriber<List<MovieTipsBean.DataBean.TipsBean>>() {
+                .subscribe(new Consumer<List<MovieTipsBean.DataBean.TipsBean>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        llTips.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onNext(List<MovieTipsBean.DataBean.TipsBean> tipsBeanList) {
+                    public void accept(@NonNull List<MovieTipsBean.DataBean.TipsBean> tipsBeen) throws Exception {
                         MovieTipsAdapter movieTipsAdapter = new MovieTipsAdapter();
                         rvMovieTips.setLayoutManager(new LinearLayoutManager(mContext));
                         rvMovieTips.setNestedScrollingEnabled(false);
                         rvMovieTips.setAdapter(movieTipsAdapter);
-                        movieTipsAdapter.setNewData(tipsBeanList);
+                        movieTipsAdapter.setNewData(tipsBeen);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+//                        progressLayout.removeView(llTips);
+                        llTips.setVisibility(View.GONE);
                     }
                 });
     }
@@ -450,21 +448,21 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             photosBeanList.add(bean);
         }
 
-        Observable.from(movie.getPhotos())
-                .map(new Func1<String, MoviePhotosBean>() {
+        Observable.fromIterable(movie.getPhotos())
+                .map(new Function<String, MoviePhotosBean>() {
                     @Override
-                    public MoviePhotosBean call(String s) {
+                    public MoviePhotosBean apply(@NonNull String s) throws Exception {
                         MoviePhotosBean bean = new MoviePhotosBean();
                         bean.setVideo(false);
                         bean.setUrl(s);
                         return bean;
                     }
                 })
+                .compose(SchedulersCompat.<MoviePhotosBean>applyIoSchedulers())
                 .toList()
-                .compose(SchedulersCompat.<List<MoviePhotosBean>>applyIoSchedulers())
-                .subscribe(new Action1<List<MoviePhotosBean>>() {
+                .subscribe(new Consumer<List<MoviePhotosBean>>() {
                     @Override
-                    public void call(List<MoviePhotosBean> moviePhotosBeen) {
+                    public void accept(@NonNull List<MoviePhotosBean> moviePhotosBeen) throws Exception {
                         photosBeanList.addAll(moviePhotosBeen);
                         MoviePhotosAdapter moviePhotosAdapter = new MoviePhotosAdapter();
                         rvMoviePhotos.setAdapter(moviePhotosAdapter);
@@ -484,39 +482,35 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addMovieStarList(MovieStarBean movieStarBean) {
         Observable.just(movieStarBean.getData())
-                .flatMap(new Func1<List<List<MovieStarBean.DataBean>>, Observable<List<MovieStarBean.DataBean>>>() {
+                .flatMap(new Function<List<List<MovieStarBean.DataBean>>, Observable<List<MovieStarBean.DataBean>>>() {
                     @Override
-                    public Observable<List<MovieStarBean.DataBean>> call(List<List<MovieStarBean.DataBean>> lists) {
-                        return Observable.from(lists);
+                    public Observable<List<MovieStarBean.DataBean>> apply(List<List<MovieStarBean.DataBean>> lists) {
+                        return Observable.fromIterable(lists);
                     }
                 })
                 //取前两组数据,如果只有1组就取1组
-                .limit(2)
-                .flatMap(new Func1<List<MovieStarBean.DataBean>, Observable<MovieStarBean.DataBean>>() {
+                .take(2)
+                .flatMap(new Function<List<MovieStarBean.DataBean>, Observable<MovieStarBean.DataBean>>() {
                     @Override
-                    public Observable<MovieStarBean.DataBean> call(List<MovieStarBean.DataBean> dataBeen) {
-                        return Observable.from(dataBeen);
+                    public Observable<MovieStarBean.DataBean> apply(List<MovieStarBean.DataBean> dataBeen) {
+                        return Observable.fromIterable(dataBeen);
                     }
                 })
+                .compose(SchedulersCompat.<MovieStarBean.DataBean>applyIoSchedulers())
                 .toList()
-                .compose(SchedulersCompat.<List<MovieStarBean.DataBean>>applyIoSchedulers())
-                .subscribe(new Subscriber<List<MovieStarBean.DataBean>>() {
+                .subscribe(new Consumer<List<MovieStarBean.DataBean>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<MovieStarBean.DataBean> dataBeen) {
+                    public void accept(@NonNull List<MovieStarBean.DataBean> dataBeen) throws Exception {
                         MovieStarListAdapter movieStarListAdapter = new MovieStarListAdapter();
                         rvMovieStar.setAdapter(movieStarListAdapter);
                         rvMovieStar.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         movieStarListAdapter.setNewData(dataBeen);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
+
                     }
                 });
 
@@ -551,11 +545,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             tvFirstWeekBox.setText(String.format("%s", moneyBoxBean.getMbox().getFirstWeekBox()));
         }
 
-        if (moneyBoxBean.isGlobalRelease()) {
-            tvSumBoxContent.setText("累计票房(万)");
-        } else {
-            tvSumBoxContent.setText("点映票房(万)");
-        }
+        tvSumBoxContent.setText(String.format("%s票房(万)", moneyBoxBean.isGlobalRelease() ? "累计" : "点映"));
+
 
         tvLastDayRank.setText(String.format("%s", moneyBoxBean.getMbox().getLastDayRank()));
         tvSumBox.setText(String.format("%s", moneyBoxBean.getMbox().getSumBox()));
@@ -570,16 +561,16 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addMovieAwards(List<MovieAwardsBean.DataBean> movieAwards) {
         Observable
-                .from(movieAwards)
-                .filter(new Func1<MovieAwardsBean.DataBean, Boolean>() {
+                .fromIterable(movieAwards)
+                .filter(new Predicate<MovieAwardsBean.DataBean>() {
                     @Override
-                    public Boolean call(MovieAwardsBean.DataBean dataBean) {
+                    public boolean test(@NonNull MovieAwardsBean.DataBean dataBean) throws Exception {
                         return dataBean.getItems().size() > 0;
                     }
                 })
-                .map(new Func1<MovieAwardsBean.DataBean, String>() {
+                .map(new Function<MovieAwardsBean.DataBean, String>() {
                     @Override
-                    public String call(MovieAwardsBean.DataBean dataBean) {
+                    public String apply(@NonNull MovieAwardsBean.DataBean dataBean) throws Exception {
                         String awardsName = "";
                         for (int i = 0; i < dataBean.getItems().size(); i++) {
                             awardsName = dataBean.getTitle();
@@ -588,11 +579,11 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return awardsName;
                     }
                 })
+                .compose(SchedulersCompat.<String>applyIoSchedulers())
                 .toList()
-                .compose(SchedulersCompat.<List<String>>applyIoSchedulers())
-                .subscribe(new Action1<List<String>>() {
+                .subscribe(new Consumer<List<String>>() {
                     @Override
-                    public void call(List<String> strings) {
+                    public void accept(@NonNull List<String> strings) throws Exception {
                         MovieAwardsAdapter movieAwardsAdapter = new MovieAwardsAdapter();
                         rvMovieAwards.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         rvMovieAwards.setAdapter(movieAwardsAdapter);
@@ -651,20 +642,22 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addMovieCommentTag(List<MovieCommentTagBean.DataBean> commentTags) {
         commentTags.add(0, new MovieCommentTagBean.DataBean(0, movieId, 0, "全部"));
+
         Observable
                 .just(commentTags)
-                .flatMap(new Func1<List<MovieCommentTagBean.DataBean>, Observable<MovieCommentTagBean.DataBean>>() {
+                .flatMap(new Function<List<MovieCommentTagBean.DataBean>, ObservableSource<MovieCommentTagBean.DataBean>>() {
                     @Override
-                    public Observable<MovieCommentTagBean.DataBean> call(List<MovieCommentTagBean.DataBean> dataBeen) {
-                        if (dataBeen.size() > 1) {
-                            return Observable.from(dataBeen);
+                    public ObservableSource<MovieCommentTagBean.DataBean> apply(@NonNull List<MovieCommentTagBean.DataBean> dataBean) throws Exception {
+                        if (dataBean.size() > 1) {
+                            return Observable.fromIterable(dataBean);
                         }
                         return Observable.error(new Exception("empty data"));
                     }
+
                 })
-                .map(new Func1<MovieCommentTagBean.DataBean, String>() {
+                .map(new Function<MovieCommentTagBean.DataBean, String>() {
                     @Override
-                    public String call(MovieCommentTagBean.DataBean dataBean) {
+                    public String apply(MovieCommentTagBean.DataBean dataBean) {
                         if (dataBean.getCount() == 0) {
                             return dataBean.getTagName();
                         } else {
@@ -672,11 +665,11 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         }
                     }
                 })
+                .compose(SchedulersCompat.<String>applyIoSchedulers())
                 .toList()
-                .compose(SchedulersCompat.<List<String>>applyIoSchedulers())
-                .subscribe(new Action1<List<String>>() {
+                .subscribe(new Consumer<List<String>>() {
                     @Override
-                    public void call(List<String> strings) {
+                    public void accept(@NonNull List<String> strings) throws Exception {
                         tagFlowLayout.setAdapter(new TagAdapter<String>(strings) {
                             @Override
                             public View getView(FlowLayout parent, int position, String s) {
@@ -686,10 +679,10 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                             }
                         });
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
-
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
                     }
                 });
 
@@ -704,9 +697,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     public void addMovieLongComment(MovieLongCommentBean.DataBean movieLongComments) {
         Observable
                 .just(movieLongComments)
-                .flatMap(new Func1<MovieLongCommentBean.DataBean, Observable<MovieLongCommentBean.DataBean>>() {
+                .flatMap(new Function<MovieLongCommentBean.DataBean, Observable<MovieLongCommentBean.DataBean>>() {
                     @Override
-                    public Observable<MovieLongCommentBean.DataBean> call(MovieLongCommentBean.DataBean dataBean) {
+                    public Observable<MovieLongCommentBean.DataBean> apply(MovieLongCommentBean.DataBean dataBean) {
                         if (dataBean.getFilmReviews().size() > 0) {
                             return Observable.just(dataBean);
                         }
@@ -714,9 +707,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
                 })
                 .compose(SchedulersCompat.<MovieLongCommentBean.DataBean>applyIoSchedulers())
-                .subscribe(new Action1<MovieLongCommentBean.DataBean>() {
+                .subscribe(new Consumer<MovieLongCommentBean.DataBean>() {
                     @Override
-                    public void call(MovieLongCommentBean.DataBean filmReviewsBean) {
+                    public void accept(MovieLongCommentBean.DataBean filmReviewsBean) {
                         MovieLongCommentAdapter movieLongCommentAdapter = new MovieLongCommentAdapter();
                         rvLongComment.setLayoutManager(new LinearLayoutManager(mContext));
                         rvLongComment.setAdapter(movieLongCommentAdapter);
@@ -728,14 +721,14 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         footer.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MovieLongCommentActivity.start(mContext,movieId,mTitle);
+                                MovieLongCommentActivity.start(mContext, movieId, mTitle);
                             }
                         });
                         movieLongCommentAdapter.addFooterView(footer);
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         tvLongComment.setVisibility(View.INVISIBLE);
                         tvNoLongComment.setVisibility(View.VISIBLE);
                     }
@@ -751,20 +744,20 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addMovieRelatedInformation(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBean) {
         Observable.just(newsListBean)
-                .flatMap(new Func1<List<MovieRelatedInformationBean.DataBean.NewsListBean>, Observable<MovieRelatedInformationBean.DataBean.NewsListBean>>() {
+                .flatMap(new Function<List<MovieRelatedInformationBean.DataBean.NewsListBean>, Observable<MovieRelatedInformationBean.DataBean.NewsListBean>>() {
                     @Override
-                    public Observable<MovieRelatedInformationBean.DataBean.NewsListBean> call(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBeen) {
+                    public Observable<MovieRelatedInformationBean.DataBean.NewsListBean> apply(List<MovieRelatedInformationBean.DataBean.NewsListBean> newsListBeen) {
                         if (newsListBeen.size() > 0) {
-                            return Observable.from(newsListBeen);
+                            return Observable.fromIterable(newsListBeen);
                         }
                         return Observable.error(new Exception("empty data"));
                     }
                 })
-                .limit(1)
+                .take(1)
                 .compose(SchedulersCompat.<MovieRelatedInformationBean.DataBean.NewsListBean>applyIoSchedulers())
-                .subscribe(new Action1<MovieRelatedInformationBean.DataBean.NewsListBean>() {
+                .subscribe(new Consumer<MovieRelatedInformationBean.DataBean.NewsListBean>() {
                     @Override
-                    public void call(final MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
+                    public void accept(final MovieRelatedInformationBean.DataBean.NewsListBean newsListBean) {
                         tvRelatedInformationTitle.setText(newsListBean.getTitle());
                         tvRelatedInformationAuthor.setText(newsListBean.getSource());
                         tvRelatedInformationViewCount.setText(String.format("%s", newsListBean.getViewCount()));
@@ -785,9 +778,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                             }
                         });
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         llRelatedInformation.setVisibility(View.GONE);
                     }
                 });
@@ -802,9 +795,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     @Override
     public void addRelatedMovie(List<RelatedMovieBean.DataBean> relatedMovies) {
         Observable.just(relatedMovies)
-                .flatMap(new Func1<List<RelatedMovieBean.DataBean>, Observable<RelatedMovieBean.DataBean>>() {
+                .flatMap(new Function<List<RelatedMovieBean.DataBean>, Observable<RelatedMovieBean.DataBean>>() {
                     @Override
-                    public Observable<RelatedMovieBean.DataBean> call(List<RelatedMovieBean.DataBean> dataBeen) {
+                    public Observable<RelatedMovieBean.DataBean> apply(List<RelatedMovieBean.DataBean> dataBeen) {
                         if (dataBeen.get(0).getItems().size() > 0) {
                             return Observable.just(dataBeen.get(0));
                         }
@@ -812,17 +805,17 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     }
                 })
                 .compose(SchedulersCompat.<RelatedMovieBean.DataBean>applyIoSchedulers())
-                .subscribe(new Action1<RelatedMovieBean.DataBean>() {
+                .subscribe(new Consumer<RelatedMovieBean.DataBean>() {
                     @Override
-                    public void call(RelatedMovieBean.DataBean dataBean) {
+                    public void accept(RelatedMovieBean.DataBean dataBean) {
                         RelatedMovieAdapter relatedMovieAdapter = new RelatedMovieAdapter();
                         rvRelatedMovie.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
                         rvRelatedMovie.setAdapter(relatedMovieAdapter);
                         relatedMovieAdapter.setNewData(dataBean.getItems());
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         llRelatedMovie.setVisibility(View.GONE);
                     }
                 });
@@ -838,29 +831,19 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     public void addMovieTopic(final MovieTopicBean.DataBean movieTopicBean) {
         Observable
                 .just(movieTopicBean)
-                .flatMap(new Func1<MovieTopicBean.DataBean, Observable<MovieTopicBean.DataBean.TopicsBean>>() {
+                .flatMap(new Function<MovieTopicBean.DataBean, Observable<MovieTopicBean.DataBean.TopicsBean>>() {
                     @Override
-                    public Observable<MovieTopicBean.DataBean.TopicsBean> call(MovieTopicBean.DataBean dataBean) {
+                    public Observable<MovieTopicBean.DataBean.TopicsBean> apply(MovieTopicBean.DataBean dataBean) {
                         if (dataBean.getTopics().size() > 0) {
-                            return Observable.from(dataBean.getTopics());
+                            return Observable.fromIterable(dataBean.getTopics());
                         }
                         return Observable.error(new Exception("empty Data"));
                     }
                 })
                 .compose(SchedulersCompat.<MovieTopicBean.DataBean.TopicsBean>applyIoSchedulers())
-                .subscribe(new Subscriber<MovieTopicBean.DataBean.TopicsBean>() {
+                .subscribe(new Consumer<MovieTopicBean.DataBean.TopicsBean>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        llRelatedTopic.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onNext(final MovieTopicBean.DataBean.TopicsBean topicsBean) {
+                    public void accept(@NonNull final MovieTopicBean.DataBean.TopicsBean topicsBean) throws Exception {
                         if (topicsBean.getPreviews().get(0).getUrl() != null) {
                             GlideManager.loadImage(mContext, topicsBean.getPreviews().get(0).getUrl(), ivRelatedTopic);
                         } else {
@@ -876,13 +859,19 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                                 MovieTopicActivity.start(mContext, topicsBean.getGroupId());
                             }
                         });
-
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
+                        llRelatedTopic.setVisibility(View.GONE);
                     }
                 });
     }
 
     /**
      * 专业影评
+     *
      * @param movieProCommentBean 数据
      */
     @Override
@@ -901,7 +890,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieProCommentActivity.start(mContext,movieId,mTitle);
+                MovieProCommentActivity.start(mContext, movieId, mTitle);
             }
         });
         movieProCommentAdapter.addFooterView(footer);
@@ -957,9 +946,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         //模糊背景图
         Observable
                 .just(originalUrl)
-                .map(new Func1<String, Bitmap>() {
+                .map(new Function<String, Bitmap>() {
                     @Override
-                    public Bitmap call(String s) {
+                    public Bitmap apply(String s) {
                         try {
                             URL url = new URL(s);
                             return BitmapFactory.decodeStream(url.openStream());
@@ -969,27 +958,22 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                         return null;
                     }
                 })
-                .map(new Func1<Bitmap, Bitmap>() {
+                .map(new Function<Bitmap, Bitmap>() {
                     @Override
-                    public Bitmap call(Bitmap bitmap) {
+                    public Bitmap apply(Bitmap bitmap) {
                         return FastBlurUtil.doBlur(bitmap, 130, false);
                     }
                 })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
-                .subscribe(new Subscriber<Bitmap>() {
+                .subscribe(new Consumer<Bitmap>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Logger.e(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Bitmap bitmap) {
+                    public void accept(@NonNull Bitmap bitmap) throws Exception {
                         ivBlurBg.setImageBitmap(bitmap);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
                     }
                 });
     }

@@ -31,9 +31,9 @@ public class OverseaMovieActivity extends BaseActivity {
     @BindView(R.id.tab_oversea)
     TabLayout tabOversea;
 
-    private OverseaMovieFragment overseaMovieFragment1;
-    private OverseaMovieFragment overseaMovieFragment2;
-    private OverseaMovieFragment overseaMovieFragment3;
+    private OverseaMovieMVPFragment overseaMovieFragment1;
+    private OverseaMovieMVPFragment overseaMovieFragment2;
+    private OverseaMovieMVPFragment overseaMovieFragment3;
 
     @Override
     protected int getLayout() {
@@ -72,15 +72,15 @@ public class OverseaMovieActivity extends BaseActivity {
 
     private void setupFragment(Bundle savedInstance) {
         if (savedInstance != null) {
-            overseaMovieFragment1 = (OverseaMovieFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment1");
-            overseaMovieFragment2 = (OverseaMovieFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment2");
-            overseaMovieFragment3 = (OverseaMovieFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment3");
+            overseaMovieFragment1 = (OverseaMovieMVPFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment1");
+            overseaMovieFragment2 = (OverseaMovieMVPFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment2");
+            overseaMovieFragment3 = (OverseaMovieMVPFragment) getSupportFragmentManager().findFragmentByTag("overseaMovieFragment3");
 
             switchFragment(0);
         } else {
-            overseaMovieFragment1 = OverseaMovieFragment.newInstance("NA");
-            overseaMovieFragment2 = OverseaMovieFragment.newInstance("KR");
-            overseaMovieFragment3 = OverseaMovieFragment.newInstance("JP");
+            overseaMovieFragment1 = OverseaMovieMVPFragment.newInstance("NA");
+            overseaMovieFragment2 = OverseaMovieMVPFragment.newInstance("KR");
+            overseaMovieFragment3 = OverseaMovieMVPFragment.newInstance("JP");
 
 
             getSupportFragmentManager().beginTransaction()

@@ -1,8 +1,8 @@
 package com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaComingMovieBean;
 import com.cicinnus.cateye.module.movie.find_movie.fixedboard_movie.oversea_movie.bean.OverseaHotMovieBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class OverseaMovieContract  {
-    public interface IOverseaMovieView extends ILoadingView{
+    public interface IOverseaMovieView extends ICoreLoadingView {
 
         void addOverseaHotMovie(List<OverseaHotMovieBean.DataBean.HotBean> hot);
 

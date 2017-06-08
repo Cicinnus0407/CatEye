@@ -1,9 +1,9 @@
 package com.cicinnus.cateye.module.discover;
 
 import com.cicinnus.cateye.net.RetrofitClient;
-import com.cicinnus.cateye.net.SchedulersCompat;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Administrator on 2017/1/18.
@@ -18,14 +18,13 @@ public class DiscoverManager {
      * @param limit
      * @return
      */
-    public Observable<DiscoverBean> getDiscoverData(int offset,int limit){
+    public Observable<DiscoverBean> getDiscoverData(int offset, int limit){
 
 
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getDiscover(offset,limit)
-                .compose(SchedulersCompat.<DiscoverBean>applyIoSchedulers());
+                .getDiscover(offset,limit);
 
     }
 
@@ -38,7 +37,6 @@ public class DiscoverManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getDiscoverHeader("android",utm_term)
-                .compose(SchedulersCompat.<DiscoverHeaderBean>applyIoSchedulers());
+                .getDiscoverHeader("android",utm_term);
     }
 }

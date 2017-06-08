@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Cicinnus on 2017/2/28.
  */
 
-public class MovieTopicActivity extends BaseRecyclerViewActivity<MovieTopicPresenter> implements MovieTopicContract.IMovieTopicView {
+public class MovieTopicActivity extends BaseRecyclerViewActivity<MovieTopicMVPPresenter> implements MovieTopicContract.IMovieTopicView {
 
     private MovieTopicAdapter movieTopicAdapter;
     private int mGroupId;
@@ -26,8 +26,8 @@ public class MovieTopicActivity extends BaseRecyclerViewActivity<MovieTopicPrese
     }
 
     @Override
-    protected MovieTopicPresenter getMPresenter() {
-        return new MovieTopicPresenter(mContext,this);
+    protected MovieTopicMVPPresenter getMPresenter() {
+        return new MovieTopicMVPPresenter(mContext,this);
     }
 
     @Override
@@ -39,17 +39,17 @@ public class MovieTopicActivity extends BaseRecyclerViewActivity<MovieTopicPrese
         movieTopicAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ((MovieTopicPresenter) mPresenter).getMoreTopic(mGroupId,offset);
+                ((MovieTopicMVPPresenter) mPresenter).getMoreTopic(mGroupId,offset);
             }
-        });
+        },rvBaseRecyclerView);
 
-        ((MovieTopicPresenter) mPresenter).getMovieTopic(mGroupId,offset);
+        ((MovieTopicMVPPresenter) mPresenter).getMovieTopic(mGroupId,offset);
     }
 
     @Override
     protected void setPullToRefresh() {
         offset =0;
-        ((MovieTopicPresenter) mPresenter).getMovieTopic(mGroupId,offset);
+        ((MovieTopicMVPPresenter) mPresenter).getMovieTopic(mGroupId,offset);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MovieTopicActivity extends BaseRecyclerViewActivity<MovieTopicPrese
     @Override
     protected void onErrorResetData() {
         offset =0;
-        ((MovieTopicPresenter) mPresenter).getMovieTopic(mGroupId,offset);
+        ((MovieTopicMVPPresenter) mPresenter).getMovieTopic(mGroupId,offset);
     }
 
     @Override

@@ -1,7 +1,7 @@
 
 package com.cicinnus.cateye.module.movie.hot_movie;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class HotMovieListContract {
-    public interface IHotMovieListView extends ILoadingView{
+    public interface IHotMovieListView extends ICoreLoadingView {
         void addHotMovieList(List<HotMovieListBean.DataBean.HotBean> hot);
 
         void addMovieIds(List<Integer> movieIds);

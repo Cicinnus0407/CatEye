@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.discover;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class DiscoverContract {
-    interface IDiscoverView extends ILoadingView {
+    interface IDiscoverView extends ICoreLoadingView {
         void addDiscoverData(List<DiscoverBean.DataBean.FeedsBean> feeds);
 
         void addDiscoverHeaderData(List<DiscoverHeaderBean.DataBean> data);

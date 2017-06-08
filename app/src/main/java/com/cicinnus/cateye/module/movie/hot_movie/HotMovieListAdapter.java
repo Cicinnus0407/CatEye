@@ -112,7 +112,7 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
                     }
                 });
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext, item.getId());

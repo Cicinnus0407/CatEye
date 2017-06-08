@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Cicinnus on 2017/2/27.
  */
 
-public class MovieInformationActivity extends BaseRecyclerViewActivity<MovieInformationPresenter> implements MovieInformationContract.IMovieInformationView {
+public class MovieInformationActivity extends BaseRecyclerViewActivity<MovieInformationMVPPresenter> implements MovieInformationContract.IMovieInformationView {
 
 
 
@@ -32,8 +32,8 @@ public class MovieInformationActivity extends BaseRecyclerViewActivity<MovieInfo
 
 
     @Override
-    protected MovieInformationPresenter getMPresenter() {
-        return new MovieInformationPresenter(mContext,this);
+    protected MovieInformationMVPPresenter getMPresenter() {
+        return new MovieInformationMVPPresenter(mContext,this);
     }
 
     @Override
@@ -46,17 +46,17 @@ public class MovieInformationActivity extends BaseRecyclerViewActivity<MovieInfo
         movieInformationAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ((MovieInformationPresenter) mPresenter).getMoreMovieInformation(mMovieId,offset);
+                ((MovieInformationMVPPresenter) mPresenter).getMoreMovieInformation(mMovieId,offset);
             }
-        });
-        ((MovieInformationPresenter) mPresenter).getMovieInformation(mMovieId,offset);
+        },rvBaseRecyclerView);
+        ((MovieInformationMVPPresenter) mPresenter).getMovieInformation(mMovieId,offset);
     }
 
 
     @Override
     protected void setPullToRefresh() {
         offset=0;
-        ((MovieInformationPresenter) mPresenter).getMovieInformation(mMovieId,offset);
+        ((MovieInformationMVPPresenter) mPresenter).getMovieInformation(mMovieId,offset);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MovieInformationActivity extends BaseRecyclerViewActivity<MovieInfo
     @Override
     protected void onErrorResetData() {
         offset = 0;
-        ((MovieInformationPresenter) mPresenter).getMovieInformation(mMovieId,offset);
+        ((MovieInformationMVPPresenter) mPresenter).getMovieInformation(mMovieId,offset);
     }
 
     @Override

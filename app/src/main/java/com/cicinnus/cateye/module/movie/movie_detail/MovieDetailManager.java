@@ -14,7 +14,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.net.RetrofitClient;
 
-import rx.Observable;
+import io.reactivex.ObservableSource;
 
 /**
  * Created by Administrator on 2017/2/10.
@@ -27,14 +27,14 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieBasicDataBean> getMovieBasicData(int movieId){
+    public ObservableSource<MovieBasicDataBean> getMovieBasicData(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
                 .getMovieBasicData(movieId);
     }
 
-    public Observable<MovieTipsBean> getMovieTips(int movieId){
+    public ObservableSource<MovieTipsBean> getMovieTips(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -46,7 +46,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieStarBean> getMovieStarList(int movieId){
+    public ObservableSource<MovieStarBean> getMovieStarList(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -58,7 +58,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieMoneyBoxBean> getMovieBox(int movieId){
+    public ObservableSource<MovieMoneyBoxBean> getMovieBox(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -70,7 +70,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieAwardsBean> getMovieAwards(int movieId){
+    public ObservableSource<MovieAwardsBean> getMovieAwards(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -82,7 +82,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieResourceBean> getMovieResource(int movieId){
+    public ObservableSource<MovieResourceBean> getMovieResource(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -94,7 +94,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieCommentTagBean> getMovieCommentTag(int movieId){
+    public ObservableSource<MovieCommentTagBean> getMovieCommentTag(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -107,7 +107,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieLongCommentBean> getMovieLongComment(int movieId){
+    public ObservableSource<MovieLongCommentBean> getMovieLongComment(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -119,7 +119,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieProCommentBean> getMovieProComment(int movieId){
+    public ObservableSource<MovieProCommentBean> getMovieProComment(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -131,7 +131,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-   public Observable<MovieRelatedInformationBean> getMovieRelatedInformation(int movieId){
+   public ObservableSource<MovieRelatedInformationBean> getMovieRelatedInformation(int movieId){
        return RetrofitClient
                .getInstance()
                .api()
@@ -144,7 +144,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<RelatedMovieBean> getRelatedMovie(int movieId){
+    public ObservableSource<RelatedMovieBean> getRelatedMovie(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
@@ -156,7 +156,7 @@ public class MovieDetailManager {
      * @param movieId
      * @return
      */
-    public Observable<MovieTopicBean> getMovieTopic(int movieId){
+    public ObservableSource<MovieTopicBean> getMovieTopic(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()

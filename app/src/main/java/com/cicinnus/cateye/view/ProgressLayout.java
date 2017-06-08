@@ -13,14 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.net.SchedulersCompat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2017/1/19.
@@ -93,17 +88,18 @@ public class ProgressLayout extends LinearLayout {
 
     public void showContent() {
         //延迟500毫秒显示
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .compose(SchedulersCompat.<Long>applyIoSchedulers())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        currentState = State.CONTENT;
-                        ProgressLayout.this.setContentVisibility(true);
-                        ProgressLayout.this.hideLoadingView();
-                        ProgressLayout.this.hideErrorView();
-                    }
-                });
+//        Observable.timer(500, TimeUnit.MILLISECONDS)
+//                .compose(SchedulersCompat.<Long>applyIoSchedulers())
+//                .subscribe(new Consumer<Long>() {
+//                    @Override
+//                    public void accept(@NonNull Long aLong) throws Exception {
+//
+//                    }
+//                });
+        currentState = State.CONTENT;
+        ProgressLayout.this.setContentVisibility(true);
+        ProgressLayout.this.hideLoadingView();
+        ProgressLayout.this.hideErrorView();
     }
 
     public void showError(OnClickListener click) {
@@ -111,7 +107,8 @@ public class ProgressLayout extends LinearLayout {
         this.hideLoadingView();
         this.showErrorView();
         this.btn_error.setOnClickListener(click);
-        this.setContentVisibility(false);
+//        this.setContentVisibility(false);
+        hideContentView();
     }
 
 
@@ -169,6 +166,13 @@ public class ProgressLayout extends LinearLayout {
         }
     }
 
+    private void hideContentView(){
+        if(contentViews!=null){
+            for (View contentView : contentViews) {
+                contentView.setVisibility(GONE);
+            }
+        }
+    }
 
     public void setContentVisibility(boolean visible) {
         for (View contentView : contentViews) {

@@ -18,7 +18,7 @@ import com.cicinnus.cateye.tools.ImgSizeUtil;
  * Created by Administrator on 2017/2/20.
  */
 
-public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSoundTrackPresenter> implements MovieSoundTrackContract.IMovieSoundTrackView {
+public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSoundTrackMVPPresenter> implements MovieSoundTrackContract.IMovieSoundTrackView {
 
 
     private static final String MOVIE_ID = "movie_id";
@@ -33,8 +33,8 @@ public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSound
     }
 
     @Override
-    protected MovieSoundTrackPresenter getMPresenter() {
-        return new MovieSoundTrackPresenter(mContext,this);
+    protected MovieSoundTrackMVPPresenter getMPresenter() {
+        return new MovieSoundTrackMVPPresenter(mContext,this);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSound
         rvBaseRecyclerView.setAdapter(movieSoundTrackAdapter);
         header = getLayoutInflater().inflate(R.layout.layout_movie_music_header, (ViewGroup) rvBaseRecyclerView.getParent(),false);
         movieSoundTrackAdapter.addHeaderView(header);
-        ((MovieSoundTrackPresenter) mPresenter).getMovieSoundTrack(movieId);
+        ((MovieSoundTrackMVPPresenter) mPresenter).getMovieSoundTrack(movieId);
     }
 
     @Override
     protected void setPullToRefresh() {
-        ((MovieSoundTrackPresenter) mPresenter).getMovieSoundTrack(movieId);
+        ((MovieSoundTrackMVPPresenter) mPresenter).getMovieSoundTrack(movieId);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSound
 
     @Override
     protected void onErrorResetData() {
-        ((MovieSoundTrackPresenter) mPresenter).getMovieSoundTrack(movieId);
+        ((MovieSoundTrackMVPPresenter) mPresenter).getMovieSoundTrack(movieId);
     }
 
     @Override

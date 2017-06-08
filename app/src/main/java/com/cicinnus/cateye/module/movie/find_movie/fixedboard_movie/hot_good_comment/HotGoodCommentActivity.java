@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * Created by Cicinnus on 2017/2/3.
  */
 
-public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter> implements HotGoodCommentContract.IHotGoodCommentView {
+public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentMVPPresenter> implements HotGoodCommentContract.IHotGoodCommentView {
 
 
     private View headerView;
@@ -75,8 +75,8 @@ public class HotGoodCommentActivity extends BaseActivity<HotGoodCommentPresenter
     }
 
     @Override
-    protected HotGoodCommentPresenter getPresenter() {
-        return new HotGoodCommentPresenter(mContext, this);
+    protected HotGoodCommentMVPPresenter getPresenter() {
+        return new HotGoodCommentMVPPresenter(mContext, this);
     }
 
     @OnClick({R.id.rl_back})

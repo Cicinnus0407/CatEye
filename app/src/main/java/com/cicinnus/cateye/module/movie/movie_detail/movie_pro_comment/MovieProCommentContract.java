@@ -1,7 +1,7 @@
 package com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieProCommentBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class MovieProCommentContract {
-    public interface IMovieProCommentView extends ILoadingView{
+    public interface IMovieProCommentView extends ICoreLoadingView {
         void addMovieProComment(List<MovieProCommentBean.DataBean> movieProCommentBeanData);
 
         void loadMoreFail(String message);

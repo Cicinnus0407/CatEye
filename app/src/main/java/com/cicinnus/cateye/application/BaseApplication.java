@@ -2,6 +2,8 @@ package com.cicinnus.cateye.application;
 
 import android.app.Application;
 
+import com.cicinnus.cateye.net.Api;
+import com.cicinnus.cateye.net.RetrofitClient;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -17,6 +19,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         instance = this;
         LeakCanary.install(this);
+        RetrofitClient.initClient_BaseUrl(null, Api.BASE_URL);
     }
 
     public static BaseApplication getInstance() {

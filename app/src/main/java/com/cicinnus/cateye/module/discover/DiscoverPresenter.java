@@ -2,15 +2,21 @@ package com.cicinnus.cateye.module.discover;
 
 import android.app.Activity;
 
-import com.cicinnus.cateye.base.BasePresenter;
+import com.cicinnus.retrofitlib.base.BaseMVPPresenter;
+import com.cicinnus.retrofitlib.net.error.ExceptionHandle;
 
-import rx.Subscriber;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Administrator on 2017/1/18.
  */
 
-public class DiscoverPresenter extends BasePresenter<DiscoverContract.IDiscoverView> implements DiscoverContract.IDiscoverPresenter {
+public class DiscoverPresenter extends BaseMVPPresenter<DiscoverContract.IDiscoverView> implements DiscoverContract.IDiscoverPresenter {
 
     private final DiscoverManager discoverManager;
 
@@ -22,42 +28,45 @@ public class DiscoverPresenter extends BasePresenter<DiscoverContract.IDiscoverV
     @Override
     public void getDiscoverData(int offset, int limit) {
         mView.showLoading();
-        addSubscribe(discoverManager.getDiscoverData(offset, limit)
-                .subscribe(new Subscriber<DiscoverBean>() {
+        addSubscribeUntilDestroy(discoverManager.getDiscoverData(offset, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DiscoverBean>() {
                     @Override
-                    public void onCompleted() {
-                        mView.showContent();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(DiscoverBean discoverBean) {
+                    public void accept( DiscoverBean discoverBean)  {
                         mView.addDiscoverData(discoverBean.getData().getFeeds());
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable)  {
+                        mView.showError(ExceptionHandle.handleException(throwable));
+
+                    }
+                }, new Action() {
+                    @Override
+                    public void run()  {
+                        mView.showContent();
                     }
                 }));
     }
 
     @Override
     public void getDiscoverHeader(String utm_term) {
-        addSubscribe(discoverManager.getDiscoverHeaderData(utm_term)
-                .subscribe(new Subscriber<DiscoverHeaderBean>() {
+        addSubscribeUntilDestroy(discoverManager.getDiscoverHeaderData(utm_term)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<DiscoverHeaderBean>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.showError("获取顶部栏目失败");
-                    }
-
-                    @Override
-                    public void onNext(DiscoverHeaderBean discoverHeaderBean) {
+                    public void accept(@NonNull DiscoverHeaderBean discoverHeaderBean) throws Exception {
                         mView.addDiscoverHeaderData(discoverHeaderBean.getData());
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+//                        mView.showError("获取顶部栏目失败");
+
                     }
                 }));
     }

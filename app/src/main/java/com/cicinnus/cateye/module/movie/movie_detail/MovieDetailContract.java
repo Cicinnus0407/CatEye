@@ -1,6 +1,5 @@
 package com.cicinnus.cateye.module.movie.movie_detail;
 
-import com.cicinnus.cateye.base.ILoadingView;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieAwardsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieBasicDataBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
@@ -13,6 +12,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieStarBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTipsBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class MovieDetailContract {
-    public interface IMovieDetailView extends ILoadingView {
+    public interface IMovieDetailView extends ICoreLoadingView {
         void addMovieBasicData(MovieBasicDataBean.DataBean.MovieBean movie);
 
         void addMovieTips(MovieTipsBean.DataBean tips);

@@ -18,7 +18,7 @@ import java.util.List;
  * Top100
  */
 
-public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundredMoviePresenter> implements TopHundredMovieContract.ITopHundredMovieView {
+public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundredMovieMVPPresenter> implements TopHundredMovieContract.ITopHundredMovieView {
 
 
     public static void start(Context context) {
@@ -33,8 +33,8 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
 
 
     @Override
-    protected TopHundredMoviePresenter getMPresenter() {
-        return new TopHundredMoviePresenter(mContext, this);
+    protected TopHundredMovieMVPPresenter getMPresenter() {
+        return new TopHundredMovieMVPPresenter(mContext, this);
     }
 
     @Override
@@ -49,10 +49,10 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
         topHundredMovieAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
+                ((TopHundredMovieMVPPresenter) mPresenter).getTopHundredMovie(offset);
             }
-        });
-        ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
+        },rvBaseRecyclerView);
+        ((TopHundredMovieMVPPresenter) mPresenter).getTopHundredMovie(offset);
 
     }
 
@@ -60,7 +60,7 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
     protected void setPullToRefresh() {
         offset = 0;
         topHundredMovieAdapter.setNewData(new ArrayList<TopHundredMovieBean.DataBean.MoviesBean>());
-        ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
+        ((TopHundredMovieMVPPresenter) mPresenter).getTopHundredMovie(offset);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TopHundredMovieActivity extends BaseRecyclerViewActivity<TopHundred
     @Override
     protected void onErrorResetData() {
         offset = 0;
-        ((TopHundredMoviePresenter) mPresenter).getTopHundredMovie(offset);
+        ((TopHundredMovieMVPPresenter) mPresenter).getTopHundredMovie(offset);
 
     }
 

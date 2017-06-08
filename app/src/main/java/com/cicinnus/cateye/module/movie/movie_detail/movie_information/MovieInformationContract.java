@@ -1,6 +1,6 @@
 package com.cicinnus.cateye.module.movie.movie_detail.movie_information;
 
-import com.cicinnus.cateye.base.ILoadingView;
+import com.cicinnus.retrofitlib.base.ICoreLoadingView;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class MovieInformationContract {
-    public interface IMovieInformationView extends ILoadingView{
+    public interface IMovieInformationView extends ICoreLoadingView {
 
         void addMovieInformation(List<MovieInformationBean.DataBean.NewsListBean> movieInformationBean);
 

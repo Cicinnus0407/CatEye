@@ -6,7 +6,8 @@ import com.cicinnus.cateye.module.movie.find_movie.bean.MovieTypeBean;
 import com.cicinnus.cateye.net.RetrofitClient;
 import com.cicinnus.cateye.tools.TimeUtils;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Cicinnus on 2017/2/2.

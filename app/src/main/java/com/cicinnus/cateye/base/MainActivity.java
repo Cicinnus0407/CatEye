@@ -5,10 +5,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.module.cinema.CinemaFragment;
+import com.cicinnus.cateye.module.cinema.CinemaMVPFragment;
 import com.cicinnus.cateye.module.discover.DiscoverFragment;
-import com.cicinnus.cateye.module.mine.MineFragment;
-import com.cicinnus.cateye.module.movie.movie_main.MovieMainFragment;
+import com.cicinnus.cateye.module.mine.MineMVPFragment;
+import com.cicinnus.cateye.module.movie.movie_main.MovieMainMVPFragment;
+import com.cicinnus.retrofitlib.base.BaseMVPActivity;
 
 import butterknife.BindView;
 
@@ -16,39 +17,45 @@ import butterknife.BindView;
  * Created by Administrator on 2017/1/18.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMVPActivity {
 
 
     @BindView(R.id.rg_main)
     RadioGroup rg_main;
 
-    private MovieMainFragment movieMainFragment;
-    private CinemaFragment cinemaFragment;
+    private MovieMainMVPFragment movieMainFragment;
+    private CinemaMVPFragment cinemaFragment;
     private DiscoverFragment discoverFragment;
-    private MineFragment mineFragment;
+    private MineMVPFragment mineFragment;
+
 
     @Override
-    protected int getLayout() {
+    public int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initEventAndData() {
+        setupRg();
+
     }
 
     @Override
     protected void initEventAndData(Bundle savedStated) {
 
-        setupRg();
 
         if (savedStated != null) {
-            movieMainFragment = (MovieMainFragment) getSupportFragmentManager().findFragmentByTag("movieMainFragment");
-            cinemaFragment = (CinemaFragment) getSupportFragmentManager().findFragmentByTag("cinemaFragment");
+            movieMainFragment = (MovieMainMVPFragment) getSupportFragmentManager().findFragmentByTag("movieMainFragment");
+            cinemaFragment = (CinemaMVPFragment) getSupportFragmentManager().findFragmentByTag("cinemaFragment");
             discoverFragment = (DiscoverFragment) getSupportFragmentManager().findFragmentByTag("discoverFragment");
-            mineFragment = (MineFragment) getSupportFragmentManager().findFragmentByTag("mineFragment");
+            mineFragment = (MineMVPFragment) getSupportFragmentManager().findFragmentByTag("mineFragment");
             switchFragment(BaseConstant.RB_MOVIE);
 
         } else {
-            movieMainFragment = MovieMainFragment.newInstance();
-            cinemaFragment = CinemaFragment.newInstance();
+            movieMainFragment = MovieMainMVPFragment.newInstance();
+            cinemaFragment = CinemaMVPFragment.newInstance();
             discoverFragment = DiscoverFragment.newInstance();
-            mineFragment = MineFragment.newInstance();
+            mineFragment = MineMVPFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fl_container_main, movieMainFragment, "movieMainFragment")

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Administrator on 2017/2/9.
  */
 
-public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMovieListPresenter> implements OverseaMovieListContract.IOverseaMovieListView{
+public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMovieListMVPPresenter> implements OverseaMovieListContract.IOverseaMovieListView{
 
 
     private static final String AREA = "area";
@@ -38,8 +38,8 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
 
 
     @Override
-    protected OverseaMovieListPresenter getMPresenter() {
-        return new OverseaMovieListPresenter(mContext,this);
+    protected OverseaMovieListMVPPresenter getMPresenter() {
+        return new OverseaMovieListMVPPresenter(mContext,this);
     }
 
     @Override
@@ -58,10 +58,10 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
                 hotListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                     @Override
                     public void onLoadMoreRequested() {
-                        ((OverseaMovieListPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
+                        ((OverseaMovieListMVPPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
                     }
-                });
-                ((OverseaMovieListPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
+                },rvBaseRecyclerView);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
                 break;
             case COMING:
                 comingListAdapter = new OverseaMovieComingListAdapter();
@@ -69,10 +69,10 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
                 comingListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
                     @Override
                     public void onLoadMoreRequested() {
-                        ((OverseaMovieListPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
+                        ((OverseaMovieListMVPPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
                     }
-                });
-                ((OverseaMovieListPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
+                },rvBaseRecyclerView);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
                 break;
         }
     }
@@ -83,10 +83,10 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
         offset = 0;
         switch (type){
             case HOT:
-                ((OverseaMovieListPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
                 break;
             case COMING:
-                ((OverseaMovieListPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
                 break;
         }
     }
@@ -116,10 +116,10 @@ public class OverSeaMovieListActivity extends BaseRecyclerViewActivity<OverseaMo
         offset = 0;
         switch (type){
             case HOT:
-                ((OverseaMovieListPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaHotMovieList(area,limit,offset);
                 break;
             case COMING:
-                ((OverseaMovieListPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
+                ((OverseaMovieListMVPPresenter) mPresenter).getOverseaComingMovieList(area,limit,offset);
                 break;
         }
     }
