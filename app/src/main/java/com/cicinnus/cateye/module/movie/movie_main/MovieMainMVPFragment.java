@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.module.movie.movie_main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,10 +9,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.base.Constants;
 import com.cicinnus.cateye.module.movie.find_movie.FindMovieMVPFragment;
 import com.cicinnus.cateye.module.movie.hot_movie.HotMovieListFragment;
-import com.cicinnus.cateye.module.movie.wait_movie.WaitMovieMVPFragment;
+import com.cicinnus.cateye.module.movie.pick_city.PickCityActivity;
+import com.cicinnus.cateye.module.movie.wait_movie.WaitMovieFragment;
 import com.cicinnus.retrofitlib.base.BaseMVPFragment;
+import com.cicinnus.retrofitlib.utils.SPUtils;
 
 import java.util.Arrays;
 
@@ -24,6 +28,8 @@ import butterknife.OnClick;
 
 public class MovieMainMVPFragment extends BaseMVPFragment {
 
+
+    private HotMovieListFragment hotMovieListFragment;
 
     public static MovieMainMVPFragment newInstance() {
         return new MovieMainMVPFragment();
@@ -40,6 +46,8 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
     View view;
     @BindView(R.id.vp_movie)
     ViewPager vp_movie;
+    @BindView(R.id.tv_city)
+    TextView tvCity;
 
 
     private FrameLayout.LayoutParams params;
@@ -52,8 +60,9 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
 
     @Override
     protected void initEventAndData() {
-        HotMovieListFragment hotMovieListFragment = HotMovieListFragment.newInstance();
-        WaitMovieMVPFragment waitMovieFragment = WaitMovieMVPFragment.newInstance();
+        tvCity.setText(SPUtils.getInstance(mContext, Constants.SP_CITY).getString(Constants.CITY_NAME, "广州"));
+        hotMovieListFragment = HotMovieListFragment.newInstance();
+        WaitMovieFragment waitMovieFragment = WaitMovieFragment.newInstance();
         FindMovieMVPFragment findMovieFragment = FindMovieMVPFragment.newInstance();
         MovieMainAdapter movieMainAdapter = new MovieMainAdapter(getFragmentManager());
         Fragment[] fragments = new Fragment[]{hotMovieListFragment, waitMovieFragment, findMovieFragment};
@@ -119,7 +128,7 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         tvHotMovie.setTextColor(selectedColor);
                         tvWaitMovie.setTextColor(unselectedColor);
@@ -147,9 +156,10 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
 
     /**
      * 点击文字切换Fragment
+     *
      * @param view
      */
-    @OnClick({R.id.tv_hot_movie,R.id.tv_wait_movie,R.id.tv_find_movie})
+    @OnClick({R.id.tv_hot_movie, R.id.tv_wait_movie, R.id.tv_find_movie, R.id.tv_city})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_hot_movie:
@@ -161,7 +171,17 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
             case R.id.tv_find_movie:
                 vp_movie.setCurrentItem(2);
                 break;
+            case R.id.tv_city:
+                PickCityActivity.start(mContext);
+                break;
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 32&&resultCode==33) {
+            tvCity.setText(data.getStringExtra("city_name"));
+            hotMovieListFragment.getPresenter().getHotMovieList(12);
+        }
+    }
 }

@@ -100,7 +100,6 @@ public class DiscoverFragment extends BaseMVPFragment<DiscoverPresenter> impleme
 
     @Override
     public void addDiscoverData(List<DiscoverBean.DataBean.FeedsBean> feeds) {
-        Logger.d(feeds.size());
         if (feeds.size() > 0) {
             offset += 10;
             discoverAdapter.addData(feeds);

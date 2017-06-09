@@ -8,13 +8,15 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.tools.GlideManager;
 
+import java.util.List;
+
 /**
  * Created by Cicinnus on 2017/1/26.
  */
 
 public class RecentExpectAdapter extends BaseQuickAdapter<ExpectMovieBean.DataBean.ComingBean, BaseViewHolder> {
-    public RecentExpectAdapter() {
-        super(R.layout.item_wait_movie_recent_expect, null);
+    public RecentExpectAdapter(List<ExpectMovieBean.DataBean.ComingBean> data) {
+        super(R.layout.item_wait_movie_recent_expect, data);
     }
 
     @Override

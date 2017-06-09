@@ -71,7 +71,7 @@ public class ClassifySearchListAdapter extends BaseMultiItemQuickAdapter<Classif
                 }
                 break;
         }
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext,item.getId());

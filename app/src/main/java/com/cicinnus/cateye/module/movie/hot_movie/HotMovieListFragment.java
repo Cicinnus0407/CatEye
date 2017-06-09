@@ -48,7 +48,7 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter>
     }
 
     @Override
-    protected HotMovieListPresenter getPresenter() {
+    public HotMovieListPresenter getPresenter() {
         return new HotMovieListPresenter(mContext, this);
     }
 
@@ -74,7 +74,7 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter>
             @Override
             public void refresh() {
                 mCurrentIndex = 1;
-                mPresenter.getHotMovieList(20, 12);
+                mPresenter.getHotMovieList(12);
             }
         });
         swip.setOnPullRefreshListener(pullToRefreshListener);
@@ -94,13 +94,13 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter>
                         }
                     }
                     //ci参数默认为20，headline参数为0
-                    mPresenter.getMoreHotMovieList(20, 0, builder.toString());
+                    mPresenter.getMoreHotMovieList( 0, builder.toString());
                 } else {
                     hotMovieListAdapter.loadMoreEnd();
                 }
             }
         },rvHotMovieList);
-        mPresenter.getHotMovieList(20, 12);
+        mPresenter.getHotMovieList(12);
 
     }
 
@@ -171,8 +171,9 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter>
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.getHotMovieList(20, 12);
+                mPresenter.getHotMovieList(12);
             }
         });
     }
+
 }

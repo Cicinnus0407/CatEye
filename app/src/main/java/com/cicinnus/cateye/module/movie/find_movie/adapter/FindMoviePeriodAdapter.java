@@ -21,7 +21,7 @@ public class FindMoviePeriodAdapter extends BaseQuickAdapter<MovieTypeBean.DataB
     protected void convert(BaseViewHolder helper, final MovieTypeBean.DataBean.TagListBean item) {
         helper.setText(R.id.tv_movie_type,item.getTagName());
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchMovieActivity.startFromPeriod(mContext,item.getTagId(),item.getTagName());

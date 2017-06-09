@@ -66,9 +66,9 @@ public class WaitMovieMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVP
     }
 
     @Override
-    public void getWaitMovieList(int ci, int limit) {
+    public void getWaitMovieList( int limit) {
         mView.showLoading();
-        addSubscribeUntilDestroy(waitMovieManager.getWaitMovieList(ci, limit)
+        addSubscribeUntilDestroy(waitMovieManager.getWaitMovieList(limit)
                 .subscribe(new Consumer<WaitMovieBean>() {
                     @Override
                     public void accept(@NonNull WaitMovieBean waitMovieBean) throws Exception {

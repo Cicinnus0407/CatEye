@@ -23,8 +23,8 @@ public class HotMovieListContract {
     }
 
     public interface IHotMoviePresenter{
-        void getHotMovieList(int ci,int limit);
+        void getHotMovieList(int limit);
 
-        void getMoreHotMovieList(int ci,int headline,String movieIds);
+        void getMoreHotMovieList(int headline,String movieIds);
     }
 }

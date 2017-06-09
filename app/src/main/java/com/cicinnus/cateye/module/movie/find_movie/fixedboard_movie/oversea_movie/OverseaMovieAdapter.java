@@ -44,7 +44,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_movie_type,item.getCat())
                         .setText(R.id.tv_movie_desc,item.getStar())
                         .setText(R.id.tv_movie_wish,String.format("%s",item.getWish()));
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         MovieDetailActivity.start(mContext,item.getId());
@@ -60,7 +60,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_hot_type2,item.getHeadLinesVO().get(1).getType())
                         .setText(R.id.tv_hot_headline_title1,item.getHeadLinesVO().get(0).getTitle())
                         .setText(R.id.tv_hot_headline_title2,item.getHeadLinesVO().get(1).getTitle());
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         MovieDetailActivity.start(mContext,item.getId());
@@ -72,7 +72,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                         .setText(R.id.tv_movie_type,item.getCat())
                         .setText(R.id.tv_movie_desc,item.getDesc())
                         .setText(R.id.tv_movie_wish,String.format("%s",item.getWish()));
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         MovieDetailActivity.start(mContext,item.getId());
@@ -81,7 +81,7 @@ public class OverseaMovieAdapter extends BaseMultiItemQuickAdapter<OverseaHotMov
                 break;
             case BaseConstant.TYPE_OVERSEA_FOOTER:
                 helper.setText(R.id.tv_footer,item.getFooterName());
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         OverSeaMovieListActivity.start(mContext,item.getArea(),item.getType());

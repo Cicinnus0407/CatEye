@@ -2,7 +2,7 @@
 ## 高仿猫眼App
 
 #### 
-   - NOTICE: v1停止更新,如需源码请clone v2 branch.
+   - NOTICE: v1停止更新,如需源码请check out v2 branch.
 #### 主要使用技术：
   - RxJava2+Retrofit+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)

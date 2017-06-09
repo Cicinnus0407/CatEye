@@ -29,7 +29,7 @@ public class MovieResourceAdapter extends BaseQuickAdapter<MovieResourceBean.Dat
 
         GlideManager.loadImage(mContext, item.getImg(), (ImageView) helper.getView(R.id.iv_movie_resource));
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (movieResourceClickListener != null) {

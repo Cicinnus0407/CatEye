@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/1/19.
+
  * 三种状态的LinearLayout，用于切换当前的页面显示
  * ERROR,CONTENT,LOADING
  */

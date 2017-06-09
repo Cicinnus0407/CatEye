@@ -17,6 +17,17 @@
     <!--读取手机存储-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +35,12 @@
         android:supportsRtl="true"
         android:name=".application.BaseApplication"
         android:theme="@style/AppThemeNoAnimation">
+
+        <!--高德地图-->
+        <meta-trailerDataBeanList
+            android:name="com.amap.api.v2.apikey"
+            android:value="979bfef3d3226a0a475200e5dd269a56" />
+
         <activity android:name="com.cicinnus.cateye.base.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -101,6 +118,15 @@
         <activity android:name=".module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity" />
         <!--所有专业评论-->
         <activity android:name=".module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity" />
+        <!--选择城市-->
+        <activity android:name=".module.movie.pick_city.PickCityActivity" />
+
+
+
+
+        <!--高德定位-->
+        <service android:name="com.amap.api.location.APSService"
+            android:exported="false"/>
     </application>
 
 </manifest>

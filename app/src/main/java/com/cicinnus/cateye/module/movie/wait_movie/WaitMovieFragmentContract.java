@@ -26,6 +26,6 @@ public class WaitMovieFragmentContract {
 
         void getRecentExpect(int offset, int limit);
 
-        void getWaitMovieList(int ci, int limit);
+        void getWaitMovieList(int limit);
     }
 }

@@ -61,7 +61,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
 
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
     private static final int INVALID_POINTER = -1;
-    private static final float DRAG_RATE = .5f;
+    private static final float DRAG_RATE = 0.4f;
 
     private static final int SCALE_DOWN_DURATION = 150;
     private static final int ANIMATE_TO_TRIGGER_DURATION = 200;

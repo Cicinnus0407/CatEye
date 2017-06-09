@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.module.movie.wait_movie.adapter;
 
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,13 +9,17 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.tools.GlideManager;
 
+import java.util.List;
+
 /**
  * Created by Cicinnus on 2017/1/26.
  */
 
 public class TrailerRecommendAdapter extends BaseQuickAdapter<TrailerRecommendBean.DataBean,BaseViewHolder> {
-    public TrailerRecommendAdapter() {
-        super(R.layout.item_wait_movie_trailer_recommend, null);
+
+
+    public TrailerRecommendAdapter(@Nullable List<TrailerRecommendBean.DataBean> data) {
+        super(R.layout.item_wait_movie_trailer_recommend, data);
     }
 
     @Override

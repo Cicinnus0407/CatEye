@@ -28,7 +28,7 @@ public class AwardsListAdapter extends BaseSectionQuickAdapter<AwardsSection,Bas
     protected void convert(BaseViewHolder helper, final AwardsSection item) {
         helper.setText(R.id.tv_award_name,item.t.getFestivalName());
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onAwardsClickListener != null) {

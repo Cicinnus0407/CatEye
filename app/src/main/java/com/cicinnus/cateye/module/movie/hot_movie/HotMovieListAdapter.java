@@ -47,7 +47,6 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
 
         } else if (item.getVer().contains("3D")) {
             helper.setImageResource(R.id.iv_ver, R.drawable.ic_3d);
-
         }
 
         if (item.getPreSale() == 0) {

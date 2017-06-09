@@ -27,7 +27,7 @@ public class RelatedMovieAdapter extends BaseQuickAdapter<RelatedMovieBean.DataB
                 .setText(R.id.tv_movie_score,String.format("%s",item.getSc()==0?"暂无评分":item.getSc()));
         String imgUrl = ImgSizeUtil.processUrl(item.getImg(),255,345);
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.iv_movie_img));
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext, Integer.parseInt(item.getDesc()));

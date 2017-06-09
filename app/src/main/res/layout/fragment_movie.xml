@@ -11,10 +11,16 @@
         android:padding="6dp">
 
         <TextView
-            android:layout_width="70dp"
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:background="@drawable/selector_ic_press"
+            android:drawablePadding="@dimen/dp_6"
+            android:drawableRight="@drawable/ic_arrow_down_white"
             android:gravity="center"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:text="广州"
             android:textColor="@android:color/white" />
 

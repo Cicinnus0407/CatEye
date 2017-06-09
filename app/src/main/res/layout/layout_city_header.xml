@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/divider_normal"
+        android:padding="@dimen/dp_10"
+        android:text="定位城市"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_12" />
+
+    <TextView
+        android:background="?selectableItemBackground"
+        android:id="@+id/tv_location_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/text_primary"
+        android:text="正在定位..." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/divider_normal"
+        android:padding="@dimen/dp_10"
+        android:text="热门城市"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/sp_12" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hot_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

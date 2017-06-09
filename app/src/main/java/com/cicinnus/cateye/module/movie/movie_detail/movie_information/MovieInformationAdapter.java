@@ -39,7 +39,7 @@ public class MovieInformationAdapter extends BaseMultiItemQuickAdapter<MovieInfo
                 GlideManager.loadImage(mContext,item.getPreviewImages().get(0).getUrl(), (ImageView) helper.getView(R.id.iv_movie_information_img1));
                 break;
         }
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BaseWebViewActivity.start(mContext, StringUtil.getRealUrl(item.getUrl()));

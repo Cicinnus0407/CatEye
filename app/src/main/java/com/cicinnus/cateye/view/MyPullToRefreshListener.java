@@ -53,11 +53,6 @@ public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRe
                         refreshView.stopAnimate();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-
-                    }
                 });
     }
 

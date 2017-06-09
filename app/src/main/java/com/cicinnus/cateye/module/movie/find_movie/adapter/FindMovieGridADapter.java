@@ -57,7 +57,7 @@ public class FindMovieGridADapter extends BaseQuickAdapter<GridMovieBean.DataBea
         GlideManager.loadImage(mContext, imgUrl1, (ImageView) helper.getView(R.id.iv_grid1));
         switch (helper.getAdapterPosition()) {
             case 0:
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         HotGoodCommentActivity.start(mContext);
@@ -65,7 +65,7 @@ public class FindMovieGridADapter extends BaseQuickAdapter<GridMovieBean.DataBea
                 });
                 break;
             case 1:
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         MostExpectMovieActivity.start(mContext);
@@ -73,7 +73,7 @@ public class FindMovieGridADapter extends BaseQuickAdapter<GridMovieBean.DataBea
                 });
                 break;
             case 2:
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         OverseaMovieActivity.start(mContext);
@@ -81,7 +81,7 @@ public class FindMovieGridADapter extends BaseQuickAdapter<GridMovieBean.DataBea
                 });
                 break;
             case 3:
-                helper.convertView.setOnClickListener(new View.OnClickListener() {
+                helper.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         TopHundredMovieActivity.start(mContext);

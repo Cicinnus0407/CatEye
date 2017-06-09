@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
@@ -147,5 +148,12 @@ public class MainActivity extends BaseMVPActivity {
                 break;
         }
         transaction.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==32&&resultCode==33) {
+            movieMainFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

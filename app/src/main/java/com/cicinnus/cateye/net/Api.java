@@ -45,6 +45,7 @@ import com.cicinnus.cateye.module.movie.movie_star.bean.StarRelatedPeople;
 import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListBean;
 import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoMovieInfoBean;
+import com.cicinnus.cateye.module.movie.pick_city.PickCityBean;
 import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
@@ -82,13 +83,11 @@ public interface Api {
     //获取首页热映列表
     // ci 参数不知道是什么，抓包时候的是20
     @GET("/mmdb/movie/v3/list/hot.json")
-    Observable<HotMovieListBean> getHostList(@Query("ci") int ci,
-                                             @Query("limit") int limit);
+    Observable<HotMovieListBean> getHostList(@Query("limit") int limit);
 
     //获取首页热映加载更多的数据
     @GET("/mmdb/movie/list/info.json")
-    Observable<HotMovieListBean> getMoreHotMovieList(@Query("ci") int ci,
-                                                     @Query("headline") int headline,
+    Observable<HotMovieListBean> getMoreHotMovieList(@Query("headline") int headline,
                                                      @Query("movieIds") String movieIds);
 
     //待映-预告片推荐
@@ -102,8 +101,7 @@ public interface Api {
 
     //待映-列表
     @GET("mmdb/movie/v2/list/rt/order/coming.json")
-    Observable<WaitMovieBean> getWaitMovieList(@Query("ci") int ci,
-                                               @Query("limit") int limit);
+    Observable<WaitMovieBean> getWaitMovieList(@Query("limit") int limit);
 
     //找片-类型
     @GET("mmdb/search/movie/tag/types.json")
@@ -313,4 +311,8 @@ public interface Api {
     Observable<MovieLongCommentBeanList> getMovieLongCommentList(@Path("movieId") int movieId,
                                                                  @Query("limit") int limit,
                                                                  @Query("offset") int offset);
+
+    //获取城市
+    @GET("/dianying/cities.json")
+    Observable<PickCityBean> getCity();
 }

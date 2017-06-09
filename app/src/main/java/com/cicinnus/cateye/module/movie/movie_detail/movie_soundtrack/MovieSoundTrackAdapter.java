@@ -27,7 +27,7 @@ public class MovieSoundTrackAdapter extends BaseQuickAdapter<MovieMusicBean.Data
             helper.setImageResource(R.id.iv_video_or_music,R.drawable.ic_video)
                     .setImageResource(R.id.iv_mv_or_music,R.drawable.ic_mv);
 
-            helper.convertView.setOnClickListener(new View.OnClickListener() {
+            helper.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     MovieVideoActivity.start(mContext,
@@ -40,7 +40,7 @@ public class MovieSoundTrackAdapter extends BaseQuickAdapter<MovieMusicBean.Data
         }else {
             helper.setImageResource(R.id.iv_video_or_music,R.drawable.ic_music)
                     .setImageResource(R.id.iv_mv_or_music,R.drawable.ic_qq_music);
-            helper.convertView.setOnClickListener(new View.OnClickListener() {
+            helper.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BaseWebViewActivity.start(mContext,item.getUrl(),"电影原声");

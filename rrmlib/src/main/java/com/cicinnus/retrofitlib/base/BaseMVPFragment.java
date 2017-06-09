@@ -118,4 +118,5 @@ public abstract class BaseMVPFragment<T extends ICorePresenter> extends Fragment
 
     protected abstract void initEventAndData();
 
+
 }

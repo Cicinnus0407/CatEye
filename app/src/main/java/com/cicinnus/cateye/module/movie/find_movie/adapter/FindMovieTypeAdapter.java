@@ -21,7 +21,7 @@ public class FindMovieTypeAdapter extends BaseQuickAdapter<MovieTypeBean.DataBea
     protected void convert(final BaseViewHolder helper, final MovieTypeBean.DataBean.TagListBean item) {
         helper.setText(R.id.tv_movie_type,item.getTagName());
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchMovieActivity.startFromType(mContext,item.getTagId(),item.getTagName());

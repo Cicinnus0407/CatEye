@@ -35,7 +35,7 @@ public class TopHundredMovieAdapter extends BaseQuickAdapter<TopHundredMovieBean
             ((ImageView) helper.getView(R.id.iv_movie_rank)).setImageResource(R.drawable.ic_gray_angle);
 
         }
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext,item.getId());

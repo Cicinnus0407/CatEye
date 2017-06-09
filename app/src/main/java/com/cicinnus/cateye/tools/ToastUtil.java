@@ -1,15 +1,24 @@
 package com.cicinnus.cateye.tools;
 
-import android.content.Context;
 import android.widget.Toast;
 
+import com.cicinnus.cateye.application.BaseApplication;
+
 /**
- * Created by Administrator on 2017/1/18.
+ *
  */
 
 public class ToastUtil {
 
-    public static void showShort(Context context, String msg){
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    private static Toast toast;
+
+    public static void showToast(String errorMsg) {
+
+        if (toast != null) {
+            toast.setText(errorMsg);
+        }else {
+            toast = Toast.makeText(BaseApplication.getInstance(),errorMsg,Toast.LENGTH_SHORT);
+        }
+        toast.show();
     }
 }

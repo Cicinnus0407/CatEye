@@ -9,8 +9,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.cicinnus.cateye.R;
 
@@ -18,7 +18,7 @@ import com.cicinnus.cateye.R;
  * 自定义刷新头部
  */
 
-public class RefreshView extends ImageView {
+public class RefreshView extends AppCompatImageView {
 
     private Paint mPaint;
     private float progress;//进度，就是显示的程度

@@ -51,10 +51,10 @@ public class MovieLongCommentListAdapter extends BaseQuickAdapter<MovieLongComme
         helper.setImageDrawable(R.id.iv_user_level,icon);
         GlideManager.loadImage(mContext,item.getAuthor().getAvatarurl(), (CircleImageView) helper.getView(R.id.civ_author));
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseWebViewActivity.start(helper.convertView.getContext(), StringUtil.getRealUrl(item.getUrl()));
+                BaseWebViewActivity.start(helper.itemView.getContext(), StringUtil.getRealUrl(item.getUrl()));
             }
         });
     }

@@ -25,11 +25,11 @@ public class HotMovieListManager {
      * @param limit
      * @return
      */
-    public Observable<HotMovieListBean> getHotMovieList(int ci, int limit) {
+    public Observable<HotMovieListBean> getHotMovieList(int limit) {
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getHostList(ci, limit);
+                .getHostList(limit);
     }
 
     /**
@@ -40,14 +40,14 @@ public class HotMovieListManager {
      * @param movieIds 需要
      * @return
      */
-    public Observable<List<HotMovieListBean.DataBean.HotBean>> getMoreMovieList(final int ci, final int headline, final String movieIds) {
+    public Observable<List<HotMovieListBean.DataBean.HotBean>> getMoreMovieList(final int headline, final String movieIds) {
         return Observable.create(new ObservableOnSubscribe<List<HotMovieListBean.DataBean.HotBean>>() {
             @Override
             public void subscribe(final ObservableEmitter<List<HotMovieListBean.DataBean.HotBean>> e) throws Exception {
                 RetrofitClient
                         .getInstance()
                         .api()
-                        .getMoreHotMovieList(ci, headline, movieIds)
+                        .getMoreHotMovieList( headline, movieIds)
                         .flatMap(new Function<HotMovieListBean, ObservableSource<HotMovieListBean.DataBean.MoviesBean>>() {
                             @Override
                             public ObservableSource<HotMovieListBean.DataBean.MoviesBean> apply(@NonNull HotMovieListBean hotMovieListBean) throws Exception {

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.movie.wait_movie.adapter.RecentExpectAdapter;
 import com.cicinnus.cateye.module.movie.wait_movie.adapter.TrailerRecommendAdapter;
-import com.cicinnus.cateye.module.movie.wait_movie.adapter.WaitMovieAdapter;
+import com.cicinnus.cateye.module.movie.wait_movie.adapter.WaitMovieMultiAdapter;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
@@ -23,17 +23,17 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by Cicinnus on 2017/1/22.
+ *
  * 待映Fragment
  */
 
-public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter> implements WaitMovieFragmentContract.IWaitMovieView {
+public class WaitMovieFragment extends BaseMVPFragment<WaitMovieMVPPresenter> implements WaitMovieFragmentContract.IWaitMovieView {
 
 
     private List<WaitMovieBean.DataBean.ComingBean> comingBeanList;
 
-    public static WaitMovieMVPFragment newInstance() {
-        WaitMovieMVPFragment fragment = new WaitMovieMVPFragment();
+    public static WaitMovieFragment newInstance() {
+        WaitMovieFragment fragment = new WaitMovieFragment();
         return fragment;
     }
 
@@ -45,12 +45,13 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
     RecyclerView rvWaitMovieList;
 
 
-    private WaitMovieAdapter waitMovieAdapter;//列表adapter
+//    private WaitMovieAdapter waitMovieAdapter;//列表adapter
     private TrailerRecommendAdapter trailerRecommendAdapter;//推荐列表adapter
     private RecentExpectAdapter recentExpectAdapter;//最近受期待
     private HashMap<Integer, String> keys;
     private WaitMovieBean.DataBean dataBean;
     private FloatingItemDecoration floatingItemDecoration;
+    private WaitMovieMultiAdapter waitMovieMultiAdapter;
     private boolean isFirst = true;
 
     @Override
@@ -72,32 +73,32 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
             public void onRefresh() {
                 mPresenter.getTrailerRecommendMovie();
                 mPresenter.getRecentExpect(0, 50);
-                mPresenter.getWaitMovieList(20, 12);
+                mPresenter.getWaitMovieList(12);
             }
         });
-
-        waitMovieAdapter = new WaitMovieAdapter();
+        waitMovieMultiAdapter = new WaitMovieMultiAdapter();
+//        waitMovieAdapter = new WaitMovieAdapter();
         rvWaitMovieList.setLayoutManager(new LinearLayoutManager(mContext));
-        rvWaitMovieList.setAdapter(waitMovieAdapter);
+        rvWaitMovieList.setAdapter(waitMovieMultiAdapter);
         floatingItemDecoration = new FloatingItemDecoration(mContext);
 
 
         //预告片推荐
         View trailerRecommendView = mContext.getLayoutInflater().inflate(R.layout.layout_wait_movie_trailer_recommend, (ViewGroup) rvWaitMovieList.getParent(), false);
         RecyclerView rvTrailerRecommend = (RecyclerView) trailerRecommendView.findViewById(R.id.rv_wait_movie_trailer_recommend);
-        trailerRecommendAdapter = new TrailerRecommendAdapter();
+//        trailerRecommendAdapter = new TrailerRecommendAdapter();
         rvTrailerRecommend.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         rvTrailerRecommend.setAdapter(trailerRecommendAdapter);
-        waitMovieAdapter.addHeaderView(trailerRecommendView);
+//        waitMovieAdapter.addHeaderView(trailerRecommendView);
 
         //最近受期待
 
         View recentExpectView = mContext.getLayoutInflater().inflate(R.layout.layout_recent_expect, (ViewGroup) rvWaitMovieList.getParent(), false);
         RecyclerView rvRecentExpect = (RecyclerView) recentExpectView.findViewById(R.id.rv_wait_movie_recent_expect);
         rvRecentExpect.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-        recentExpectAdapter = new RecentExpectAdapter();
+//        recentExpectAdapter = new RecentExpectAdapter();
         rvRecentExpect.setAdapter(recentExpectAdapter);
-        waitMovieAdapter.addHeaderView(recentExpectView);
+//        waitMovieAdapter.addHeaderView(recentExpectView);
 
     }
 
@@ -106,7 +107,7 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
         if(isFirst){
             mPresenter.getTrailerRecommendMovie();
             mPresenter.getRecentExpect(0, 50);
-            mPresenter.getWaitMovieList(20, 12);
+            mPresenter.getWaitMovieList( 12);
             isFirst = false;
         }
 
@@ -114,17 +115,18 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
 
     @Override
     public void addTrailerRecommendMovieList(List<TrailerRecommendBean.DataBean> data) {
-        trailerRecommendAdapter.setNewData(data);
+//        trailerRecommendAdapter.setNewData(data);
+        waitMovieMultiAdapter.setTrailer(data);
     }
 
     @Override
     public void addRecentExpectMovieList(List<ExpectMovieBean.DataBean.ComingBean> coming) {
-        recentExpectAdapter.setNewData(coming);
+//        recentExpectAdapter.setNewData(coming);
+        waitMovieMultiAdapter.setRecent(coming);
     }
 
     @Override
     public void addWaitMovieList(final List<WaitMovieBean.DataBean.ComingBean> coming) {
-        waitMovieAdapter.setNewData(coming);
 
 
     }
@@ -150,7 +152,7 @@ public class WaitMovieMVPFragment extends BaseMVPFragment<WaitMovieMVPPresenter>
         progressLayout.showError(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.getWaitMovieList(20, 12);
+                mPresenter.getWaitMovieList( 12);
             }
         });
     }

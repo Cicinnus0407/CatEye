@@ -304,6 +304,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
 
             }
         });
+
         initSwipe();
         initStatusBar();
         initListener();

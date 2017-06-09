@@ -27,7 +27,7 @@ public class StarRelatedPeopleAdapter extends BaseQuickAdapter<StarRelatedPeople
         String imgUrl = ImgSizeUtil.processUrl(item.getAvatar(),255,345);
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.iv_related_star));
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieStarActivity.start(mContext,item.getId());

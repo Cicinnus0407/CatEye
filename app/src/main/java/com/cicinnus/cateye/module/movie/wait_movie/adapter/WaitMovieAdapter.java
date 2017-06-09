@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.tools.GlideManager;
-import com.cicinnus.cateye.tools.ToastUtil;
 
 /**
  * Created by Cicinnus on 2017/1/25.
@@ -28,11 +28,11 @@ public class WaitMovieAdapter extends BaseQuickAdapter<WaitMovieBean.DataBean.Co
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, WaitMovieBean.DataBean.ComingBean item) {
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+    protected void convert(final BaseViewHolder helper, final WaitMovieBean.DataBean.ComingBean item) {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.showShort(mContext,helper.getAdapterPosition()+"");
+                MovieDetailActivity.start(mContext,item.getId());
             }
         });
         //图片地址不能直接使用，需要进行转换

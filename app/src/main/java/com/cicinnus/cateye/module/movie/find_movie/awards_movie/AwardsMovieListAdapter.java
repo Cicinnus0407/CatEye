@@ -26,7 +26,7 @@ public class AwardsMovieListAdapter extends BaseMultiItemQuickAdapter<AwardsMovi
 
     @Override
     protected void convert(BaseViewHolder helper, final AwardsMovieListBean.DataBean.AwardsBean item) {
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext,item.getMovieId());

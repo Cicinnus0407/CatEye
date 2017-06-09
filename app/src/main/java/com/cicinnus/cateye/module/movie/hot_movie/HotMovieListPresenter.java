@@ -27,9 +27,9 @@ public class HotMovieListPresenter extends BaseMVPPresenter<HotMovieListContract
     }
 
     @Override
-    public void getHotMovieList(int ci, int limit) {
+    public void getHotMovieList(int limit) {
         mView.showLoading();
-        addSubscribeUntilDestroy(hotMovieListManager.getHotMovieList(ci, limit)
+        addSubscribeUntilDestroy(hotMovieListManager.getHotMovieList(limit)
                 .compose(SchedulersCompat.<HotMovieListBean>applyIoSchedulers())
                 .subscribe(new Consumer<HotMovieListBean>() {
                     @Override
@@ -53,8 +53,8 @@ public class HotMovieListPresenter extends BaseMVPPresenter<HotMovieListContract
     }
 
     @Override
-    public void getMoreHotMovieList(int ci, int headline, final String movieIds) {
-        addSubscribeUntilDestroy(hotMovieListManager.getMoreMovieList(ci, headline, movieIds)
+    public void getMoreHotMovieList(int headline, final String movieIds) {
+        addSubscribeUntilDestroy(hotMovieListManager.getMoreMovieList(headline, movieIds)
                 .compose(SchedulersCompat.<List<HotMovieListBean.DataBean.HotBean>>applyIoSchedulers())
                 .subscribe(new Consumer<List<HotMovieListBean.DataBean.HotBean>>() {
                     @Override

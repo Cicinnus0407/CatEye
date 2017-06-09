@@ -24,11 +24,9 @@ public interface BaseConstant {
     int TYPE_HOT_PRE_SELL = 2;//预售
 
     //待映5种item
-    int TYPE_WAIT_DIVIDER = 0;//悬浮item
-    int TYPE_WAIT_HEADLINES = 1;//有专访的item
-    int TYPE_WAIT_TRAILER = 2;//预告片
-    int TYPE_WAIT_RECENT = 3;//近期受期待
-    int TYPE_WAIT_NORMAL = 4;//正常
+    int TYPE_WAIT_TRAILER = 0;//预告片
+    int TYPE_WAIT_RECENT = 1;//近期受期待
+    int TYPE_WAIT_NORMAL = 2;//正常
 
     //分类查找
     int TYPE_CLASSIFY_NORMAL = 0;//不在上映
@@ -63,6 +61,11 @@ public interface BaseConstant {
     int TYPE_MOVIE_TOPIC_ONE_IMG= 0;
     int TYPE_MOVIE_TOPIC_MULTI_IMG= 1;
     int TYPE_MOVIE_TOPIC_NO_IMG =2;
+
+    //待映列表type
+    int TYPE_VIDEO = 0;
+    int TYPE_RECENT = 1;
+    int TYPE_NORMAL = 2;
 
 }
 

@@ -40,7 +40,7 @@ public class MostExpectMovieAdapter extends BaseQuickAdapter<MostExpectMovieBean
                 .setText(R.id.tv_new_wish, String.format("%s", item.getMonthWish()))
                 .setText(R.id.tv_movie_rank, String.format("%s", helper.getAdapterPosition()));
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MovieDetailActivity.start(mContext,item.getId());

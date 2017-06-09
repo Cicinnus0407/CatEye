@@ -45,7 +45,7 @@ public class VideoListAdapter extends BaseQuickAdapter<VideoListBean.DataBean, B
                     .setText(R.id.tv_video_play_status, TimeUtils.secondToMinute(item.getTm()));
         }
 
-        helper.convertView.setOnClickListener(new View.OnClickListener() {
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (selectedPos != helper.getAdapterPosition()) {

@@ -41,11 +41,11 @@ public class WaitMovieManager {
 
     }
 
-    public Observable<WaitMovieBean> getWaitMovieList(int ci, int limit){
+    public Observable<WaitMovieBean> getWaitMovieList( int limit){
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getWaitMovieList(ci,limit)
+                .getWaitMovieList(limit)
                 .compose(SchedulersCompat.<WaitMovieBean>applyIoSchedulers());
     }
 }
