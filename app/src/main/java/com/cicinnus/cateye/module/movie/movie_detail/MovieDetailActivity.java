@@ -51,7 +51,6 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourc
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
-import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
@@ -59,6 +58,7 @@ import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ExpandTextView;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.retrofitlib.rx.SchedulersCompat;
+import com.cicinnus.retrofitlib.utils.BlurUtils;
 import com.orhanobut.logger.Logger;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -901,7 +901,27 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             tvPeopleJudge.setVisibility(View.GONE);
             tvMovieScore.setText(String.format("%s人想看", movie.getWish()));
         }
-        //模糊背景图
+//        Glide.with(mContext).load(originalUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+//            @Override
+//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                //模糊背景图
+//
+//                Observable.just(resource)
+//                        .map(new Function<Bitmap, Bitmap>() {
+//                            @Override
+//                            public Bitmap apply(@NonNull Bitmap bitmap) throws Exception {
+//
+//                            }
+//                        })
+//                        .subscribe(new Consumer<Bitmap>() {
+//                            @Override
+//                            public void accept(@NonNull Bitmap bitmap) throws Exception {
+//                                ivBlurBg.setImageBitmap(bitmap);
+//                            }
+//                        });
+//            }
+//        });
+
         Observable
                 .just(originalUrl)
                 .map(new Function<String, Bitmap>() {
@@ -919,14 +939,18 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 .map(new Function<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap apply(Bitmap bitmap) {
-                        return FastBlurUtil.doBlur(bitmap, 130, false);
+                         return  BlurUtils.with(mContext)
+                                .bitmap(bitmap)
+                                .radius(18)
+                                .blur();
                     }
                 })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
                 .subscribe(new Consumer<Bitmap>() {
                     @Override
                     public void accept(@NonNull Bitmap bitmap) throws Exception {
-                        ivBlurBg.setImageBitmap(bitmap);
+                                ivBlurBg.setImageBitmap(bitmap);
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -28,6 +28,7 @@ public class GlideManager {
                 .into(imageView);
     }
 
+
     public static void loadImage(Context context, int drawable, ImageView imageView) {
         Glide.with(context)
                 .load(drawable)

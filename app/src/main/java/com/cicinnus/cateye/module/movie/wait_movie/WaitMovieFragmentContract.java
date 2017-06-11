@@ -19,6 +19,13 @@ public class WaitMovieFragmentContract {
 
         void addWaitMovieList(List<WaitMovieBean.DataBean.ComingBean> coming);
 
+        void addIds(List<Integer> movieIds);
+
+        void addMoreWaitMovie(List<WaitMovieBean.DataBean.ComingBean> coming);
+
+        void loadMoreFail();
+
+        void loadMoreComplete();
     }
 
     public interface IWaitMoviePresenter {
@@ -26,6 +33,8 @@ public class WaitMovieFragmentContract {
 
         void getRecentExpect(int offset, int limit);
 
-        void getWaitMovieList(int limit);
+        void getWaitMovieList(int limit,int offset,int limit2);
+
+        void getMoreWaitMovie(String s);
     }
 }

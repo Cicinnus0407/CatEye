@@ -8,6 +8,7 @@ import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.tools.ErrorHanding;
 import com.orhanobut.logger.Logger;
 
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -66,17 +67,30 @@ public class WaitMovieMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVP
     }
 
     @Override
-    public void getWaitMovieList( int limit) {
+    public void getWaitMovieList(int limit, int offset, int limit2) {
         mView.showLoading();
-        addSubscribeUntilDestroy(waitMovieManager.getWaitMovieList(limit)
-                .subscribe(new Consumer<WaitMovieBean>() {
+        //按顺序发射三组数据
+        addSubscribeUntilDestroy(Observable.concatArray(
+                waitMovieManager.getWaitMovieList(limit),
+                waitMovieManager.getTrailerRecommendMovie(),
+                waitMovieManager.getRecentExpectList(offset, limit2))
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void accept(@NonNull WaitMovieBean waitMovieBean) throws Exception {
-                        mView.addWaitMovieList(waitMovieBean.getData().getComing());
+                    public void accept(@NonNull Object o) throws Exception {
+                        if (o instanceof WaitMovieBean) {
+                            mView.addWaitMovieList(((WaitMovieBean) o).getData().getComing());
+                            mView.addIds(((WaitMovieBean) o).getData().getMovieIds());
+                        } else if (o instanceof TrailerRecommendBean) {
+                            mView.addTrailerRecommendMovieList(((TrailerRecommendBean) o).getData());
+                        } else if (o instanceof ExpectMovieBean) {
+                            mView.addRecentExpectMovieList(((ExpectMovieBean) o).getData().getComing());
+
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.d(throwable.getMessage());
                         mView.showError(ErrorHanding.handleError(throwable));
                     }
                 }, new Action() {
@@ -86,4 +100,23 @@ public class WaitMovieMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVP
                     }
                 }));
     }
+
+    @Override
+    public void getMoreWaitMovie(String s) {
+        addSubscribeUntilDestroy(waitMovieManager.getMoreWaitMovieList(s)
+                .subscribe(new Consumer<WaitMovieBean.DataBean>() {
+                    @Override
+                    public void accept(@NonNull WaitMovieBean.DataBean dataBean) throws Exception {
+                        mView.addMoreWaitMovie(dataBean.getComing());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
+                        mView.loadMoreFail();
+                    }
+                }));
+    }
+
+
 }

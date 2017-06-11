@@ -172,8 +172,8 @@ public class ExpectMovieBean {
             private String nm;
             private int pn;
             private boolean preShow;
-            private int proScore;
-            private int proScoreNum;
+            private Number proScore;
+            private Number proScoreNum;
             private long pubDate;
             private int pubShowNum;
             private int recentShowDate;
@@ -339,19 +339,19 @@ public class ExpectMovieBean {
                 this.preShow = preShow;
             }
 
-            public int getProScore() {
+            public Number getProScore() {
                 return proScore;
             }
 
-            public void setProScore(int proScore) {
+            public void setProScore(Number proScore) {
                 this.proScore = proScore;
             }
 
-            public int getProScoreNum() {
+            public Number getProScoreNum() {
                 return proScoreNum;
             }
 
-            public void setProScoreNum(int proScoreNum) {
+            public void setProScoreNum(Number proScoreNum) {
                 this.proScoreNum = proScoreNum;
             }
 

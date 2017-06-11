@@ -50,6 +50,7 @@ import com.cicinnus.cateye.module.movie.search_movie.ClassifySearchBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
+import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieMoreBean;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -85,10 +86,10 @@ public interface Api {
     @GET("/mmdb/movie/v3/list/hot.json")
     Observable<HotMovieListBean> getHostList(@Query("limit") int limit);
 
-    //获取首页热映加载更多的数据
+    //加载更多的数据
     @GET("/mmdb/movie/list/info.json")
-    Observable<HotMovieListBean> getMoreHotMovieList(@Query("headline") int headline,
-                                                     @Query("movieIds") String movieIds);
+    Observable<HotMovieListBean> getHotMovieList(@Query("headline") int headline,
+                                                 @Query("movieIds") String movieIds);
 
     //待映-预告片推荐
     @GET("/mmdb/movie/lp/list.json")
@@ -102,6 +103,9 @@ public interface Api {
     //待映-列表
     @GET("mmdb/movie/v2/list/rt/order/coming.json")
     Observable<WaitMovieBean> getWaitMovieList(@Query("limit") int limit);
+
+    @GET("mmdb/movie/list/info.json")
+    Observable<WaitMovieMoreBean> getMoreWaitMovieList(@Query("headline") int headline, @Query("movieIds") String movieIds);
 
     //找片-类型
     @GET("mmdb/search/movie/tag/types.json")

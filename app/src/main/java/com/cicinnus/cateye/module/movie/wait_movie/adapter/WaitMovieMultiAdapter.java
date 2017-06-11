@@ -15,13 +15,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseConstant;
 import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
-import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.tools.GlideManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Cicinnus on 2017/1/27.
@@ -30,26 +25,14 @@ import java.util.List;
 public class WaitMovieMultiAdapter extends BaseMultiItemQuickAdapter<WaitMovieBean.DataBean.ComingBean, BaseViewHolder> {
 
 
-    private List<ExpectMovieBean.DataBean.ComingBean> mRecentList;
-    private List<TrailerRecommendBean.DataBean> mTrailerList;
 
     public WaitMovieMultiAdapter() {
         super(null);
-        mRecentList = new ArrayList<>();
         addItemType(BaseConstant.TYPE_WAIT_TRAILER, R.layout.layout_wait_movie_trailer_recommend);
         addItemType(BaseConstant.TYPE_WAIT_RECENT, R.layout.layout_recent_expect);
         addItemType(BaseConstant.TYPE_WAIT_NORMAL, R.layout.item_wait_movie);
     }
 
-
-    public void setRecent(List<ExpectMovieBean.DataBean.ComingBean> data){
-        this.mRecentList.clear();
-        this.mRecentList.addAll(data);
-    }
-    public void setTrailer(List<TrailerRecommendBean.DataBean> data) {
-        this.mTrailerList.clear();
-        this.mTrailerList.addAll(data);
-    }
 
     @Override
     protected void convert(BaseViewHolder helper, final WaitMovieBean.DataBean.ComingBean item) {
@@ -64,7 +47,7 @@ public class WaitMovieMultiAdapter extends BaseMultiItemQuickAdapter<WaitMovieBe
             case BaseConstant.TYPE_WAIT_RECENT:
                 RecyclerView rvRecentExpect = helper.getView(R.id.rv_wait_movie_recent_expect);
                 rvRecentExpect.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-                RecentExpectAdapter recentExpectAdapter = new RecentExpectAdapter(mRecentList);
+                RecentExpectAdapter recentExpectAdapter = new RecentExpectAdapter(item.getRecentExpectList());
                 rvRecentExpect.setAdapter(recentExpectAdapter);
                 break;
             case BaseConstant.TYPE_WAIT_NORMAL:

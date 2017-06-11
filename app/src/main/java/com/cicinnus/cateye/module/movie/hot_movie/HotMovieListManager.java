@@ -47,7 +47,7 @@ public class HotMovieListManager {
                 RetrofitClient
                         .getInstance()
                         .api()
-                        .getMoreHotMovieList( headline, movieIds)
+                        .getHotMovieList( headline, movieIds)
                         .flatMap(new Function<HotMovieListBean, ObservableSource<HotMovieListBean.DataBean.MoviesBean>>() {
                             @Override
                             public ObservableSource<HotMovieListBean.DataBean.MoviesBean> apply(@NonNull HotMovieListBean hotMovieListBean) throws Exception {
