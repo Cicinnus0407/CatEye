@@ -1,4 +1,4 @@
-package com.cicinnus.cateye.module.movie.movie_detail.adapter;
+package com.cicinnus.cateye.module.movie.movie_detail.movie_resource.adapter;
 
 import android.view.View;
 import android.widget.ImageView;

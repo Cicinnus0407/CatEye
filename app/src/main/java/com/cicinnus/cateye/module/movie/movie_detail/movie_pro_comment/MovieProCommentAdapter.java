@@ -1,4 +1,4 @@
-package com.cicinnus.cateye.module.movie.movie_detail.adapter;
+package com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment;
 
 import android.widget.ImageView;
 
@@ -24,7 +24,8 @@ public class MovieProCommentAdapter extends BaseQuickAdapter<MovieProCommentBean
                 .setText(R.id.tv_author_title,item.getAuthInfo())
                 .setText(R.id.tv_comment_content,item.getContent())
                 .setText(R.id.tv_createDate, TimeUtils.dateYMD(item.getCreated()))
-                .setText(R.id.tv_score,String.format("%s",(int)(item.getScore()*2)));
+                .setText(R.id.tv_score,String.format("%s",(int)(item.getScore()*2)))
+                .setText(R.id.tv_likes_num,String.format("%s",item.getApprove()));
         String imgUrl = item.getAvatarurl();
         imgUrl.replace("avatar","180.180/avatar");
         GlideManager.loadImage(mContext,imgUrl, (ImageView) helper.getView(R.id.civ_author));

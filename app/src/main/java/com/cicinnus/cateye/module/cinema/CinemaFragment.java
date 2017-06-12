@@ -4,14 +4,14 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.retrofitlib.base.BaseMVPFragment;
 
 /**
- * Created by Administrator on 2017/1/18.
+ * 影院列表
  */
 
-public class CinemaMVPFragment extends BaseMVPFragment {
+public class CinemaFragment extends BaseMVPFragment {
 
-    public static CinemaMVPFragment newInstance() {
+    public static CinemaFragment newInstance() {
 
-        return new CinemaMVPFragment();
+        return new CinemaFragment();
     }
 
     @Override

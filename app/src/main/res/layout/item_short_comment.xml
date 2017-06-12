@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/selector_layout_press"
     android:orientation="vertical"
     android:padding="@dimen/dp_14">
 
@@ -48,17 +49,25 @@
 
     </LinearLayout>
 
-    <RatingBar
+
+    <com.cicinnus.cateye.view.RatingBar
         android:id="@+id/rb_score"
-        style="@style/Base.Widget.AppCompat.RatingBar.Small"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_author_name"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_toRightOf="@id/fl_author_iv" />
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_toRightOf="@id/fl_author_iv"
+        app:starCount="5"
+        app:starEmpty="@drawable/ic_star_gray"
+        app:starFill="@drawable/ic_star_yellow"
+        app:starHalf="@drawable/ic_star_half"
+        app:starImageSize="10dp"
+        app:starPadding="4dp"
+        app:starStep="0"
+        app:stepSize="Full" />
 
     <TextView
-        tools:text="asdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         android:id="@+id/tv_comment_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,16 +76,17 @@
         android:layout_marginTop="@dimen/dp_4"
         android:layout_toRightOf="@id/fl_author_iv"
         android:textColor="@color/text_primary"
-        android:textSize="@dimen/sp_16" />
+        android:textSize="@dimen/sp_16"
+        tools:text="asdasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
 
     <LinearLayout
-        android:layout_toRightOf="@id/fl_author_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_comment_content"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_6">
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toRightOf="@id/fl_author_iv">
 
         <TextView
             android:id="@+id/tv_pub_time"

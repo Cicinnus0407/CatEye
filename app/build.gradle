@@ -14,15 +14,29 @@ android {
         ndk { //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters  "armeabi" }
     }
+    signingConfigs {
+        config {
+            storeFile file("mykey.jks")
+            storePassword 'cicinnus1'
+            keyAlias "cicinnus"
+            keyPassword 'cicinnus1'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.config
         }
     }
+
+
+
     greendao {
         schemaVersion 1
         daoPackage 'com.cicinnus.greendao.gen'

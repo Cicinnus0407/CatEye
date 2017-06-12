@@ -72,16 +72,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_14">
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_14">
 
             <TextView
                 android:id="@+id/tv_createDate"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_14"
+                android:layout_weight="1"
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/sp_12"
                 tools:text="123123123" />
+
+            <TextView
+                android:id="@+id/tv_likes_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_good"
+                android:drawablePadding="@dimen/dp_6"
+                android:textColor="@color/text_gray"
+                tools:text="123" />
         </LinearLayout>
 
 

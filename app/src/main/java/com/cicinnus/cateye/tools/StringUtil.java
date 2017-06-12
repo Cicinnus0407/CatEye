@@ -17,9 +17,10 @@ public class StringUtil {
      * @return
      */
     public static String changeNumToCN(int num) {
+        DecimalFormat format = new DecimalFormat("0.0");
         int u = (int) Math.floor(Math.log10(num));
-        if (u > 6) {
-            return String.format("%s万", num / 6);
+        if (u >= 5) {
+            return String.format("%s万", format.format(num / 10000.0));
         } else return String.format("%s", num);
     }
 
@@ -38,21 +39,26 @@ public class StringUtil {
         } else return String.format("%s万", count);
     }
 
+    /**
+     * 获取正确的url
+     * @param url
+     * @return
+     */
     public static String getRealUrl(String url) {
         Logger.d(url);
         if (url.contains("id=")) {
-            if(url.contains("&")) {
+            if (url.contains("&")) {
                 String id = url.substring(url.indexOf("id=") + 3, url.indexOf("&"));
                 return "http://m.maoyan.com/information/" + id + "?_v_=yes";
-            }else {
+            } else {
                 String id = url.substring(url.indexOf("id=") + 3);
                 return "http://m.maoyan.com/information/" + id + "?_v_=yes";
             }
-        }else if(url.contains("ID=")){
-            if(url.contains("&")) {
+        } else if (url.contains("ID=")) {
+            if (url.contains("&")) {
                 String id = url.substring(url.indexOf("ID=") + 3, url.indexOf("&"));
                 return "http://m.maoyan.com/topic/" + id + "?_v_=yes";
-            }else {
+            } else {
                 String id = url.substring(url.indexOf("ID=") + 3);
                 return "http://m.maoyan.com/topic/" + id + "?_v_=yes";
             }

@@ -14,6 +14,8 @@ public class MovieProCommentContract {
         void addMovieProComment(List<MovieProCommentBean.DataBean> movieProCommentBeanData);
 
         void loadMoreFail(String message);
+
+        void addMovieData(MovieProCommentBean.PagingBean paging);
     }
 
     public interface IMovieProCommentPresenter{

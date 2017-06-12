@@ -38,7 +38,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/fl_movie_img"
         android:layout_alignTop="@id/fl_movie_img"
@@ -80,29 +80,29 @@
             android:textColor="@color/white"
             tools:text="english name" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_people_judge"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/dp_4"
-            android:drawableRight="@drawable/ic_arrow_right_gray_bg"
-            android:gravity="center_vertical"
-            android:text="观众评分"
-            android:textColor="@color/text_gray_light"
-            android:textSize="@dimen/sp_12" />
+            <TextView
+                android:id="@+id/tv_people_judge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dp_4"
+                android:drawableRight="@drawable/ic_arrow_right_gray_bg"
+                android:gravity="center_vertical"
+                android:text="观众评分"
+                android:textColor="@color/text_gray_light"
+                android:textSize="@dimen/sp_12" />
 
-        <LinearLayout
-            android:id="@+id/ll_score"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tv_movie_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tv_people_judge"
+                android:layout_marginTop="@dimen/dp_6"
                 android:textColor="@color/text_yellow"
                 android:textSize="@dimen/sp_16"
                 tools:text="8.5" />
@@ -111,11 +111,75 @@
                 android:id="@+id/tv_snum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_movie_score"
+                android:layout_alignTop="@id/tv_movie_score"
+                android:layout_below="@id/tv_people_judge"
                 android:layout_marginLeft="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_movie_score"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_gray_light"
                 android:textSize="11sp"
                 tools:text="(16.2万人评)" />
-        </LinearLayout>
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="1px"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_movie_score"
+                android:layout_alignTop="@id/tv_people_judge"
+                android:layout_marginBottom="@dimen/dp_6"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toRightOf="@id/tv_snum"
+                android:background="@color/divider_normal" />
+
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/tv_pro_judge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_toRightOf="@id/view_divider"
+                android:drawablePadding="@dimen/dp_4"
+                android:drawableRight="@drawable/ic_arrow_right_gray_bg"
+                android:gravity="center_vertical"
+                android:text="专业评分"
+                android:textColor="@color/text_gray_light"
+                android:textSize="@dimen/sp_12" />
+
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/tv_pro_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_people_judge"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toRightOf="@id/view_divider"
+                android:textColor="@color/text_yellow"
+                android:textSize="@dimen/sp_16"
+                tools:text="8.5" />
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/tv_pro_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_movie_score"
+                android:layout_alignTop="@id/tv_movie_score"
+                android:layout_below="@id/tv_people_judge"
+                android:layout_marginLeft="@dimen/dp_4"
+                android:layout_toRightOf="@id/tv_pro_score"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_gray_light"
+                android:textSize="11sp"
+                tools:text="(16.2万人评)" />
+
+
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_movie_type"

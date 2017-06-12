@@ -99,15 +99,14 @@ public class MovieDetailManager {
         return RetrofitClient
                 .getInstance()
                 .api()
-                //20为广州,暂时写死
-                .getMovieCommentTag(movieId,20);
+                .getMovieCommentTag(movieId);
     }
 
     public ObservableSource<MovieShortCommentBean> getMovieShortCommentBean(int movieId){
         return RetrofitClient
                 .getInstance()
                 .api()
-                .getMovieShortComment(movieId);
+                .getMovieShortComment(movieId,0,3,0);
     }
 
 

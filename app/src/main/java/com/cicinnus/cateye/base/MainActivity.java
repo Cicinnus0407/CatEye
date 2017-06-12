@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
 import com.cicinnus.cateye.R;
-import com.cicinnus.cateye.module.cinema.CinemaMVPFragment;
+import com.cicinnus.cateye.module.cinema.CinemaFragment;
 import com.cicinnus.cateye.module.discover.DiscoverFragment;
 import com.cicinnus.cateye.module.mine.MineMVPFragment;
 import com.cicinnus.cateye.module.movie.movie_main.MovieMainMVPFragment;
@@ -25,7 +25,7 @@ public class MainActivity extends BaseMVPActivity {
     RadioGroup rg_main;
 
     private MovieMainMVPFragment movieMainFragment;
-    private CinemaMVPFragment cinemaFragment;
+    private CinemaFragment cinemaFragment;
     private DiscoverFragment discoverFragment;
     private MineMVPFragment mineFragment;
 
@@ -47,14 +47,14 @@ public class MainActivity extends BaseMVPActivity {
 
         if (savedStated != null) {
             movieMainFragment = (MovieMainMVPFragment) getSupportFragmentManager().findFragmentByTag("movieMainFragment");
-            cinemaFragment = (CinemaMVPFragment) getSupportFragmentManager().findFragmentByTag("cinemaFragment");
+            cinemaFragment = (CinemaFragment) getSupportFragmentManager().findFragmentByTag("cinemaFragment");
             discoverFragment = (DiscoverFragment) getSupportFragmentManager().findFragmentByTag("discoverFragment");
             mineFragment = (MineMVPFragment) getSupportFragmentManager().findFragmentByTag("mineFragment");
             switchFragment(BaseConstant.RB_MOVIE);
 
         } else {
             movieMainFragment = MovieMainMVPFragment.newInstance();
-            cinemaFragment = CinemaMVPFragment.newInstance();
+            cinemaFragment = CinemaFragment.newInstance();
             discoverFragment = DiscoverFragment.newInstance();
             mineFragment = MineMVPFragment.newInstance();
             getSupportFragmentManager()

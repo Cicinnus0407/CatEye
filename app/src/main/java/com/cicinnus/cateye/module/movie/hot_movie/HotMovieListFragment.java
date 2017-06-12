@@ -93,7 +93,6 @@ public class HotMovieListFragment extends BaseMVPFragment<HotMovieListPresenter>
                             builder.append(mMovieIds.get(mCurrentIndex).get(i));
                         }
                     }
-                    //ci参数默认为20，headline参数为0
                     mPresenter.getMoreHotMovieList( 0, builder.toString());
                 } else {
                     hotMovieListAdapter.loadMoreEnd();

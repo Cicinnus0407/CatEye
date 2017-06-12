@@ -13,11 +13,11 @@ import io.reactivex.functions.Consumer;
  * Created by Cicinnus on 2017/3/13.
  */
 
-public class MovieProCommentMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<MovieProCommentContract.IMovieProCommentView> implements MovieProCommentContract.IMovieProCommentPresenter {
+public class MovieProCommentPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<MovieProCommentContract.IMovieProCommentView> implements MovieProCommentContract.IMovieProCommentPresenter {
 
     private final MovieProCommentManager movieProCommentManager;
 
-    public MovieProCommentMVPPresenter(Activity activity, MovieProCommentContract.IMovieProCommentView view) {
+    public MovieProCommentPresenter(Activity activity, MovieProCommentContract.IMovieProCommentView view) {
         super(activity, view);
         movieProCommentManager = new MovieProCommentManager();
     }
@@ -30,6 +30,7 @@ public class MovieProCommentMVPPresenter extends com.cicinnus.retrofitlib.base.B
                     @Override
                     public void accept(@NonNull MovieProCommentBean movieProCommentBean) throws Exception {
                         mView.addMovieProComment(movieProCommentBean.getData());
+                        mView.addMovieData(movieProCommentBean.getPaging());
                     }
                 }, new Consumer<Throwable>() {
                     @Override

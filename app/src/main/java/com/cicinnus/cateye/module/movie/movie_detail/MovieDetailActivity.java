@@ -22,10 +22,7 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.base.BaseWebViewActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieAwardsAdapter;
-import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieLongCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MoviePhotosAdapter;
-import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieProCommentAdapter;
-import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieResourceAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieShortCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieStarListAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.adapter.MovieTipsAdapter;
@@ -46,14 +43,19 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieTopicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.RelatedMovieBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_information.MovieInformationActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment.MovieLongCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment.MovieProCommentAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.adapter.MovieResourceAdapter;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment.MovieShortCommentActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
+import com.cicinnus.cateye.tools.ToastUtil;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ExpandTextView;
 import com.cicinnus.cateye.view.ProgressLayout;
@@ -124,6 +126,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     TextView tvPeopleJudge;
     @BindView(R.id.tv_snum)
     TextView tvSnum;//总评价数
+    @BindView(R.id.tv_pro_judge)
+    TextView tvProJudge;
+    @BindView(R.id.tv_pro_score)
+    TextView tvProScore;
+    @BindView(R.id.tv_pro_num)
+    TextView tvProNum;
     @BindView(R.id.tv_movie_type)
     TextView tvMovieType;
     @BindView(R.id.tv_src_dur)
@@ -134,8 +142,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     RelativeLayout rlMovieInfo;
     @BindView(R.id.iv_blur_bg)
     ImageView ivBlurBg;
-    @BindView(R.id.ll_score)
-    LinearLayout ll_score;
     /***************
      * 电影简介
      *****************/
@@ -274,6 +280,8 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     private int movieId;//电影Id
     private String mMovieName;
     private String mTitle;
+    private MovieBasicDataBean.DataBean.MovieBean mMovieBean;
+    private double mProScore;
 
     public static void start(Context context, int movieId) {
         Intent starter = new Intent(context, MovieDetailActivity.class);
@@ -340,13 +348,17 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         progressLayout.setLayoutParams(progressLayoutParams);
     }
 
-    @OnClick({R.id.rl_back})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rl_back:
-                finish();
-                break;
-        }
+    @OnClick({R.id.rl_back,
+                R.id.tv_pro_judge})
+        void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.rl_back:
+                    finish();
+                    break;
+                case R.id.tv_pro_judge:
+                    MovieProCommentActivity.start(mContext,movieId,mProScore,mMovieName);
+                    break;
+            }
     }
 
 
@@ -657,9 +669,9 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      * @param commentTags
      */
     @Override
-    public void addMovieCommentTag(List<MovieCommentTagBean.DataBean> commentTags) {
+    public void addMovieCommentTag(final List<MovieCommentTagBean.DataBean> commentTags) {
         commentTags.add(0, new MovieCommentTagBean.DataBean(0, movieId, 0, "全部"));
-        List<String> tags = new ArrayList<>();
+        final List<String> tags = new ArrayList<>();
         if (commentTags.size() > 1) {
             for (int i = 0; i < commentTags.size(); i++) {
                 if (commentTags.get(i).getCount() == 0) {
@@ -675,6 +687,16 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 TextView tv = (TextView) getLayoutInflater().inflate(R.layout.layout_flow_tv, tagFlowLayout, false);
                 tv.setText(s);
                 return tv;
+            }
+
+        });
+        tagFlowLayout.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                ToastUtil.showToast(commentTags.get(position).getTag()+"");
+                //                MovieShortCommentActivity.start(mContext,movieId,mMovieName,);
+
+                return false;
             }
         });
 
@@ -701,7 +723,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             footer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO 所有短评
+                    MovieShortCommentActivity.start(mContext,movieId,mMovieName,0,0);
                 }
             });
             movieShortCommentAdapter.addFooterView(footer);
@@ -803,7 +825,6 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         if (movieTopicBean.getTopics().size() > 0) {
             for (int i = 0; i < movieTopicBean.getTopics().size(); i++) {
                 if (movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl() != null) {
-                    Logger.d(movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl());
                     GlideManager.loadImage(mContext, movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl(), ivRelatedTopic);
                 } else {
                     ivRelatedTopic.setVisibility(View.GONE);
@@ -848,7 +869,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         footer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieProCommentActivity.start(mContext, movieId, mTitle);
+                MovieProCommentActivity.start(mContext, movieId,mProScore,mMovieName);
             }
         });
         movieProCommentAdapter.addFooterView(footer);
@@ -878,7 +899,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
      */
     private void setMovieInfo(final MovieBasicDataBean.DataBean.MovieBean movie) {
         String imgUrl = ImgSizeUtil.resetPicUrl(movie.getImg(), ".webp@321w_447h_1e_1c_1l");
-        String originalUrl = ImgSizeUtil.resetPicUrl(movie.getImg(), "");
+
         GlideManager.loadImage(mContext, imgUrl, ivMovieImg);
         flMovieImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -901,29 +922,18 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             tvPeopleJudge.setVisibility(View.GONE);
             tvMovieScore.setText(String.format("%s人想看", movie.getWish()));
         }
-//        Glide.with(mContext).load(originalUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                //模糊背景图
-//
-//                Observable.just(resource)
-//                        .map(new Function<Bitmap, Bitmap>() {
-//                            @Override
-//                            public Bitmap apply(@NonNull Bitmap bitmap) throws Exception {
-//
-//                            }
-//                        })
-//                        .subscribe(new Consumer<Bitmap>() {
-//                            @Override
-//                            public void accept(@NonNull Bitmap bitmap) throws Exception {
-//                                ivBlurBg.setImageBitmap(bitmap);
-//                            }
-//                        });
-//            }
-//        });
+        //专业评分
+        if (movie.getProScore()!=0) {
+            tvProJudge.setVisibility(View.VISIBLE);
+            tvProScore.setVisibility(View.VISIBLE);
+            tvProNum.setVisibility(View.VISIBLE);
+            tvProScore.setText(String.format("%s",movie.getProScore()));
+            tvProNum.setText(String.format("(%s人评)",movie.getProScoreNum()));
+        }
+        mProScore = movie.getProScore();
 
         Observable
-                .just(originalUrl)
+                .just(imgUrl)
                 .map(new Function<String, Bitmap>() {
                     @Override
                     public Bitmap apply(String s) {
@@ -941,7 +951,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                     public Bitmap apply(Bitmap bitmap) {
                          return  BlurUtils.with(mContext)
                                 .bitmap(bitmap)
-                                .radius(18)
+                                .radius(14)
                                 .blur();
                     }
                 })

@@ -29,11 +29,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".application.BaseApplication"
         android:theme="@style/AppThemeNoAnimation">
 
         <!--高德地图-->
@@ -109,24 +109,29 @@
             android:name=".module.movie.movie_detail.movie_resource.MovieResourceActivity"
             android:screenOrientation="portrait" />
         <!--电影资讯-->
-        <activity android:name=".module.movie.movie_detail.movie_information.MovieInformationActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.movie.movie_detail.movie_information.MovieInformationActivity"
+            android:screenOrientation="portrait" />
         <!--电影话题-->
-        <activity android:name=".module.movie.movie_detail.movie_topic.MovieTopicActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.movie.movie_detail.movie_topic.MovieTopicActivity"
+            android:screenOrientation="portrait" />
+        <!--所有短评-->
+        <activity android:name=".module.movie.movie_detail.movie_short_comment.MovieShortCommentActivity" />
         <!--所有长评-->
         <activity android:name=".module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity" />
         <!--所有专业评论-->
-        <activity android:name=".module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity" />
+        <activity
+            android:name=".module.movie.movie_detail.movie_pro_comment.MovieProCommentActivity"
+            android:theme="@style/FullScreenTheme" />
         <!--选择城市-->
         <activity android:name=".module.movie.pick_city.PickCityActivity" />
 
 
-
-
         <!--高德定位-->
-        <service android:name="com.amap.api.location.APSService"
-            android:exported="false"/>
+        <service
+            android:name="com.amap.api.location.APSService"
+            android:exported="false" />
     </application>
 
 </manifest>

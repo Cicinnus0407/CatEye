@@ -11,6 +11,7 @@ import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.TimeUtils;
 import com.cicinnus.cateye.view.CircleImageView;
+import com.cicinnus.cateye.view.RatingBar;
 
 /**
  * 长评adapter
@@ -29,6 +30,10 @@ public class MovieLongCommentListAdapter extends BaseQuickAdapter<MovieLongComme
                 .setText(R.id.tv_view_count,String.format("%s",item.getViewCount()))
                 .setText(R.id.tv_comment_count,String.format("%s",item.getCommentCount()))
                 .setText(R.id.tv_pub_time, TimeUtils.dateMD(item.getCreated()));
+
+
+        RatingBar ratingBar = helper.getView(R.id.rb_score);
+        ratingBar.setStar((float) item.getSc());
 
         Drawable icon = null;
         switch (item.getAuthor().getUserLevel()){

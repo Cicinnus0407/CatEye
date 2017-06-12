@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/bg_pro_comment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#c8000000" />
+
+    <TextView
+        android:id="@+id/tv_pro_comment_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/text_yellow"
+        android:textSize="36sp"
+        tools:text="6.8" />
+
+    <TextView
+        android:id="@+id/tv_pro_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pro_comment_score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        tools:text="54位专业评委参与评分" />
+
+    <TextView
+        android:id="@+id/tv_pro_comment_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_pro_comment_count"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/text_gray_light"
+        tools:text="电影名称" />
+
+
+</RelativeLayout>

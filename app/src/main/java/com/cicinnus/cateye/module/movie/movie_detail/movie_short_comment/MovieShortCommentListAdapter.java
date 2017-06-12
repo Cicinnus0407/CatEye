@@ -1,4 +1,4 @@
-package com.cicinnus.cateye.module.movie.movie_detail.adapter;
+package com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment;
 
 import android.graphics.drawable.Drawable;
 
@@ -12,20 +12,21 @@ import com.cicinnus.cateye.view.CircleImageView;
 import com.cicinnus.cateye.view.RatingBar;
 
 /**
- * 短评
+ * Created by Cicinnus on 2017/6/12.
  */
 
-public class MovieShortCommentAdapter extends BaseQuickAdapter<MovieShortCommentBean.DataBean.HcmtsBean,BaseViewHolder> {
-    public MovieShortCommentAdapter() {
+public class MovieShortCommentListAdapter extends BaseQuickAdapter<MovieShortCommentBean.DataBean.CmtsBean,BaseViewHolder> {
+    public MovieShortCommentListAdapter() {
         super(R.layout.item_short_comment,null);
+
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MovieShortCommentBean.DataBean.HcmtsBean item) {
+    protected void convert(BaseViewHolder helper, MovieShortCommentBean.DataBean.CmtsBean item) {
         helper.setText(R.id.tv_author_name,item.getNickName())
                 .setText(R.id.tv_comment_content,String.format("%s",item.getContent()))
-                .setText(R.id.tv_approve_count,String.format("%s",item.getApprove()))
-                .setText(R.id.tv_reply_count,String.format("%s",item.getReply()))
+                .setText(R.id.tv_approve_count,String.format("%s",item.getApprove()==0?"赞":item.getApprove()))
+                .setText(R.id.tv_reply_count,String.format("%s",item.getReply()==0?"回复":item.getReply()))
                 .setText(R.id.tv_pub_time, TimeUtils.dateMD(item.getCreated()));
 
         RatingBar ratingBar = helper.getView(R.id.rb_score);

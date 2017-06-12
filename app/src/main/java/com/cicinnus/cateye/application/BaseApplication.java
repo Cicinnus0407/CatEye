@@ -2,6 +2,7 @@ package com.cicinnus.cateye.application;
 
 import android.app.Application;
 
+import com.amap.api.location.AMapLocationClient;
 import com.cicinnus.cateye.net.Api;
 import com.cicinnus.cateye.net.OkHttpManager;
 import com.cicinnus.cateye.net.RetrofitClient;
@@ -21,6 +22,7 @@ public class BaseApplication extends Application {
         instance = this;
         LeakCanary.install(this);
         RetrofitClient.initClient_BaseUrl(OkHttpManager.getInstance(), Api.BASE_URL);
+        AMapLocationClient.setApiKey("979bfef3d3226a0a475200e5dd269a56");
     }
 
     public static BaseApplication getInstance() {

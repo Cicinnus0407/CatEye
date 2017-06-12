@@ -17,11 +17,11 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2017/2/20.
  */
 
-public class MovieResourceMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<MovieResourceContract.IMovieResourceView> implements MovieResourceContract.IMovieResourcePresenter {
+public class MovieResourcePresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<MovieResourceContract.IMovieResourceView> implements MovieResourceContract.IMovieResourcePresenter {
 
     private final MovieResourceManager movieResourceManager;
 
-    public MovieResourceMVPPresenter(Activity activity, MovieResourceContract.IMovieResourceView view) {
+    public MovieResourcePresenter(Activity activity, MovieResourceContract.IMovieResourceView view) {
         super(activity, view);
         movieResourceManager = new MovieResourceManager();
     }

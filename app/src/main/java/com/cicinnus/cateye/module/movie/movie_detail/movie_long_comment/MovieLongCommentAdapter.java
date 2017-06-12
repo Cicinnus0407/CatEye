@@ -1,4 +1,4 @@
-package com.cicinnus.cateye.module.movie.movie_detail.adapter;
+package com.cicinnus.cateye.module.movie.movie_detail.movie_long_comment;
 
 import android.graphics.drawable.Drawable;
 
@@ -9,6 +9,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieLongCommentBean;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.TimeUtils;
 import com.cicinnus.cateye.view.CircleImageView;
+import com.cicinnus.cateye.view.RatingBar;
 
 /**
  * Created by Administrator on 2017/2/13.
@@ -27,6 +28,11 @@ public class MovieLongCommentAdapter extends BaseQuickAdapter<MovieLongCommentBe
                 .setText(R.id.tv_view_count,String.format("%s",item.getViewCount()))
                 .setText(R.id.tv_comment_count,String.format("%s",item.getCommentCount()))
                 .setText(R.id.tv_pub_time, TimeUtils.dateMD(item.getCreated()));
+
+
+        RatingBar ratingBar = helper.getView(R.id.rb_score);
+        ratingBar.setStar((float) item.getSc());
+
 
         Drawable icon = null;
         switch (item.getAuthor().getUserLevel()){
