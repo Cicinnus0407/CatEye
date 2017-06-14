@@ -1,6 +1,7 @@
 package com.cicinnus.cateye.module.movie.movie_detail.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,12 +17,15 @@ import com.cicinnus.cateye.view.RatingBar;
  */
 
 public class MovieShortCommentAdapter extends BaseQuickAdapter<MovieShortCommentBean.DataBean.HcmtsBean,BaseViewHolder> {
+
+
+    private OnShortCommentClickListener onShortCommentClickListener;
     public MovieShortCommentAdapter() {
         super(R.layout.item_short_comment,null);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MovieShortCommentBean.DataBean.HcmtsBean item) {
+    protected void convert(BaseViewHolder helper, final MovieShortCommentBean.DataBean.HcmtsBean item) {
         helper.setText(R.id.tv_author_name,item.getNickName())
                 .setText(R.id.tv_comment_content,String.format("%s",item.getContent()))
                 .setText(R.id.tv_approve_count,String.format("%s",item.getApprove()))
@@ -50,6 +54,24 @@ public class MovieShortCommentAdapter extends BaseQuickAdapter<MovieShortComment
                 break;
         }
         helper.setImageDrawable(R.id.iv_user_level,icon);
-        GlideManager.loadImage(mContext,item.getAvatarurl(), (CircleImageView) helper.getView(R.id.civ_author));
+        GlideManager.loadImage(mContext,item.getAvatarurl(), R.drawable.ic_user_default,(CircleImageView) helper.getView(R.id.civ_author));
+
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onShortCommentClickListener != null) {
+                    onShortCommentClickListener.onClick(item.getId());
+                }
+            }
+        });
+
+    }
+
+    public void setOnShortCommentClickListener(OnShortCommentClickListener onShortCommentClickListener) {
+        this.onShortCommentClickListener = onShortCommentClickListener;
+    }
+
+    public interface OnShortCommentClickListener{
+        void onClick(int id);
     }
 }

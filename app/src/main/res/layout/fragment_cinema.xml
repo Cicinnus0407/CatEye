@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:text="影院"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:padding="6dp">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_ic_press"
+            android:drawablePadding="@dimen/dp_6"
+            android:drawableRight="@drawable/ic_arrow_down_white"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="广州"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="影院"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+        <RelativeLayout
+            android:id="@+id/rl_search"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_ic_press">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_search_white" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <com.cicinnus.cateye.view.ProgressLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cinema"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
+
+    </com.cicinnus.cateye.view.ProgressLayout>
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.cicinnus.cateye.net;
 
+import com.cicinnus.cateye.module.cinema.bean.CinemaListBean;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListBean;
@@ -34,6 +35,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieHi
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieParentGuidancesBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieRelatedCompanies;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.bean.MovieTechnicalsBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment.movie_short_comment_detail.MovieShortCommentDetailBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieAlbumBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicListBean;
@@ -57,6 +59,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -203,11 +206,16 @@ public interface Api {
     Observable<MovieCommentTagBean> getMovieCommentTag(@Path("movieId") int movieId);
 
     //热门短评
-    @GET("/mmdb/comments/movie/v3/{movieId}.json")
+    @GET("mmdb/comments/movie/v3/{movieId}.json")
     Observable<MovieShortCommentBean> getMovieShortComment(@Path("movieId") int movieId,
                                                            @Query("tag") int tag,
                                                            @Query("limit") int limit,
                                                            @Query("offset") int offset);
+
+    @GET("mmdb/replies/comment/v2/{movieId}.json")
+    Observable<MovieShortCommentDetailBean> getMovieShortCommentDetail(@Path("movieId") int movieId,
+                                                                       @Query("limit") int limit,
+                                                                       @Query("offset") int offset);
 
     //热门长评
     @GET("sns/movie/{movieId}/filmReview/top.json")
@@ -320,4 +328,20 @@ public interface Api {
     //获取城市
     @GET("dianying/cities.json")
     Observable<PickCityBean> getCity();
+
+    //获取电影院
+    @Headers({
+            "Date:Wed, 14 Jun 2017 01:30:12 GMT",
+            "Key:95345759",
+            "Authorization:a7864cebef128a23350d9ffa876f8d2e",
+            "if-Modified-Since:Wed, 14 Jun 2017 01:23:28 GMT"})
+    @GET("mmcs/cinema/v1/select/cinemas.json")
+    Observable<CinemaListBean> getCinemaList(@Query("cityId") int cityId,
+                                             @Query("offset") int offset,
+                                             @Query("channelId") int channelId,
+                                             @Query("limit") int limit,
+                                             @Query("lat") double lat,
+                                             @Query("lng") double lng,
+                                             @Query("utm_medium") String utm_medium,
+                                             @Query("utm_term") String utm_term);
 }

@@ -128,7 +128,7 @@ public class MovieProCommentActivity extends BaseActivity<MovieProCommentPresent
     }
 
     private void initListener() {
-        final int changedHeight = UiUtils.dp2px(mContext, 180);
+        final int changedHeight = UiUtils.dp2px(mContext, 160);
         rvProComment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

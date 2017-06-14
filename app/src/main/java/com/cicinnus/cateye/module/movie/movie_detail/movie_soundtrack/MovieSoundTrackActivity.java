@@ -15,7 +15,7 @@ import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 
 /**
- * Created by Administrator on 2017/2/20.
+ * 电影原声
  */
 
 public class MovieSoundTrackActivity extends BaseRecyclerViewActivity<MovieSoundTrackMVPPresenter> implements MovieSoundTrackContract.IMovieSoundTrackView {

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_14">
+
+    <FrameLayout
+        android:id="@+id/fl_author_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp">
+
+        <com.cicinnus.cateye.view.CircleImageView
+            android:id="@+id/civ_author"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_user_default" />
+
+        <ImageView
+            android:id="@+id/iv_user_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            tools:src="@drawable/ic_lv1" />
+
+
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_arrow_down" />
+
+
+    <TextView
+        android:id="@+id/tv_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/fl_author_iv"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:textColor="@color/text_gray_deep"
+        tools:text="啊实打实大" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_author_name"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/sp_12"
+        tools:text="5分钟前" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_time"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        tools:text="1234567asd" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_reply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_toRightOf="@id/fl_author_iv"
+        android:background="@color/divider_normal"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_reply_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_14"
+            tools:text="asdasdasd " />
+
+        <TextView
+            android:id="@+id/tv_reply_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/sp_14"
+            tools:text="这些操作写成携程" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ll_reply"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6">
+
+
+        <TextView
+            android:id="@+id/tv_approve_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_good"
+            android:drawablePadding="@dimen/dp_6" />
+
+
+        <TextView
+            android:id="@+id/tv_reply_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="@dimen/dp_6"
+            android:text="回复" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

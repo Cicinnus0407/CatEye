@@ -49,6 +49,7 @@ import com.cicinnus.cateye.module.movie.movie_detail.movie_pro_comment.MovieProC
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.MovieResourceActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_resource.adapter.MovieResourceAdapter;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment.MovieShortCommentActivity;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment.movie_short_comment_detail.MovieShortCommentDetailActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.MovieSoundTrackActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_topic.MovieTopicActivity;
 import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
@@ -727,6 +728,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 }
             });
             movieShortCommentAdapter.addFooterView(footer);
+            movieShortCommentAdapter.setOnShortCommentClickListener(new MovieShortCommentAdapter.OnShortCommentClickListener() {
+                @Override
+                public void onClick(int id) {
+                    MovieShortCommentDetailActivity.start(mContext,id);
+                }
+            });
         } else {
             tvShortComment.setVisibility(View.INVISIBLE);
             tvNoShortComment.setVisibility(View.VISIBLE);
@@ -874,6 +881,12 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
         });
         movieProCommentAdapter.addFooterView(footer);
         movieProCommentAdapter.setNewData(movieProCommentBean.getData());
+        movieProCommentAdapter.setOnMovieProCommentClickListener(new MovieProCommentAdapter.OnMovieProCommentClickListener() {
+            @Override
+            public void onClick() {
+                MovieProCommentActivity.start(mContext,movieId,mProScore,mMovieName);
+            }
+        });
 
     }
 

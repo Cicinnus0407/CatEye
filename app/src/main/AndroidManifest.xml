@@ -118,6 +118,9 @@
             android:screenOrientation="portrait" />
         <!--所有短评-->
         <activity android:name=".module.movie.movie_detail.movie_short_comment.MovieShortCommentActivity" />
+        <!--短评详情页-->
+        <activity android:name=".module.movie.movie_detail.movie_short_comment.movie_short_comment_detail.MovieShortCommentDetailActivity" />
+
         <!--所有长评-->
         <activity android:name=".module.movie.movie_detail.movie_long_comment.MovieLongCommentActivity" />
         <!--所有专业评论-->

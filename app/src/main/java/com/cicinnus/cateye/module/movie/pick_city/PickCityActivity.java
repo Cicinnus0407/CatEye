@@ -44,7 +44,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 
 /**
- * Created by Cicinnus on 2017/6/8.
+ * 选择城市
  */
 
 public class PickCityActivity extends BaseActivity<PickCityPresenter> implements PickCityContract.IPickCityView {

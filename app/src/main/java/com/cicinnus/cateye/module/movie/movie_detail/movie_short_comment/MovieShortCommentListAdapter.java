@@ -1,6 +1,7 @@
 package com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,13 +17,17 @@ import com.cicinnus.cateye.view.RatingBar;
  */
 
 public class MovieShortCommentListAdapter extends BaseQuickAdapter<MovieShortCommentBean.DataBean.CmtsBean,BaseViewHolder> {
+
+
+    private OnShortCommentClickListener onShortCommentClickListener;
+
     public MovieShortCommentListAdapter() {
         super(R.layout.item_short_comment,null);
 
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MovieShortCommentBean.DataBean.CmtsBean item) {
+    protected void convert(BaseViewHolder helper, final MovieShortCommentBean.DataBean.CmtsBean item) {
         helper.setText(R.id.tv_author_name,item.getNickName())
                 .setText(R.id.tv_comment_content,String.format("%s",item.getContent()))
                 .setText(R.id.tv_approve_count,String.format("%s",item.getApprove()==0?"赞":item.getApprove()))
@@ -52,5 +57,22 @@ public class MovieShortCommentListAdapter extends BaseQuickAdapter<MovieShortCom
         }
         helper.setImageDrawable(R.id.iv_user_level,icon);
         GlideManager.loadImage(mContext,item.getAvatarurl(), (CircleImageView) helper.getView(R.id.civ_author));
+
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onShortCommentClickListener != null) {
+                    onShortCommentClickListener.onClick(item.getId());
+                }
+            }
+        });
+    }
+
+    public void setOnShortCommentClickListener(OnShortCommentClickListener onShortCommentClickListener) {
+        this.onShortCommentClickListener = onShortCommentClickListener;
+    }
+
+    public interface OnShortCommentClickListener{
+        void onClick(int id);
     }
 }

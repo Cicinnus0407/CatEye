@@ -1,10 +1,12 @@
 package com.cicinnus.cateye.module.movie.wait_movie.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_detail.MovieDetailActivity;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.ExpectMovieBean;
 import com.cicinnus.cateye.tools.GlideManager;
 
@@ -20,7 +22,7 @@ public class RecentExpectAdapter extends BaseQuickAdapter<ExpectMovieBean.DataBe
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, ExpectMovieBean.DataBean.ComingBean item) {
+    protected void convert(final BaseViewHolder helper, final ExpectMovieBean.DataBean.ComingBean item) {
 
 
         String originUrl = item.getImg();
@@ -29,5 +31,11 @@ public class RecentExpectAdapter extends BaseQuickAdapter<ExpectMovieBean.DataBe
         helper.setText(R.id.tv_recent_expect_movie_name, item.getNm())
                 .setText(R.id.tv_recent_expect_wish, String.format("%s人想看", item.getWish()))
                 .setText(R.id.tv_recent_expect_time,item.getComingTitle().substring(0,item.getComingTitle().indexOf(" ")));
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieDetailActivity.start(mContext,item.getId());
+            }
+        });
     }
 }

@@ -13,6 +13,7 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieCommentTagBean;
 import com.cicinnus.cateye.module.movie.movie_detail.bean.MovieShortCommentBean;
+import com.cicinnus.cateye.module.movie.movie_detail.movie_short_comment.movie_short_comment_detail.MovieShortCommentDetailActivity;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.FloatingItemDecoration;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
@@ -113,6 +114,14 @@ public class MovieShortCommentActivity extends BaseActivity<MovieShortCommentPre
                 mPresenter.getMoreShortComment(movieId, tag, SHORT_COMMENT_LIMIT, offset);
             }
         }, rvShortComment);
+
+
+        commentListAdapter.setOnShortCommentClickListener(new MovieShortCommentListAdapter.OnShortCommentClickListener() {
+            @Override
+            public void onClick(int id) {
+                MovieShortCommentDetailActivity.start(mContext,id);
+            }
+        });
 
         //头部
         View shortCommentHeader = getLayoutInflater().inflate(R.layout.layout_short_comment_header, (ViewGroup) rvShortComment.getParent(), false);

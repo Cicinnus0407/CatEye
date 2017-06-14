@@ -10,6 +10,7 @@ import com.cicinnus.cateye.module.cinema.CinemaFragment;
 import com.cicinnus.cateye.module.discover.DiscoverFragment;
 import com.cicinnus.cateye.module.mine.MineMVPFragment;
 import com.cicinnus.cateye.module.movie.movie_main.MovieMainMVPFragment;
+import com.cicinnus.cateye.tools.ToastUtil;
 import com.cicinnus.retrofitlib.base.BaseMVPActivity;
 
 import butterknife.BindView;
@@ -28,6 +29,7 @@ public class MainActivity extends BaseMVPActivity {
     private CinemaFragment cinemaFragment;
     private DiscoverFragment discoverFragment;
     private MineMVPFragment mineFragment;
+    private long firstTime;
 
 
     @Override
@@ -155,5 +157,19 @@ public class MainActivity extends BaseMVPActivity {
         if(requestCode==32&&resultCode==33) {
             movieMainFragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000) {
+            firstTime = secondTime;
+            ToastUtil.showToast( "再次点击返回退出应用");
+        } else {
+            finish();
+        }
+
     }
 }
