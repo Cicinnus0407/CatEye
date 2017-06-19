@@ -49,4 +49,21 @@ public class CinemaPresenter extends BaseMVPPresenter<CinemaContract.ICinemaView
                     }
                 }));
     }
+
+    @Override
+    public void getMoreCinema(int cityId, int offset, int limit, double lat, double lng) {
+        addSubscribeUntilDestroy(cinemaManager.getCinemaBean(cityId, offset, limit, lat, lng)
+                .compose(SchedulersCompat.<CinemaListBean>applyIoSchedulers())
+                .subscribe(new Consumer<CinemaListBean>() {
+                    @Override
+                    public void accept(@NonNull CinemaListBean cinemaListBean) throws Exception {
+                        mView.addMoreCinema(cinemaListBean.getData().getCinemas());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        mView.addMoreCinemaFail(ExceptionHandle.handleException(throwable));
+                    }
+                }));
+    }
 }

@@ -86,6 +86,11 @@ public class PickCityActivity extends BaseActivity<PickCityPresenter> implements
         context.startActivityForResult(starter, 32);
     }
 
+    public static void start(Activity context,int code) {
+        Intent starter = new Intent(context, PickCityActivity.class);
+        context.startActivityForResult(starter, code);
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.activity_pick_city;

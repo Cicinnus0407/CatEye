@@ -3,6 +3,7 @@ package com.cicinnus.retrofitlib.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Administrator on 2017/1/18.
@@ -79,4 +80,36 @@ public class TimeUtil {
         return cal.getTimeInMillis();
     }
 
+
+    /**
+     *  7天内时间显示
+     * @param time
+     * @return
+     */
+    public static String daysAgo(long time) {
+        String ago = dateYMD(time);
+        long currentTime = System.currentTimeMillis();
+        long second = (currentTime - time) / 10000;
+        if (second / 60 > 0) {
+            ago = String.format("%s分钟前", second / 60);
+            if (second / 360 > 0) {
+                ago = String.format("%s小时前", second / 360);
+                if (second / (360 * 24) > 0 && second / (360 * 24) < 7) {
+                    ago = String.format("%s天前", second / (360 * 24));
+                }
+            }
+        }
+        return ago;
+    }
+
+    /**
+     *  获取当天GMT时间
+     * @return
+     */
+    public static String getCurrentGMT() {
+        Calendar cd = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d yyyy HH:mm:ss 'GMT'", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置时区为GMT
+        return sdf.format(cd.getTime());
+    }
 }

@@ -23,16 +23,16 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/1/18.
+ * 电影页
  */
 
-public class MovieMainMVPFragment extends BaseMVPFragment {
+public class MovieMainFragment extends BaseMVPFragment {
 
 
     private HotMovieListFragment hotMovieListFragment;
 
-    public static MovieMainMVPFragment newInstance() {
-        return new MovieMainMVPFragment();
+    public static MovieMainFragment newInstance() {
+        return new MovieMainFragment();
     }
 
 
@@ -180,6 +180,9 @@ public class MovieMainMVPFragment extends BaseMVPFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 32&&resultCode==33) {
+            tvCity.setText(data.getStringExtra("city_name"));
+            hotMovieListFragment.getPresenter().getHotMovieList(12);
+        }else if(requestCode==56&&resultCode==33){
             tvCity.setText(data.getStringExtra("city_name"));
             hotMovieListFragment.getPresenter().getHotMovieList(12);
         }

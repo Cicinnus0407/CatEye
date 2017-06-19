@@ -15,12 +15,12 @@
         tools:text="电影院名称" />
 
     <TextView
-        android:layout_marginLeft="@dimen/dp_4"
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tv_cinema_name"
         android:layout_alignTop="@id/tv_cinema_name"
+        android:layout_marginLeft="@dimen/dp_4"
         android:layout_toRightOf="@id/tv_cinema_name"
         android:gravity="center_vertical"
         tools:text="18.9元起" />
@@ -31,14 +31,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:textSize="@dimen/sp_12"
         android:layout_below="@id/tv_cinema_name"
         android:layout_marginTop="@dimen/dp_6"
         android:gravity="center"
+        android:textSize="@dimen/sp_12"
         tools:text="0.8km" />
 
     <TextView
-        android:textSize="@dimen/sp_12"
         android:id="@+id/tv_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +46,7 @@
         android:layout_toLeftOf="@id/tv_distance"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textSize="@dimen/sp_12"
         tools:text="地址...." />
 
     <LinearLayout
@@ -70,16 +70,30 @@
         android:drawableLeft="@drawable/ic_label_benefit"
         android:drawablePadding="@dimen/dp_6"
         android:gravity="center_vertical"
+        android:textSize="@dimen/sp_12"
+        tools:text="阿诗丹顿" />
+
+    <TextView
+        android:id="@+id/tv_merchant_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_platform_activity"
+        android:layout_marginTop="@dimen/dp_4"
+        android:drawableLeft="@drawable/ic_label_merchart"
+        android:drawablePadding="@dimen/dp_6"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/sp_12"
         tools:text="阿诗丹顿" />
 
     <TextView
         android:id="@+id/tv_card_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_platform_activity"
+        android:layout_below="@id/tv_merchant_activity"
         android:layout_marginTop="@dimen/dp_4"
         android:drawableLeft="@drawable/ic_label_card"
-        android:drawablePadding="@dimen/dp_6" />
+        android:drawablePadding="@dimen/dp_6"
+        android:textSize="@dimen/sp_12" />
 
 
 </RelativeLayout>

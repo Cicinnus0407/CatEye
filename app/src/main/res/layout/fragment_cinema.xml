@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorAccent"
@@ -49,6 +51,7 @@
     </RelativeLayout>
 
     <com.cicinnus.cateye.view.ProgressLayout
+        android:layout_below="@id/rl_title"
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -67,4 +70,24 @@
         </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
 
     </com.cicinnus.cateye.view.ProgressLayout>
-</LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:background="@drawable/bg_location"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="@dimen/dp_6"
+        android:drawableRight="@drawable/ic_refresh"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="@dimen/dp_4"
+
+        android:textColor="@color/text_gray_deep"
+        android:text="正在定位.." />
+</RelativeLayout>

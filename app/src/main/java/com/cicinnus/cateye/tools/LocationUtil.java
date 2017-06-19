@@ -7,7 +7,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.ref.WeakReference;
 
@@ -21,14 +20,14 @@ public class LocationUtil {
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+    //定位模式,默认为省电模式
+    public AMapLocationClientOption.AMapLocationMode aMapLocationMode = AMapLocationClientOption.AMapLocationMode.Battery_Saving;
     //定位信息
     private AMapLocation mLocationInfo;
-    private boolean mOnceLocation = true;
-    private boolean showLocationError;
-    private final RxPermissions rxPermissions;
 
-    public void setOnLocationChangeListener(OnLocationChangeListener onLocationChangeListener) {
+    public LocationUtil setOnLocationChangeListener(OnLocationChangeListener onLocationChangeListener) {
         this.onLocationChangeListener = onLocationChangeListener;
+        return this;
     }
 
     //回调
@@ -37,7 +36,7 @@ public class LocationUtil {
     public LocationUtil(final WeakReference<Activity> mContext) {
         mLocationClient = new AMapLocationClient(mContext.get());
         initOption();
-        rxPermissions = new RxPermissions(mContext.get());
+        mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation amapLocation) {
@@ -59,17 +58,12 @@ public class LocationUtil {
             }
         });
 
-
     }
 
     private void initOption() {
-        //初始化AMapLocationClientOption对象
+              //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //获取一次定位结果：
-        //该方法默认为false。
-        mLocationOption.setOnceLocation(mOnceLocation);
         //获取最近3s内精度最高的一次定位结果：
         //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。
         // 如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
@@ -82,16 +76,29 @@ public class LocationUtil {
      * 开始定位
      */
     public void startLocation() {
+        mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
+
     }
 
     /**
      * 设置是否进行单次定位,默认true
      *
-     * @param mOnceLocation
+     * @param once
      */
-    public void setOnceLocation(boolean mOnceLocation) {
-        this.mOnceLocation = mOnceLocation;
+    public LocationUtil setOnceLocation(boolean once) {
+        mLocationOption.setOnceLocation(once);
+        return this;
+    }
+
+    /**
+     * 设置定位精度模式
+     * @param mode
+     */
+    public LocationUtil setLocationType(AMapLocationClientOption.AMapLocationMode mode){
+        this.aMapLocationMode = mode;
+        mLocationOption.setLocationMode(aMapLocationMode);
+        return this;
     }
 
     /**

@@ -327,6 +327,7 @@ public class CinemaListBean {
 
                 private String cardPromotionTag;
                 private String platformActivityTag;
+                private String merchantActivityTag;
 
                 public String getCardPromotionTag() {
                     return cardPromotionTag;
@@ -342,6 +343,14 @@ public class CinemaListBean {
 
                 public void setPlatformActivityTag(String platformActivityTag) {
                     this.platformActivityTag = platformActivityTag;
+                }
+
+                public String getMerchantActivityTag() {
+                    return merchantActivityTag;
+                }
+
+                public void setMerchantActivityTag(String merchantActivityTag) {
+                    this.merchantActivityTag = merchantActivityTag;
                 }
             }
 

@@ -9,9 +9,10 @@ import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.cinema.CinemaFragment;
 import com.cicinnus.cateye.module.discover.DiscoverFragment;
 import com.cicinnus.cateye.module.mine.MineMVPFragment;
-import com.cicinnus.cateye.module.movie.movie_main.MovieMainMVPFragment;
+import com.cicinnus.cateye.module.movie.movie_main.MovieMainFragment;
 import com.cicinnus.cateye.tools.ToastUtil;
 import com.cicinnus.retrofitlib.base.BaseMVPActivity;
+import com.cicinnus.retrofitlib.utils.CleanLeakUtils;
 
 import butterknife.BindView;
 
@@ -25,7 +26,7 @@ public class MainActivity extends BaseMVPActivity {
     @BindView(R.id.rg_main)
     RadioGroup rg_main;
 
-    private MovieMainMVPFragment movieMainFragment;
+    private MovieMainFragment movieMainFragment;
     private CinemaFragment cinemaFragment;
     private DiscoverFragment discoverFragment;
     private MineMVPFragment mineFragment;
@@ -48,14 +49,14 @@ public class MainActivity extends BaseMVPActivity {
 
 
         if (savedStated != null) {
-            movieMainFragment = (MovieMainMVPFragment) getSupportFragmentManager().findFragmentByTag("movieMainFragment");
+            movieMainFragment = (MovieMainFragment) getSupportFragmentManager().findFragmentByTag("movieMainFragment");
             cinemaFragment = (CinemaFragment) getSupportFragmentManager().findFragmentByTag("cinemaFragment");
             discoverFragment = (DiscoverFragment) getSupportFragmentManager().findFragmentByTag("discoverFragment");
             mineFragment = (MineMVPFragment) getSupportFragmentManager().findFragmentByTag("mineFragment");
             switchFragment(BaseConstant.RB_MOVIE);
 
         } else {
-            movieMainFragment = MovieMainMVPFragment.newInstance();
+            movieMainFragment = MovieMainFragment.newInstance();
             cinemaFragment = CinemaFragment.newInstance();
             discoverFragment = DiscoverFragment.newInstance();
             mineFragment = MineMVPFragment.newInstance();
@@ -154,8 +155,12 @@ public class MainActivity extends BaseMVPActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==32&&resultCode==33) {
+        if (requestCode == 32 && resultCode == 33) {
             movieMainFragment.onActivityResult(requestCode, resultCode, data);
+            cinemaFragment.onActivityResult(requestCode, resultCode, data);
+        }else if(requestCode==56&&resultCode==33){
+            movieMainFragment.onActivityResult(requestCode, resultCode, data);
+            cinemaFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -166,10 +171,17 @@ public class MainActivity extends BaseMVPActivity {
         long secondTime = System.currentTimeMillis();
         if (secondTime - firstTime > 2000) {
             firstTime = secondTime;
-            ToastUtil.showToast( "再次点击返回退出应用");
+            ToastUtil.showToast("再次点击返回退出应用");
         } else {
             finish();
+
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        CleanLeakUtils.fixInputMethodManagerLeak(MainActivity.this);
+        super.onDestroy();
     }
 }
