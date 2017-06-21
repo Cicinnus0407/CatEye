@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.cicinnus.retrofitlib.base.BaseMVPPresenter;
 import com.cicinnus.retrofitlib.net.error.ExceptionHandle;
 import com.cicinnus.retrofitlib.rx.SchedulersCompat;
+import com.orhanobut.logger.Logger;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
@@ -36,6 +37,7 @@ public class MovieShortCommentDetailPresenter extends BaseMVPPresenter<MovieShor
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
                         mView.showError(ExceptionHandle.handleException(throwable));
                     }
                 }, new Action() {

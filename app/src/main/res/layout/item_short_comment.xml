@@ -81,6 +81,7 @@
 
 
     <LinearLayout
+        android:layout_marginBottom="@dimen/dp_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_comment_content"
@@ -121,7 +122,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="2px"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/fl_author_iv"
         android:background="@color/divider_normal" />

@@ -60,6 +60,7 @@ public class MovieShortCommentActivity extends BaseActivity<MovieShortCommentPre
     private FloatingItemDecoration floatingItemDecoration;
     private int mCurrentPosition;
     private TextView tvAllShortComment;
+    private String movieName;
 
     public static void start(Context context, int movieId, String movieName,int tag,int position) {
         Intent starter = new Intent(context, MovieShortCommentActivity.class);
@@ -84,7 +85,7 @@ public class MovieShortCommentActivity extends BaseActivity<MovieShortCommentPre
 
     @Override
     protected void initEventAndData() {
-        String movieName = getIntent().getStringExtra("movieName");
+        movieName = getIntent().getStringExtra("movieName");
         movieId = getIntent().getIntExtra("movieId", 0);
         tag = getIntent().getIntExtra("tag",0);
         mCurrentPosition = getIntent().getIntExtra("position",0);
@@ -119,7 +120,7 @@ public class MovieShortCommentActivity extends BaseActivity<MovieShortCommentPre
         commentListAdapter.setOnShortCommentClickListener(new MovieShortCommentListAdapter.OnShortCommentClickListener() {
             @Override
             public void onClick(int id) {
-                MovieShortCommentDetailActivity.start(mContext,id);
+                MovieShortCommentDetailActivity.start(mContext,id,movieName);
             }
         });
 
@@ -130,7 +131,7 @@ public class MovieShortCommentActivity extends BaseActivity<MovieShortCommentPre
         commentListAdapter.addHeaderView(shortCommentHeader);
 
 
-        floatingItemDecoration = new FloatingItemDecoration(mContext, mContext.getResources().getColor(R.color.divider_normal), 100, 1);
+        floatingItemDecoration = new FloatingItemDecoration(mContext, mContext.getResources().getColor(R.color.divider_normal), 100, 0);
         floatingItemDecoration.setmTitleHeight(UiUtils.dp2px(mContext, 27));
         floatingItemDecoration.setShowFloatingHeaderOnScrolling(true);//悬浮
         rvShortComment.addItemDecoration(floatingItemDecoration);

@@ -25,13 +25,13 @@ import com.cicinnus.cateye.module.movie.movie_star.bean.MovieStarInfoBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.RelatedInformationBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.StarMoviesBean;
 import com.cicinnus.cateye.module.movie.movie_star.bean.StarRelatedPeople;
-import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
 import com.cicinnus.cateye.tools.StringUtil;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.retrofitlib.rx.SchedulersCompat;
+import com.cicinnus.retrofitlib.utils.BlurUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
@@ -306,7 +306,9 @@ public class MovieStarActivity extends BaseActivity<MovieStarMVPPresenter> imple
                     .map(new Function<Bitmap, Bitmap>() {
                         @Override
                         public Bitmap apply(Bitmap bitmap) {
-                            return FastBlurUtil.doBlur(bitmap, 130, false);
+                            return BlurUtils.with(mContext).radius(14)
+                                    .bitmap(bitmap)
+                                    .blur();
                         }
                     })
                     .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())

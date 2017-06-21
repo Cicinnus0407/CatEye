@@ -21,7 +21,7 @@ public abstract class BaseMVPFragment<T extends ICorePresenter> extends Fragment
     protected T mPresenter;
     private boolean isInit;
     private boolean isLoad;
-    private View rootView;
+    protected View rootView;
     private Unbinder mUnbinder;
     @Override
     public void onAttach(Context context) {

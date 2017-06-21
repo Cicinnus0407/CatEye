@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -51,10 +51,10 @@
     </RelativeLayout>
 
     <com.cicinnus.cateye.view.ProgressLayout
-        android:layout_below="@id/rl_title"
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_title">
 
         <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
             android:id="@+id/swipe"
@@ -71,7 +71,13 @@
 
     </com.cicinnus.cateye.view.ProgressLayout>
 
-
+    <include
+        android:id="@+id/ll_filter"
+        layout="@layout/layout_cinema_pinned_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_title"
+        android:visibility="gone" />
     <TextView
         android:id="@+id/tv_location"
         android:layout_width="match_parent"
@@ -87,7 +93,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:padding="@dimen/dp_4"
-
-        android:textColor="@color/text_gray_deep"
-        android:text="正在定位.." />
+        android:text="正在定位.."
+        android:textColor="@color/text_gray_deep" />
 </RelativeLayout>

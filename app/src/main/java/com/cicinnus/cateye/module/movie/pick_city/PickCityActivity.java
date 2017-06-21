@@ -147,6 +147,11 @@ public class PickCityActivity extends BaseActivity<PickCityPresenter> implements
                             tvLocationCity.setText(String.format("%s", cityName.substring(0, cityName.indexOf("市"))));
                         }
                     }
+
+                    @Override
+                    public void onLocateFail(AMapLocation amapLocation) {
+
+                    }
                 });
                 locationUtil.startLocation();
             }

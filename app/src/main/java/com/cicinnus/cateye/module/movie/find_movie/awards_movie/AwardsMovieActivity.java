@@ -18,7 +18,6 @@ import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListActivity;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.bean.AwardsMovieListBean;
-import com.cicinnus.cateye.tools.FastBlurUtil;
 import com.cicinnus.cateye.tools.GlideManager;
 import com.cicinnus.cateye.tools.UiUtils;
 import com.cicinnus.cateye.view.CircleImageView;
@@ -27,6 +26,7 @@ import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 import com.cicinnus.retrofitlib.rx.SchedulersCompat;
+import com.cicinnus.retrofitlib.utils.BlurUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> i
     public static final int REQUEST_CODE = 101;
     public static final String ID = "fest_id";//从奖项列表拿到的数据
     public static final String COME_FROM_FIND_MOVIE = "come_from_find_movie";
-    private boolean isComeFromFindMovie =false;
+    private boolean isComeFromFindMovie = false;
     private ImageView ivBlur;
 
     public static void start(Context context, int festivalId, int festSessionId) {
@@ -148,7 +148,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> i
             public void onLoadMoreRequested() {
                 mPresenter.getMoreAwardsMovie(festSessionId, 10, offset);
             }
-        },rvAwardsMovie);
+        }, rvAwardsMovie);
         awardsList = new ArrayList<>();
         if (isComeFromFindMovie) {
             festivalId = getIntent().getIntExtra(ID, 0);
@@ -355,13 +355,15 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> i
                 .filter(new Predicate<Bitmap>() {
                     @Override
                     public boolean test(@NonNull Bitmap bitmap) throws Exception {
-                        return bitmap!=null;
+                        return bitmap != null;
                     }
                 })
                 .map(new Function<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap apply(Bitmap bitmap) {
-                        return FastBlurUtil.doBlur(bitmap, 9, false);
+                        return BlurUtils.with(mContext).radius(14)
+                                .bitmap(bitmap)
+                                .blur();
                     }
                 })
                 .compose(SchedulersCompat.<Bitmap>applyIoSchedulers())
@@ -415,7 +417,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> i
 
     @Override
     protected void onPause() {
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         super.onPause();
     }
 }

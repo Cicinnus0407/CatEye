@@ -1,6 +1,8 @@
 package com.cicinnus.cateye.net;
 
+import com.cicinnus.cateye.module.cinema.bean.CinemaBannerBean;
 import com.cicinnus.cateye.module.cinema.bean.CinemaListBean;
+import com.cicinnus.cateye.module.cinema.bean.FilterBean;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListBean;
@@ -54,6 +56,8 @@ import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieBean;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.WaitMovieMoreBean;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -63,6 +67,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * Created by Administrator on 2017/1/18.
@@ -329,19 +334,28 @@ public interface Api {
     @GET("dianying/cities.json")
     Observable<PickCityBean> getCity();
 
-    //获取电影院
+    //获取电影院,这4个参数必须有,否则会提示没有授权,
+    //Authorization 的值是根据Date和其他约定规则生成,但是无法得知生成规则,所以只能根据抓包内容写死
     @Headers({
             "Date:Wed, 14 Jun 2017 01:30:12 GMT",
             "Key:95345759",
             "Authorization:a7864cebef128a23350d9ffa876f8d2e",
             "if-Modified-Since:Wed, 14 Jun 2017 01:23:28 GMT"})
     @GET("mmcs/cinema/v1/select/cinemas.json")
-    Observable<CinemaListBean> getCinemaList(@Query("cityId") int cityId,
-                                             @Query("offset") int offset,
-                                             @Query("channelId") int channelId,
-                                             @Query("limit") int limit,
-                                             @Query("lat") double lat,
-                                             @Query("lng") double lng,
-                                             @Query("utm_medium") String utm_medium,
-                                             @Query("utm_term") String utm_term);
+    Observable<CinemaListBean> getCinemaList(@QueryMap Map<String,Object> queryMap);
+
+
+    //获取广告条
+    @GET("http://advert.mobile.meituan.com/api/v3/adverts")
+    Observable<CinemaBannerBean> getBanner(@QueryMap Map<String,Object> queryMap);
+
+    //获取筛选信息
+    @Headers({
+            "Date:Tue, 20 Jun 2017 08:48:04 GMT",
+            "Key:52708733",
+            "userid:-1",
+            "Authorization:5a2680d8b1a1720c70f21f985f9574d7",
+            "if-Modified-Since:Tue, 20 Jun 2017 08:48:04 GMT"})
+    @GET("mmcs/cinema/v1/select/items.json")
+    Observable<FilterBean> getFilter(@Query("cityId") int cityId);
 }

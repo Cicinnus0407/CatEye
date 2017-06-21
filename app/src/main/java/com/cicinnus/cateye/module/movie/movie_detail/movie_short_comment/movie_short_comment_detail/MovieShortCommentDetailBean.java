@@ -87,7 +87,7 @@ public class MovieShortCommentDetailBean {
         private int oppose;
         private boolean pro;
         private int reply;
-        private int score;
+        private Number score;
         private int spoiler;
         private boolean supportComment;
         private boolean supportLike;
@@ -219,11 +219,11 @@ public class MovieShortCommentDetailBean {
             this.reply = reply;
         }
 
-        public int getScore() {
+        public Number getScore() {
             return score;
         }
 
-        public void setScore(int score) {
+        public void setScore(Number score) {
             this.score = score;
         }
 

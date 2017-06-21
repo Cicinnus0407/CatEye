@@ -731,7 +731,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
             movieShortCommentAdapter.setOnShortCommentClickListener(new MovieShortCommentAdapter.OnShortCommentClickListener() {
                 @Override
                 public void onClick(int id) {
-                    MovieShortCommentDetailActivity.start(mContext,id);
+                    MovieShortCommentDetailActivity.start(mContext,id,mMovieName);
                 }
             });
         } else {

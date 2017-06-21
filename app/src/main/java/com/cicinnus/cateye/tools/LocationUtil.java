@@ -21,7 +21,7 @@ public class LocationUtil {
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
     //定位模式,默认为省电模式
-    public AMapLocationClientOption.AMapLocationMode aMapLocationMode = AMapLocationClientOption.AMapLocationMode.Battery_Saving;
+    public AMapLocationClientOption.AMapLocationMode aMapLocationMode = AMapLocationClientOption.AMapLocationMode.Device_Sensors;
     //定位信息
     private AMapLocation mLocationInfo;
 
@@ -53,6 +53,9 @@ public class LocationUtil {
                         Log.e("AmapError", "location Error, ErrCode:"
                                 + amapLocation.getErrorCode() + ", errInfo:"
                                 + amapLocation.getErrorInfo());
+                        if (onLocationChangeListener != null) {
+                            onLocationChangeListener.onLocateFail(amapLocation);
+                        }
                     }
                 }
             }
@@ -135,10 +138,13 @@ public class LocationUtil {
     public void destroyLocation() {
         if (mLocationClient != null) {
             mLocationClient.onDestroy();
+            mLocationClient = null;
         }
     }
 
     public interface OnLocationChangeListener {
         void onChange(AMapLocation amapLocation);
+
+        void onLocateFail(AMapLocation amapLocation);
     }
 }

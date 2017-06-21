@@ -13,7 +13,7 @@ import io.reactivex.functions.Consumer;
 
 
 /**
- * Created by Administrator on 2017/2/4.
+ * 下拉刷新实现类
  */
 
 public class MyPullToRefreshListener implements SuperSwipeRefreshLayout.OnPullRefreshListener {

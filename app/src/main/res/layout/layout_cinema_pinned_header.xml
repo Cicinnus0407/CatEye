@@ -10,11 +10,15 @@
         android:background="@color/white">
 
         <TextView
+            android:textColor="@color/text_gray_deep"
+            android:id="@+id/tv_area"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableRight="@drawable/ic_arrow_down_solid"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:text="区域" />
 
         <View
@@ -26,11 +30,14 @@
             android:background="@color/divider_normal" />
 
         <TextView
+            android:id="@+id/tv_sort_condition"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableRight="@drawable/ic_arrow_down_solid"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:text="离我最近" />
 
         <View
@@ -42,11 +49,14 @@
             android:background="@color/divider_normal" />
 
         <TextView
+            android:id="@+id/tv_brand"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableRight="@drawable/ic_arrow_down_solid"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:text="品牌" />
 
         <View
@@ -58,11 +68,14 @@
             android:background="@color/divider_normal" />
 
         <TextView
+            android:id="@+id/tv_hall_type"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableRight="@drawable/ic_arrow_down_solid"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="1"
             android:text="特效/服务" />
     </LinearLayout>
 
