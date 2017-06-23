@@ -12,9 +12,9 @@ import android.widget.PopupWindow;
 
 public class PopupWindowUtils {
 
-    private static PopupWindow window;
+    private  PopupWindow window;
 
-    public static PopupWindow createPopupWindow(final View content, int heightPx) {
+    public  PopupWindow createPopupWindow(final View content, int heightPx) {
         window = new PopupWindow(content,
                 ViewGroup.LayoutParams.MATCH_PARENT, heightPx);
         //点击地方消失

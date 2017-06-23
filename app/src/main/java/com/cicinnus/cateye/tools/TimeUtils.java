@@ -51,6 +51,18 @@ public class TimeUtils {
         }
     }
 
+    public static String MinuteToHour(int minute) {
+
+        if (minute / 60 < 24) {
+            return String.format("%s:%s", minute / 60 <= 10 ? "0" + minute / 60 : minute / 60, minute % 60 < 10 ? "0" + minute % 60 : minute % 60);
+        } else {
+            //大于24小时
+            minute = minute - 1440;
+            return MinuteToHour(minute);
+        }
+    }
+
+
     public static String daysAgo(long time) {
         String ago = dateYMD(time);
         long currentTime = System.currentTimeMillis();

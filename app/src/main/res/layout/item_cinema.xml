@@ -60,40 +60,51 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/tv_platform_activity"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_promotion"
+        android:layout_marginBottom="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_6"
-        android:drawableLeft="@drawable/ic_label_benefit"
-        android:drawablePadding="@dimen/dp_6"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/sp_12"
-        tools:text="阿诗丹顿" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_merchant_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_platform_activity"
-        android:layout_marginTop="@dimen/dp_4"
-        android:drawableLeft="@drawable/ic_label_merchart"
-        android:drawablePadding="@dimen/dp_6"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/sp_12"
-        tools:text="阿诗丹顿" />
+        <TextView
+            android:id="@+id/tv_platform_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_label_benefit"
+            android:drawablePadding="@dimen/dp_6"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_12"
+            tools:text="阿诗丹顿" />
 
-    <TextView
-        android:id="@+id/tv_card_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_merchant_activity"
-        android:layout_marginTop="@dimen/dp_4"
-        android:drawableLeft="@drawable/ic_label_card"
-        android:drawablePadding="@dimen/dp_6"
-        android:textSize="@dimen/sp_12" />
+        <TextView
+            android:id="@+id/tv_merchant_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:drawableLeft="@drawable/ic_label_merchart"
+            android:drawablePadding="@dimen/dp_6"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_12"
+            tools:text="阿诗丹顿" />
 
+        <TextView
+            android:id="@+id/tv_card_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4"
+            android:drawableLeft="@drawable/ic_label_card"
+            android:drawablePadding="@dimen/dp_6"
+            android:textSize="@dimen/sp_12" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/text_gray_light" />
 
 </RelativeLayout>

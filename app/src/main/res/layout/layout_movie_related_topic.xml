@@ -28,6 +28,7 @@
 
 
         <ImageView
+            android:layout_marginRight="@dimen/dp_10"
             android:id="@+id/iv_related_topic"
             android:layout_width="106dp"
             android:layout_height="80dp" />
@@ -36,7 +37,6 @@
             android:id="@+id/tv_related_topic_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/text_primary"

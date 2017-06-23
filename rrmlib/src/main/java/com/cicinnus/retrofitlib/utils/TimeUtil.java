@@ -1,5 +1,6 @@
 package com.cicinnus.retrofitlib.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -27,8 +28,13 @@ public class TimeUtil {
 
     }
 
+    public static String dateMDHSCN(long time) {
+        SimpleDateFormat format = new SimpleDateFormat("MM月\tdd日 HH:mm", Locale.CHINA);
+        return format.format(time);
+    }
+
     public static String dateMDCN(long time) {
-        SimpleDateFormat format = new SimpleDateFormat("MM月\tdd日\tHH:mm", Locale.CHINA);
+        SimpleDateFormat format = new SimpleDateFormat("MM月\tdd日", Locale.CHINA);
         return format.format(time);
     }
 
@@ -111,5 +117,36 @@ public class TimeUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d yyyy HH:mm:ss 'GMT'", Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置时区为GMT
         return sdf.format(cd.getTime());
+    }
+
+    /**
+     * 判断日期是该星期的第几天
+     * @param time
+     * @return
+     */
+    public static int dayForWeek(String time)  {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c = Calendar.getInstance();
+
+        try {
+            c.setTime(format.parse(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int dayForWeek = 0;
+
+        if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+
+            dayForWeek = 7;
+
+        } else {
+
+            dayForWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+
+        }
+
+        return dayForWeek;
     }
 }

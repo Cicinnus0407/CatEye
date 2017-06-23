@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_12">
+
+    <TextView
+        android:id="@+id/tv_play_next_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:background="@drawable/bg_blue"
+        android:padding="2dp"
+        android:text="次日播放"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            tools:text="00:12" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_time"
+            android:layout_marginTop="@dimen/dp_6"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12"
+            tools:text="02:40散场" />
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_time"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_toRightOf="@id/tv_time"
+            android:textColor="@color/text_primary"
+            tools:text="英语3D" />
+
+        <TextView
+            android:id="@+id/tv_hall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_language"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_toRightOf="@id/tv_time"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12"
+            tools:text="1号厅" />
+
+
+        <TextView
+            android:id="@+id/tv_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_tv_buy_white"
+            android:textColor="@color/colorPrimary"
+            tools:text="购票" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_22"
+            android:layout_toLeftOf="@id/tv_buy"
+            android:gravity="right|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="43元"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_login_benefit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="登录优惠"
+                android:textColor="@color/text_gray"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@color/divider_normal" />
+
+</LinearLayout>

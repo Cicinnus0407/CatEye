@@ -125,7 +125,7 @@ public class MovieDetailPresenter extends com.cicinnus.retrofitlib.base.BaseMVPP
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-
+                        Logger.e(throwable.getMessage());
                     }
                 }));
     }

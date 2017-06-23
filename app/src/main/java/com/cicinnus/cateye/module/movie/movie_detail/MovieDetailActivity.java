@@ -831,7 +831,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
     public void addMovieTopic(final MovieTopicBean.DataBean movieTopicBean) {
         if (movieTopicBean.getTopics().size() > 0) {
             for (int i = 0; i < movieTopicBean.getTopics().size(); i++) {
-                if (movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl() != null) {
+                if (movieTopicBean.getTopics().get(i).getPreviews()!=null&&movieTopicBean.getTopics().get(i).getPreviews().size()>0) {
                     GlideManager.loadImage(mContext, movieTopicBean.getTopics().get(i).getPreviews().get(0).getUrl(), ivRelatedTopic);
                 } else {
                     ivRelatedTopic.setVisibility(View.GONE);

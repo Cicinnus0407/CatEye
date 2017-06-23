@@ -56,6 +56,8 @@
             tools:src="@drawable/icon_default" />
 
         <TextView
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_marginTop="1dp"
             android:textSize="11sp"
             android:id="@+id/tv_award_prize_name"

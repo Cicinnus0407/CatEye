@@ -20,6 +20,9 @@ public class TestDemo {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d yyyy HH:mm:ss 'GMT'", Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置时区为GMT
         String str = sdf.format(cd.getTime());
-        System.out.println(str);
+//        System.out.println(str);
+
+//        System.out.println();
+        System.out.println(150%60);
     }
 }

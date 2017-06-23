@@ -23,7 +23,8 @@ public class BrandAdapter extends BaseQuickAdapter<FilterBean.DataBean.BrandBean
 
     @Override
     protected void convert(final BaseViewHolder helper, final FilterBean.DataBean.BrandBean.SubItemsBean item) {
-        helper.setText(R.id.tv_brand, item.getName());
+        helper.setText(R.id.tv_brand, item.getName())
+                .setText(R.id.tv_count,String.format("%s",item.getCount()));
 
         helper.setTextColor(R.id.tv_brand, item.isSelect ?
                 mContext.getResources().getColor(R.color.colorPrimary) :

@@ -15,14 +15,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,7 +29,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import com.cicinnus.cateye.tools.UiUtils;
 
@@ -572,67 +565,67 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
      *
      * @return
      */
-    public boolean isChildScrollToBottom() {
-        if (isChildScrollToTop()) {
-            return false;
-        }
-        if (mTarget instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) mTarget;
-            LayoutManager layoutManager = recyclerView.getLayoutManager();
-            int count = recyclerView.getAdapter().getItemCount();
-            if (layoutManager instanceof LinearLayoutManager && count > 0) {
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
-                if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == count - 1) {
-                    return true;
-                }
-            } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
-                int[] lastItems = new int[2];
-                staggeredGridLayoutManager
-                        .findLastCompletelyVisibleItemPositions(lastItems);
-                int lastItem = Math.max(lastItems[0], lastItems[1]);
-                if (lastItem == count - 1) {
-                    return true;
-                }
-            }
-            return false;
-        } else if (mTarget instanceof AbsListView) {
-            final AbsListView absListView = (AbsListView) mTarget;
-            int count = absListView.getAdapter().getCount();
-            int fristPos = absListView.getFirstVisiblePosition();
-            if (fristPos == 0
-                    && absListView.getChildAt(0).getTop() >= absListView
-                    .getPaddingTop()) {
-                return false;
-            }
-            int lastPos = absListView.getLastVisiblePosition();
-            if (lastPos > 0 && count > 0 && lastPos == count - 1) {
-                return true;
-            }
-            return false;
-        } else if (mTarget instanceof ScrollView) {
-            ScrollView scrollView = (ScrollView) mTarget;
-            View view = (View) scrollView
-                    .getChildAt(scrollView.getChildCount() - 1);
-            if (view != null) {
-                int diff = (view.getBottom() - (scrollView.getHeight() + scrollView
-                        .getScrollY()));
-                if (diff == 0) {
-                    return true;
-                }
-            }
-        } else if (mTarget instanceof NestedScrollView) {
-            NestedScrollView nestedScrollView = (NestedScrollView) mTarget;
-            View view = (View) nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1);
-            if (view != null) {
-                int diff = (view.getBottom() - (nestedScrollView.getHeight() + nestedScrollView.getScrollY()));
-                if (diff == 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+//    public boolean isChildScrollToBottom() {
+//        if (isChildScrollToTop()) {
+//            return false;
+//        }
+//        if (mTarget instanceof RecyclerView) {
+//            RecyclerView recyclerView = (RecyclerView) mTarget;
+//            LayoutManager layoutManager = recyclerView.getLayoutManager();
+//            int count = recyclerView.getAdapter().getItemCount();
+//            if (layoutManager instanceof LinearLayoutManager && count > 0) {
+//                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+//                if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == count - 1) {
+//                    return true;
+//                }
+//            } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+//                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+//                int[] lastItems = new int[2];
+//                staggeredGridLayoutManager
+//                        .findLastCompletelyVisibleItemPositions(lastItems);
+//                int lastItem = Math.max(lastItems[0], lastItems[1]);
+//                if (lastItem == count - 1) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        } else if (mTarget instanceof AbsListView) {
+//            final AbsListView absListView = (AbsListView) mTarget;
+//            int count = absListView.getAdapter().getCount();
+//            int fristPos = absListView.getFirstVisiblePosition();
+//            if (fristPos == 0
+//                    && absListView.getChildAt(0).getTop() >= absListView
+//                    .getPaddingTop()) {
+//                return false;
+//            }
+//            int lastPos = absListView.getLastVisiblePosition();
+//            if (lastPos > 0 && count > 0 && lastPos == count - 1) {
+//                return true;
+//            }
+//            return false;
+//        } else if (mTarget instanceof ScrollView) {
+//            ScrollView scrollView = (ScrollView) mTarget;
+//            View view = (View) scrollView
+//                    .getChildAt(scrollView.getChildCount() - 1);
+//            if (view != null) {
+//                int diff = (view.getBottom() - (scrollView.getHeight() + scrollView
+//                        .getScrollY()));
+//                if (diff == 0) {
+//                    return true;
+//                }
+//            }
+//        } else if (mTarget instanceof NestedScrollView) {
+//            NestedScrollView nestedScrollView = (NestedScrollView) mTarget;
+//            View view = (View) nestedScrollView.getChildAt(nestedScrollView.getChildCount() - 1);
+//            if (view != null) {
+//                int diff = (view.getBottom() - (nestedScrollView.getHeight() + nestedScrollView.getScrollY()));
+//                if (diff == 0) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * 主要判断是否应该拦截子View的事件<br>
@@ -649,7 +642,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
             mReturningToStart = false;
         }
         if (!isEnabled() || mReturningToStart || mRefreshing || mLoadMore
-                || (!isChildScrollToTop() && !isChildScrollToBottom())) {
+                || (!isChildScrollToTop())) {
             // 如果子View可以滑动，不拦截事件，交给子View处理-下拉刷新
             // 或者子View没有滑动到底部不拦截事件-上拉加载更多
             return false;
@@ -670,8 +663,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 if (mActivePointerId == INVALID_POINTER) {
-                    Log.e(LOG_TAG,
-                            "Got ACTION_MOVE event but don't have an active pointer id.");
+
                     return false;
                 }
 
@@ -680,16 +672,13 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                     return false;
                 }
                 float yDiff = 0;
-                if (isChildScrollToBottom()) {
-                    yDiff = mInitialMotionY - y;// 计算上拉距离
-                    if (yDiff > mTouchSlop && !mIsBeingDragged) {// 判断是否下拉的距离足够
-                        mIsBeingDragged = true;// 正在上拉
-                    }
-                } else {
+                if (isChildScrollToTop()) {
                     yDiff = y - mInitialMotionY;// 计算下拉距离
                     if (yDiff > mTouchSlop && !mIsBeingDragged) {// 判断是否下拉的距离足够
                         mIsBeingDragged = true;// 正在下拉
                     }
+                } else {
+
                 }
                 break;
 
@@ -729,16 +718,12 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
             mReturningToStart = false;
         }
         if (!isEnabled() || mReturningToStart
-                || (!isChildScrollToTop() && !isChildScrollToBottom())) {
+                || (!isChildScrollToTop() )) {
             // 如果子View可以滑动，不拦截事件，交给子View处理
             return false;
         }
 
-        if (isChildScrollToBottom()) {// 上拉加载更多
-            return handlerPushTouchEvent(ev, action);
-        } else {// 下拉刷新
-            return handlerPullTouchEvent(ev, action);
-        }
+        return handlerPullTouchEvent(ev, action);
     }
 
     private boolean handlerPullTouchEvent(MotionEvent ev, int action) {
@@ -752,8 +737,6 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                 final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
                         mActivePointerId);
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG,
-                            "Got ACTION_MOVE event but have an invalid active pointer id.");
                     return false;
                 }
 
@@ -823,8 +806,6 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
             case MotionEvent.ACTION_CANCEL: {
                 if (mActivePointerId == INVALID_POINTER) {
                     if (action == MotionEvent.ACTION_UP) {
-                        Log.e(LOG_TAG,
-                                "Got ACTION_UP event but don't have an active pointer id.");
                     }
                     return false;
                 }
@@ -880,14 +861,11 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mIsBeingDragged = false;
-                Log.d(LOG_TAG, "debug:onTouchEvent ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_MOVE: {
                 final int pointerIndex = MotionEventCompat.findPointerIndex(ev,
                         mActivePointerId);
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG,
-                            "Got ACTION_MOVE event but have an invalid active pointer id.");
                     return false;
                 }
                 final float y = MotionEventCompat.getY(ev, pointerIndex);
@@ -916,8 +894,6 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
             case MotionEvent.ACTION_CANCEL: {
                 if (mActivePointerId == INVALID_POINTER) {
                     if (action == MotionEvent.ACTION_UP) {
-                        Log.e(LOG_TAG,
-                                "Got ACTION_UP event but don't have an active pointer id.");
                     }
                     return false;
                 }

@@ -49,8 +49,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.cicinnus.retrofitlib.utils.PopupWindowUtils.createPopupWindow;
-
 /**
  * 影院列表
  */
@@ -76,6 +74,8 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
     TextView tvBrand;
     @BindView(R.id.tv_hall_type)
     TextView tvHallType;
+    @BindView(R.id.tv_city)
+    TextView tvCity;
 
     private LocationUtil locationUtil;
     private MyPullToRefreshListener pullToRefreshListener;
@@ -131,6 +131,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
     private HallTypeAdapter hallTypeAdapter;
     private PopupWindow hallTypeWindow;
     private TextView headerTvHallType;
+    private PopupWindowUtils popupWindowUtils;
 
     public static CinemaFragment newInstance() {
 
@@ -150,9 +151,10 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
     @Override
     protected void initEventAndData() {
         ci = SPUtils.getInstance(mContext, Constants.SP_CITY).getInt(Constants.CITY_CODE, 20);
+        tvCity.setText(SPUtils.getInstance(mContext, Constants.SP_CITY).getString(Constants.CITY_NAME, "广州"));
         initSwipe();
         initRv();
-
+        popupWindowUtils = new PopupWindowUtils();
         createAreaWindow();
         createSortCondition();
         createBrandWindow();
@@ -182,6 +184,9 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
             }
         }, rvCinema);
         rvCinema.setNestedScrollingEnabled(false);
+
+
+
         banner = new Banner(mContext);
 
         View header = LayoutInflater.from(mContext).inflate(R.layout.layout_cinema_pinned_header, (ViewGroup) rvCinema.getParent(), false);
@@ -306,6 +311,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 offset = 0;
                 mPresenter.getCinema(ci, offset, limit, lat, lng, districtId, areaId, sort, lineId, stationId, brandId, serviceId, hallType);
                 mPresenter.getBanner(ci);
+                mPresenter.getFilter(ci);
             }
         });
 
@@ -489,7 +495,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
             }
         });
 
-        areaWindow = createPopupWindow(areaContent, UiUtils.dp2px(mContext, 300));
+        areaWindow = popupWindowUtils.createPopupWindow(areaContent, UiUtils.dp2px(mContext, 300));
         areaWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -518,7 +524,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 sortWindow.dismiss();
             }
         });
-        sortWindow = PopupWindowUtils.createPopupWindow(sortCondition, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sortWindow = popupWindowUtils.createPopupWindow(sortCondition, ViewGroup.LayoutParams.WRAP_CONTENT);
         sortWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -554,7 +560,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
             }
         });
 
-        brandWindow = PopupWindowUtils.createPopupWindow(brandContent, UIUtils.dp2px(mContext, 260));
+        brandWindow = popupWindowUtils.createPopupWindow(brandContent, UIUtils.dp2px(mContext, 260));
         brandWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -566,6 +572,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
 
     }
 
+    //服务和影厅window
     private void createHallTypeWindow() {
         View hallTypeContent = LayoutInflater.from(mContext).inflate(R.layout.layout_hall_type, null);
 
@@ -630,7 +637,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 });
 
 
-        hallTypeWindow = PopupWindowUtils.createPopupWindow(hallTypeContent, ViewGroup.LayoutParams.WRAP_CONTENT);
+        hallTypeWindow = popupWindowUtils.createPopupWindow(hallTypeContent, ViewGroup.LayoutParams.WRAP_CONTENT);
         hallTypeWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -849,11 +856,17 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 32 && resultCode == 33) {
+            tvCity.setText(data.getStringExtra("city_name"));
             ci = SPUtils.getInstance(mContext, Constants.SP_CITY).getInt(Constants.CITY_CODE, 20);
             mPresenter.getCinema(ci, offset, limit, lat, lng, districtId, areaId, sort, lineId, stationId, brandId, serviceId, hallType);
+            mPresenter.getBanner(ci);
+            mPresenter.getFilter(ci);
         } else if (requestCode == 56 && resultCode == 33) {
+            tvCity.setText(data.getStringExtra("city_name"));
             ci = SPUtils.getInstance(mContext, Constants.SP_CITY).getInt(Constants.CITY_CODE, 20);
             mPresenter.getCinema(ci, offset, limit, lat, lng, districtId, areaId, sort, lineId, stationId, brandId, serviceId, hallType);
+            mPresenter.getBanner(ci);
+            mPresenter.getFilter(ci);
         }
     }
 

@@ -3,6 +3,9 @@ package com.cicinnus.cateye.net;
 import com.cicinnus.cateye.module.cinema.bean.CinemaBannerBean;
 import com.cicinnus.cateye.module.cinema.bean.CinemaListBean;
 import com.cicinnus.cateye.module.cinema.bean.FilterBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaMovieBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.bean.FoodsBean;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListBean;
@@ -342,20 +345,52 @@ public interface Api {
             "Authorization:a7864cebef128a23350d9ffa876f8d2e",
             "if-Modified-Since:Wed, 14 Jun 2017 01:23:28 GMT"})
     @GET("mmcs/cinema/v1/select/cinemas.json")
-    Observable<CinemaListBean> getCinemaList(@QueryMap Map<String,Object> queryMap);
+    Observable<CinemaListBean> getCinemaList(@QueryMap Map<String, Object> queryMap);
 
 
     //获取广告条
     @GET("http://advert.mobile.meituan.com/api/v3/adverts")
-    Observable<CinemaBannerBean> getBanner(@QueryMap Map<String,Object> queryMap);
+    Observable<CinemaBannerBean> getBanner(@QueryMap Map<String, Object> queryMap);
 
     //获取筛选信息
     @Headers({
-            "Date:Tue, 20 Jun 2017 08:48:04 GMT",
-            "Key:52708733",
+            "Date:Wed, 21 Jun 2017 13:49:41 GMT",
+            "Key:91137528",
             "userid:-1",
-            "Authorization:5a2680d8b1a1720c70f21f985f9574d7",
-            "if-Modified-Since:Tue, 20 Jun 2017 08:48:04 GMT"})
+            "Authorization:7d125f9728d3f7ad8b73f0a57fbf938d",
+            "if-Modified-Since:Wed, 21 Jun 2017 13:49:41 GMT"})
     @GET("mmcs/cinema/v1/select/items.json")
     Observable<FilterBean> getFilter(@Query("cityId") int cityId);
+
+
+    //获取影院信息
+    @Headers({
+            "Date:Thu, 22 Jun 2017 08:06:58 GMT",
+            "Key:71143834",
+            "Authorization:25a4eb48eee17c0ca3fd4c5055b834fa",
+    })
+    @GET("mmcs/cinema/v1/cinema.json")
+    Observable<CinemaBean> getCinemaData(@QueryMap Map<String, Object> map);
+
+    //影院上映电影
+    @Headers({
+            "Date:Wed, 21 Jun 2017 13:52:23 GMT",
+            "Key:20653024",
+            "Authorization:a6341de85fdb5a0fffc57897f8237c2b",
+            "if-Modified-Since:Wed, 21 Jun 2017 10:40:36 GMT"
+    })
+    @GET("mmcs/show/v2/cinema/shows.json")
+    Observable<CinemaMovieBean> getCinemaMovie(@QueryMap Map<String, Object> queryMap);
+
+
+    //影院销售食品信息
+    @Headers({
+            "Date:Thu, 22 Jun 2017 09:01:22 GMT",
+            "Key:89345706",
+            "Authorization:ad9c2ec80e48adc0c3e45eee55422482",
+    })
+    @GET("goods/queryDealList.json")
+    Observable<FoodsBean> getFoods(@QueryMap Map<String, Object> map);
+
+
 }

@@ -106,7 +106,7 @@
             android:drawableLeft="@drawable/ic_wish"
             android:drawablePadding="@dimen/dp_4"
             android:text="想看"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 

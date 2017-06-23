@@ -91,7 +91,7 @@
 
         <TextView
             android:background="@drawable/bg_tv_buy"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="购票" />

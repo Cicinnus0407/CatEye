@@ -7,6 +7,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.module.cinema.bean.CinemaListBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.CinemaDetailActivity;
 import com.cicinnus.cateye.tools.UiUtils;
 
 /**
@@ -24,12 +26,14 @@ import com.cicinnus.cateye.tools.UiUtils;
 public class CinemaAdapter extends BaseQuickAdapter<CinemaListBean.DataBean.CinemasBean, BaseViewHolder> {
 
 
+    private OnCinemaClickListener onCinemaClickListener;
+
     public CinemaAdapter() {
         super(R.layout.item_cinema);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CinemaListBean.DataBean.CinemasBean item) {
+    protected void convert(BaseViewHolder helper, final CinemaListBean.DataBean.CinemasBean item) {
         helper.setText(R.id.tv_cinema_name, item.getNm())
                 .setText(R.id.tv_address, item.getAddr())
                 .setText(R.id.tv_platform_activity, item.getPromotion().getPlatformActivityTag())
@@ -57,7 +61,7 @@ public class CinemaAdapter extends BaseQuickAdapter<CinemaListBean.DataBean.Cine
         LinearLayout ll = helper.getView(R.id.ll_promotion);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, UiUtils.dp2px(helper.itemView.getContext(), 4), 0);
-        if (ll.getTag() == null) {
+        if (helper.itemView.getTag() == null) {
 
             //座
             if (item.getTag().getSell() == 1) {
@@ -69,27 +73,6 @@ public class CinemaAdapter extends BaseQuickAdapter<CinemaListBean.DataBean.Cine
                 ll.addView(tv);
             }
 
-            //退票
-//            if (item.getTag().getAllowRefund() == 1) {
-//                TextView tv = createTextView(
-//                        helper.itemView.getContext(),
-//                        layoutParams,
-//                        "退",
-//                        "#579daf");
-//                ll.addView(tv);
-//            }
-            //影院类型
-            if (item.getTag().getHallType() != null && item.getTag().getHallType().size() > 0) {
-                for (int i = 0; i < item.getTag().getHallType().size(); i++) {
-                    TextView tv = createTextView(
-                            helper.itemView.getContext(),
-                            layoutParams,
-                            item.getTag().getHallType().get(i),
-                            "#579daf");
-                    ll.addView(tv);
-                }
-
-            }
             if (item.getLabels() != null && item.getLabels().size() > 0) {
                 for (int i = 0; i < item.getLabels().size(); i++) {
                     TextView tv = createTextView(
@@ -101,11 +84,18 @@ public class CinemaAdapter extends BaseQuickAdapter<CinemaListBean.DataBean.Cine
 
                 }
             }
-
-            //这样在view复用的时候就不会重复添加label
-            ll.setTag("addView");
+            helper.itemView.setTag(ll);
         }
 
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CinemaDetailActivity.start(mContext, item.getId(), item.getNm());
+                if (onCinemaClickListener != null) {
+                    onCinemaClickListener.onClick(item.getId());
+                }
+            }
+        });
 
     }
 
@@ -119,5 +109,13 @@ public class CinemaAdapter extends BaseQuickAdapter<CinemaListBean.DataBean.Cine
         GradientDrawable background = (GradientDrawable) tv.getBackground();
         background.setStroke(2, Color.parseColor(color));
         return tv;
+    }
+
+    public void setOnCinemaClickListener(OnCinemaClickListener onCinemaClickListener) {
+        this.onCinemaClickListener = onCinemaClickListener;
+    }
+
+    public interface OnCinemaClickListener {
+        void onClick(int cinemaId);
     }
 }

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_normal_back_title" />
+
+    <com.cicinnus.cateye.view.ProgressLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.cicinnus.cateye.view.SuperSwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_12">
+
+                        <ImageView
+                            android:id="@+id/iv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:src="@drawable/ic_location_blue" />
+
+                        <View
+                            android:id="@+id/view_divider"
+                            android:layout_width="1px"
+                            android:layout_height="10dp"
+                            android:layout_alignBottom="@id/iv_location"
+                            android:layout_alignTop="@id/iv_location"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_toLeftOf="@id/iv_location"
+                            android:background="@color/text_gray_light" />
+                        <TextView
+                            android:id="@+id/tv_cinema_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            tools:text="电影院名称" />
+
+                        <TextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_cinema_name"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:layout_toLeftOf="@id/view_divider"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/text_gray"
+                            tools:text="地理位置" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_cinema_tag"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_location"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_sale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ll_cinema_tag"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:background="@drawable/bg_cinema_foods"
+                            android:paddingBottom="@dimen/dp_6"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tv_sale_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_12"
+                                android:layout_marginTop="@dimen/dp_6"
+                                android:textColor="@color/colorPrimary"
+                                tools:text="标题" />
+
+                            <TextView
+                                android:id="@+id/tv_sale_content"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_sale_title"
+                                android:layout_marginLeft="@dimen/dp_12"
+                                android:layout_marginTop="@dimen/dp_4"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/sp_12"
+                                tools:text="内容" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/dp_6"
+                                android:src="@drawable/ic_foods" />
+
+                        </RelativeLayout>
+
+
+
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_movies"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:clipChildren="false">
+
+                        <ImageView
+                            android:id="@+id/iv_blur_bg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_blur_bg"
+                            android:scaleType="centerCrop" />
+
+                        <com.cicinnus.cateye.view.ClipViewPager
+                            android:id="@+id/vp_movie"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_centerInParent="true"
+                            android:clipChildren="false" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_triangle_white" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dp_12">
+
+                        <TextView
+                            android:id="@+id/tv_movie_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/sp_16"
+                            tools:text="电影名" />
+
+                        <TextView
+                            android:id="@+id/tv_movie_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_6"
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/sp_16"
+                            tools:text="6.8" />
+
+                        <TextView
+                            android:id="@+id/tv_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/sp_12"
+                            tools:text="分" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_movie_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="123" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginTop="@dimen/dp_6"
+                        android:background="@color/divider_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/divider_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_foods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </com.cicinnus.cateye.view.SuperSwipeRefreshLayout>
+
+    </com.cicinnus.cateye.view.ProgressLayout>
+</LinearLayout>
