@@ -2,7 +2,7 @@
 ## 高仿猫眼App(7.9.1)
 
 #### 
-   - NOTICE: v1停止更新,如需源码请check out v2 branch.
+   - NOTICE: 实现过程中猫眼App升级了8.0.1.主要界面发生了改版,当前项目实现的是7.9.1版本的UI界面
 #### 主要使用技术：
   - RxJava2+Retrofit+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
