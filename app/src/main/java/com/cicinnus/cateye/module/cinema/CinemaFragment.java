@@ -194,7 +194,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
         headerTvArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindowUtils.ToggleWindow(areaWindow, headerTvArea, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(areaWindow, headerTvArea, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvArea, true);
@@ -213,7 +213,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
         headerTvSortCondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindowUtils.ToggleWindow(sortWindow, headerTvSortCondition, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(sortWindow, headerTvSortCondition, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvSortCondition, true);
@@ -233,7 +233,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
         headerTvBrand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindowUtils.ToggleWindow(brandWindow, headerTvBrand, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(brandWindow, headerTvBrand, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvBrand, true);
@@ -253,7 +253,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
         headerTvHallType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindowUtils.ToggleWindow(hallTypeWindow, headerTvHallType, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(hallTypeWindow, headerTvHallType, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvHallType, true);
@@ -370,7 +370,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 PickCityActivity.start(mContext, 56);
                 break;
             case R.id.tv_area:
-                PopupWindowUtils.ToggleWindow(areaWindow, headerTvArea, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(areaWindow, tvArea, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvArea, true);
@@ -385,7 +385,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 });
                 break;
             case R.id.tv_sort_condition:
-                PopupWindowUtils.ToggleWindow(sortWindow, tvSortCondition, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(sortWindow, tvSortCondition, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvSortCondition, true);
@@ -400,7 +400,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 });
                 break;
             case R.id.tv_brand:
-                PopupWindowUtils.ToggleWindow(brandWindow, tvBrand, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(brandWindow, tvBrand, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvBrand, true);
@@ -415,7 +415,7 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
                 });
                 break;
             case R.id.tv_hall_type:
-                PopupWindowUtils.ToggleWindow(hallTypeWindow, tvHallType, new PopupWindowUtils.onWindowStatusChanged() {
+                popupWindowUtils.ToggleWindow(hallTypeWindow, tvHallType, new PopupWindowUtils.onWindowStatusChanged() {
                     @Override
                     public void onShow() {
                         setTextDrawableAndColor(tvHallType, true);
@@ -617,9 +617,8 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
 
                         serviceAdapter.notifyDataSetChanged();
                         hallTypeAdapter.notifyDataSetChanged();
-
-                        offset = 0;
-                        mPresenter.getCinema(ci, offset, limit, lat, lng, districtId, areaId, sort, lineId, stationId, brandId, serviceId, hallType);
+                        setTextDrawableAndColor(tvHallType,false);
+                        setTextDrawableAndColor(headerTvHallType,false);
                         hallTypeWindow.dismiss();
 
                     }
@@ -641,10 +640,8 @@ public class CinemaFragment extends BaseMVPFragment<CinemaPresenter> implements 
         hallTypeWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                if (hallType == -1 && serviceId == -1) {
-                    setTextDrawableAndColor(tvHallType, false);
-                    setTextDrawableAndColor(headerTvHallType, false);
-                }
+                setTextDrawableAndColor(tvHallType, false);
+                setTextDrawableAndColor(headerTvHallType, false);
             }
         });
     }

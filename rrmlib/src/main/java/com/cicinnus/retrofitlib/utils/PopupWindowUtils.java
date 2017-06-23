@@ -42,7 +42,7 @@ public class PopupWindowUtils {
      * @param targetView    popupWindow出现的位置
      * @param statusChanged 状态
      */
-    public static void ToggleWindow(PopupWindow popupWindow, View targetView, onWindowStatusChanged statusChanged) {
+    public  void ToggleWindow(PopupWindow popupWindow, View targetView, onWindowStatusChanged statusChanged) {
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
             statusChanged.onDismiss();
