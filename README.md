@@ -20,11 +20,18 @@
   - [x] ViewPager的画廊实现(影院详情页)
   
 ### 截图
-![热映](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231055.png)
-![找片](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231254.png)
-![分类查找](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231356.png)
-![热映口碑榜](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-02-03-231507.png)
-
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-170714.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-170754.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-170833.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-170944.png)
+</br>
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-171000.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-171423.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-171502.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-172138.png)
+</br>
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-172240.png)
+![](https://github.com/Cicinnus0407/CatEye/blob/master/screenShoot/device-2017-07-01-172359.png)
 </br>
 
 ###注意事项
