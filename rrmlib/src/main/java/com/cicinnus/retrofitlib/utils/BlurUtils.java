@@ -10,131 +10,139 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
+
 import static android.os.Build.VERSION.SDK_INT;
 
 /**
- * Created by Cicinnus on 2017/6/11.
+ * 搞死模糊工具类
  */
 
 public class BlurUtils {
 
     private static final String TAG = "BlurUtils";
     private static final float SCALE = 1 / 8.0F;//default scale
-    private static volatile BlurUtils singleton = null;
+    private static  BlurUtils singleton = null;
     private Bitmap mBitmap;
     private int mRadius = 0;
     private float mScale = SCALE;
     private Context mContext;
     private BlurPolicy mPolicy = BlurPolicy.RS_BLUR;//默认使用rs 模糊图片
-    public enum BlurPolicy{
+
+    public enum BlurPolicy {
         RS_BLUR,
         FAST_BLUR
     }
+
     /**
      * 单例
+     *
      * @param context
      * @return
      */
-    public static BlurUtils with(Context context){
+    public static BlurUtils with(WeakReference<Context> context) {
         if (singleton == null) {
             synchronized (BlurUtils.class) {
                 if (singleton == null) {
-                    singleton = new BlurUtils(context);
+                    singleton = new BlurUtils(context.get());
                 }
             }
         }
         return singleton;
     }
 
-    private BlurUtils(Context context){
+    private BlurUtils(Context context) {
         this.mContext = context.getApplicationContext();
     }
 
-    public Bitmap blur(){
-        if(mBitmap == null){
+    public Bitmap blur() {
+        if (mBitmap == null) {
             throw new RuntimeException("Bitmap can not be null");
         }
-        if(mRadius == 0){
+        if (mRadius == 0) {
             throw new RuntimeException("radius must > 0");
         }
-        if(SDK_INT > 17){// support library running on 2.3(API 9)  and higher 算法
-            if(mPolicy == BlurPolicy.FAST_BLUR){
-                Log.d(TAG,"blur fast algorithm");
-                return  fastBlur(mBitmap,mScale,mRadius);
-            }else{
-                Log.d(TAG,"blur render script  algorithm");
-                return rsBlur(mContext,mBitmap,mRadius,mScale);
+        if (SDK_INT > 17) {// support library running on 2.3(API 9)  and higher 算法
+            if (mPolicy == BlurPolicy.FAST_BLUR) {
+                Log.d(TAG, "blur fast algorithm");
+                return fastBlur(mBitmap, mScale, mRadius);
+            } else {
+                Log.d(TAG, "blur render script  algorithm");
+                return rsBlur(mContext, mBitmap, mRadius, mScale);
             }
 
-        }else{
-            Log.d(TAG,"blur fast algorithm");
-            return  fastBlur(mBitmap,mScale,mRadius);
+        } else {
+            Log.d(TAG, "blur fast algorithm");
+            return fastBlur(mBitmap, mScale, mRadius);
         }
 
     }
 
     /**
      * 模糊的算法策略
+     *
      * @param policy
      * @return
      */
-    public BlurUtils policy(BlurPolicy policy){
+    public BlurUtils policy(BlurPolicy policy) {
         this.mPolicy = policy;
         return this;
     }
 
     /**
-     *  模糊的Bitmap
+     * 模糊的Bitmap
+     *
      * @param bitmap
      * @return
      */
-    public BlurUtils bitmap(Bitmap bitmap){
+    public BlurUtils bitmap(Bitmap bitmap) {
         this.mBitmap = bitmap;
         return this;
     }
 
     /**
      * 缩放的系数
+     *
      * @param scale
      * @return
      */
-    public BlurUtils scale(int scale){
+    public BlurUtils scale(int scale) {
         this.mScale = 1.0f / scale;
         return this;
     }
 
     /**
      * 模糊的半径，0-25
+     *
      * @param radius
      * @return
      */
-    public BlurUtils radius(int radius){
+    public BlurUtils radius(int radius) {
         this.mRadius = radius;
         return this;
     }
 
     /**
-     *  使用RenderScript 模糊图片
+     * 使用RenderScript 模糊图片
+     *
      * @param context
      * @param source
      * @return
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static Bitmap rsBlur(Context context, Bitmap source, int radius, float scale){
-        Log.i(TAG,"origin size:"+source.getWidth()+"*"+source.getHeight());
+    private static Bitmap rsBlur(Context context, Bitmap source, int radius, float scale) {
         int width = Math.round(source.getWidth() * scale);
         int height = Math.round(source.getHeight() * scale);
 
-        Bitmap inputBmp = Bitmap.createScaledBitmap(source,width,height,false);
+        Bitmap inputBmp = Bitmap.createScaledBitmap(source, width, height, false);
 
-        RenderScript renderScript =  RenderScript.create(context);
+        RenderScript renderScript = RenderScript.create(context);
 
-        Log.i(TAG,"scale size:"+inputBmp.getWidth()+"*"+inputBmp.getHeight());
 
         // Allocate memory for Renderscript to work with
 
-        final Allocation input = Allocation.createFromBitmap(renderScript,inputBmp);
-        final Allocation output = Allocation.createTyped(renderScript,input.getType());
+        final Allocation input = Allocation.createFromBitmap(renderScript, inputBmp);
+        final Allocation output = Allocation.createTyped(renderScript, input.getType());
 
         // Load up an instance of the specific script that we want to use.
         ScriptIntrinsicBlur scriptIntrinsicBlur = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
@@ -160,16 +168,16 @@ public class BlurUtils {
      * http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
      * Java Author: Mario Klingemann <mario at quasimondo.com>
      * http://incubator.quasimondo.com
-     *
+     * <p>
      * created Feburary 29, 2004
      * Android port : Yahel Bouaziz <yahel at kayenko.com>
      * http://www.kayenko.com
      * ported april 5th, 2012
-     *
+     * <p>
      * This is a compromise between Gaussian Blur and Box blur
      * It creates much better looking blurs than Box Blur, but is
      * 7x faster than my Gaussian Blur implementation.
-     *
+     * <p>
      * I called it Stack Blur because this describes best how this
      * filter works internally: it creates a kind of moving stack
      * of colors whilst scanning through the image. Thereby it
@@ -178,7 +186,7 @@ public class BlurUtils {
      * colors on the topmost layer of the stack are either added on
      * or reduced by one, depending on if they are on the right or
      * on the left side of the stack.
-     *
+     * <p>
      * If you are using this algorithm in your code please add
      * the following line:
      * Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
@@ -340,7 +348,7 @@ public class BlurUtils {
             stackpointer = radius;
             for (y = 0; y < h; y++) {
                 // Preserve alpha channel: ( 0xff000000 & pix[yi] )
-                pix[yi] = ( 0xff000000 & pix[yi] ) | ( dv[rsum] << 16 ) | ( dv[gsum] << 8 ) | dv[bsum];
+                pix[yi] = (0xff000000 & pix[yi]) | (dv[rsum] << 16) | (dv[gsum] << 8) | dv[bsum];
 
                 rsum -= routsum;
                 gsum -= goutsum;

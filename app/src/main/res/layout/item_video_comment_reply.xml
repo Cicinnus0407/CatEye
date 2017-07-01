@@ -89,15 +89,12 @@
             tools:text="回复xxx:" />
 
         <com.cicinnus.cateye.view.ExpandTextView
-
             android:id="@+id/tv_reply_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            app:maxLine="3"
             app:text="666"
-            app:textColor="@color/text_gray_deep"
-            app:textSize="@dimen/sp_14" />
+            app:textColor="@color/text_gray_deep" />
 
     </LinearLayout>
 

@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ import com.cicinnus.cateye.module.cinema.cinema_detail.adapter.ShowListAdapter;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaBean;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaMovieBean;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.FoodsBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.cinema_info_detail.CinemaInfoDetailActivity;
 import com.cicinnus.cateye.tools.ImgSizeUtil;
-import com.cicinnus.cateye.tools.TimeUtils;
 import com.cicinnus.cateye.view.ClipViewPager;
 import com.cicinnus.cateye.view.CustomViewPagerTransformer;
 import com.cicinnus.cateye.view.MyPullToRefreshListener;
@@ -38,8 +39,8 @@ import com.cicinnus.retrofitlib.utils.BlurUtils;
 import com.cicinnus.retrofitlib.utils.UIUtils;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -220,7 +221,7 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
                             .map(new Function<Bitmap, Bitmap>() {
                                 @Override
                                 public Bitmap apply(@NonNull Bitmap bitmap) throws Exception {
-                                    return BlurUtils.with(mContext).bitmap(bitmap)
+                                    return BlurUtils.with(new WeakReference<Context>(mContext)).bitmap(bitmap)
                                             .radius(14)
                                             .blur();
                                 }
@@ -234,7 +235,7 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
                             });
                 }
                 setMovieInfo(mCurrentMovies, position);
-                setShowList(mCurrentMovies, position);
+                setDateList(mCurrentMovies, position);
 
                 showListAdapter.setNewData(movieDateAdapter.getData().get(0).getPlist());
             }
@@ -254,11 +255,14 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
         vpMovie.setCurrentItem(0);
     }
 
-    @OnClick({R.id.rl_back})
+    @OnClick({R.id.rl_back,R.id.tv_cinema_name})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_back:
                 finish();
+                break;
+            case R.id.tv_cinema_name:
+                CinemaInfoDetailActivity.start(mContext,cinemaId);
                 break;
         }
     }
@@ -295,11 +299,12 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
         //设置影片信息
         setMovieInfo(movies, 0);
         //设置放映列表
-        setShowList(movies, 0);
+        setDateList(movies, 0);
         //照片url
         moviePicAdapter.setUrls(movies);
         //第一次加载放映列表
         showListAdapter.setNewData(movieDateAdapter.getData().get(0).getPlist());
+        vpMovie.setCurrentItem(0);
 
         //初次模糊
         Observable.just(movies.get(0).getImg())
@@ -330,7 +335,7 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
                 .map(new Function<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap apply(Bitmap bitmap) {
-                        return BlurUtils.with(mContext)
+                        return BlurUtils.with(new WeakReference<Context>(mContext))
                                 .bitmap(bitmap)
                                 .radius(14)
                                 .blur();
@@ -359,8 +364,10 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
             GradientDrawable background = (GradientDrawable) tv.getBackground();
             background.setStroke(2, Color.parseColor("#579daf"));
             tv.setTextColor(Color.parseColor("#579daf"));
-            tv.setTextSize(12);
+            tv.setTextSize(11);
             tv.setText(data.getFeatureTags().get(i).getTag());
+            tv.setMaxLines(1);
+            tv.setEllipsize(TextUtils.TruncateAt.END);
             tv.setLayoutParams(layoutParams);
             llCinemaTag.addView(tv);
         }
@@ -387,34 +394,41 @@ public class CinemaDetailActivity extends BaseActivity<CinemaDetailPresenter> im
      * @param movies
      * @param position
      */
-    private void setShowList(List<CinemaMovieBean.DataBean.MoviesBean> movies, int position) {
-        movieDateAdapter.setNewData(new ArrayList<CinemaMovieBean.DataBean.MoviesBean.ShowsBean>());
-        movieDateAdapter.addData(movies.get(position).getShows());
+    private void setDateList(List<CinemaMovieBean.DataBean.MoviesBean> movies, int position) {
+//        movieDateAdapter.setNewData(new ArrayList<CinemaMovieBean.DataBean.MoviesBean.ShowsBean>());
+//        movies.get(position).getShows().get(0).isSelect = true;
+        movieDateAdapter.setNewData(movies.get(position).getShows());
         //判断是否为只有一天排片,并且是否上映
-        if (!movies.get(position).isGlobalReleased() && movieDateAdapter.getData().size() == 1) {
-            CinemaMovieBean.DataBean.MoviesBean.ShowsBean bean = new CinemaMovieBean.DataBean.MoviesBean.ShowsBean();
-            bean.setShowDate(TimeUtils.dateYMD(System.currentTimeMillis()));
-            movieDateAdapter.addData(0, bean);
-        }
-        movieDateAdapter.getData().get(0).isSelect = true;
-        movieDateAdapter.notifyItemChanged(0);
-        View emptyView = showListAdapter.getEmptyView();
-        if (!movies.get(position).isGlobalReleased() && movieDateAdapter.getData().size() > 1) {
+//        View emptyView = showListAdapter.getEmptyView();
+//
+//        if (movieDateAdapter.getData().size() == 1) {
+//            //如果只有一天,则添加今天空放映列表
+//            CinemaMovieBean.DataBean.MoviesBean.ShowsBean bean = new CinemaMovieBean.DataBean.MoviesBean.ShowsBean();
+//            bean.setShowDate(TimeUtils.dateYMD(System.currentTimeMillis()));
+//            movieDateAdapter.addData(0, bean);
+//            if(movies.get(position).isGlobalReleased()){
+//                TextView tvNext = ((TextView) emptyView.findViewById(R.id.tv_show_next));
+//                tvNext.setVisibility(View.VISIBLE);
+//                tvNext.setText(String.format("点击查看%s的场次", movieDateAdapter.getData().get(1).getShowDate()));
+//                tvNext.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        rvDate.findViewHolderForAdapterPosition(1).itemView.callOnClick();
+//                    }
+//                });
+//                ((TextView) emptyView.findViewById(R.id.tv_empty_show_list)).setText("今天暂无场次");
+//            }else {
+//                ((TextView) emptyView.findViewById(R.id.tv_empty_show_list)).setText("影片未上映");
+//                movieDateAdapter.remove(0);
+//
+//            }
+//        } else {
+//            emptyView.findViewById(R.id.tv_show_next).setVisibility(View.GONE);
+//            ((TextView) emptyView.findViewById(R.id.tv_empty_show_list)).setText("今天场次已映完");
+//        }
+//        if()
 
-            TextView tvNext = ((TextView) emptyView.findViewById(R.id.tv_show_next));
-            tvNext.setVisibility(View.VISIBLE);
-            tvNext.setText(String.format("点击查看%s的场次", movieDateAdapter.getData().get(1).getShowDate()));
-            tvNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rvDate.findViewHolderForAdapterPosition(1).itemView.callOnClick();
-                }
-            });
-            ((TextView) emptyView.findViewById(R.id.tv_empty_show_list)).setText("影片未上映");
-        } else {
-            emptyView.findViewById(R.id.tv_show_next).setVisibility(View.GONE);
-            ((TextView) emptyView.findViewById(R.id.tv_empty_show_list)).setText("今天场次已映完");
-        }
+
         showListAdapter.setDuration(movies.get(position).getDur());
 
     }

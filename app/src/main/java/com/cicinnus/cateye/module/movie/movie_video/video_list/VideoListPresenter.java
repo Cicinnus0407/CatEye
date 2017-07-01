@@ -11,11 +11,11 @@ import io.reactivex.functions.Consumer;
  * Created by Administrator on 2017/2/15.
  */
 
-public class VideoListMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<VideoListContract.IVideoListView> implements VideoListContract.IVideoListPresenter {
+public class VideoListPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<VideoListContract.IVideoListView> implements VideoListContract.IVideoListPresenter {
 
     private final VideoListManager videoListManager;
 
-    public VideoListMVPPresenter(Activity activity, VideoListContract.IVideoListView view) {
+    public VideoListPresenter(Activity activity, VideoListContract.IVideoListView view) {
         super(activity, view);
         videoListManager = new VideoListManager();
     }

@@ -13,6 +13,7 @@ import com.cicinnus.cateye.view.MyPullToRefreshListener;
 import com.cicinnus.cateye.view.ProgressLayout;
 import com.cicinnus.cateye.view.SuperSwipeRefreshLayout;
 import com.cicinnus.retrofitlib.base.BaseMVPFragment;
+import com.hwangjr.rxbus.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,10 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by Administrator on 2017/2/15.
+ * 视频列表
  */
 
-public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter> implements VideoListContract.IVideoListView {
+public class VideoListFragment extends BaseMVPFragment<VideoListPresenter> implements VideoListContract.IVideoListView {
 
     @BindView(R.id.rv_movie_video)
     RecyclerView rvMovieVideo;
@@ -56,16 +57,17 @@ public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter>
     private boolean mIsMv = false;
     private MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean mvData;
 
-    public static VideoListMVPFragment newInstance(int movieId, boolean isMv, MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean dataBean) {
+    public static VideoListFragment newInstance(int movieId, boolean isMv,MovieMusicBean.DataBean.ItemsBean.VideoTagVOBean dataBean) {
 
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movieId);
         args.putBoolean(IS_MV, isMv);
         args.putParcelable(MV_DATA,dataBean);
-        VideoListMVPFragment fragment = new VideoListMVPFragment();
+        VideoListFragment fragment = new VideoListFragment();
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     protected int getLayoutId() {
@@ -73,8 +75,8 @@ public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter>
     }
 
     @Override
-    protected VideoListMVPPresenter getPresenter() {
-        return new VideoListMVPPresenter(mContext, this);
+    protected VideoListPresenter getPresenter() {
+        return new VideoListPresenter(mContext,this);
     }
 
     @Override
@@ -82,6 +84,7 @@ public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter>
         movieId = getArguments().getInt(MOVIE_ID, 0);
         mIsMv = getArguments().getBoolean(IS_MV, false);
         mvData = getArguments().getParcelable(MV_DATA);
+        RxBus.get().register(this);
 
 
         videoListBeen = new ArrayList<>();
@@ -216,5 +219,6 @@ public class VideoListMVPFragment extends BaseMVPFragment<VideoListMVPPresenter>
     @Override
     public void onDestroy() {
         super.onDestroy();
+        RxBus.get().unregister(this);
     }
 }

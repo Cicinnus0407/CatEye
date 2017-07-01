@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -119,6 +120,25 @@ public class Banner extends FrameLayout implements View.OnClickListener {
         vp.setAdapter(new MyPagerAdapter());
         vp.setFocusable(true);//设置可以获取触摸焦点
         vp.setCurrentItem(1);
+        vp.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                //监听ViewPager的触摸事件，当用户按下的时候取消注册，当用户手抬起的时候再注册
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        stopPlay();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        startPlay();
+                        break;
+                }
+                return false;
+
+            }
+        });
+
+
         currentItem = 1;//初始化item为1
         myOnPageChangeListener = new MyOnPageChangeListener();
         vp.addOnPageChangeListener(myOnPageChangeListener);
@@ -130,26 +150,28 @@ public class Banner extends FrameLayout implements View.OnClickListener {
      */
     private void startPlay() {
         isAutoPlay = true;
-        disposable = Observable.interval(SECONDS, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(@NonNull Long aLong) throws Exception {
-                        if (isAutoPlay) {
-                            currentItem = currentItem % (picBeen.size() + 1) + 1;
-                            if (currentItem == 1) {
-                                vp.setCurrentItem(currentItem, false);
-                            } else {
-                                vp.setCurrentItem(currentItem);
+        if (disposable == null) {
+            disposable = Observable.interval(SECONDS, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Long>() {
+                        @Override
+                        public void accept(@NonNull Long aLong) throws Exception {
+                            if (isAutoPlay) {
+                                currentItem = currentItem % (picBeen.size() + 1) + 1;
+                                if (currentItem == 1) {
+                                    vp.setCurrentItem(currentItem, false);
+                                } else {
+                                    vp.setCurrentItem(currentItem);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
+
     }
 
     public void stopPlay() {
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
-            disposable = null;
         }
     }
 

@@ -6,6 +6,8 @@ import com.cicinnus.cateye.module.cinema.bean.FilterBean;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaBean;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaMovieBean;
 import com.cicinnus.cateye.module.cinema.cinema_detail.bean.FoodsBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.cinema_info_detail.bean.CinemaCommentBean;
+import com.cicinnus.cateye.module.cinema.cinema_detail.cinema_info_detail.bean.CinemaInfoBean;
 import com.cicinnus.cateye.module.discover.DiscoverBean;
 import com.cicinnus.cateye.module.discover.DiscoverHeaderBean;
 import com.cicinnus.cateye.module.movie.find_movie.awards_movie.awards_list.AwardsListBean;
@@ -387,10 +389,24 @@ public interface Api {
     @Headers({
             "Date:Thu, 22 Jun 2017 09:01:22 GMT",
             "Key:89345706",
-            "Authorization:ad9c2ec80e48adc0c3e45eee55422482",
+            "Authorization:ad9c2ec80e48adc0c3e45eee55422482"
     })
     @GET("goods/queryDealList.json")
     Observable<FoodsBean> getFoods(@QueryMap Map<String, Object> map);
+
+
+    //获取影院信息
+    @Headers({
+            "Date:Mon, 26 Jun 2017 01:55:23 GMT",
+            "Key:94178590",
+            "Authorization:207eb59e2bc3e49ea0af69e23f84aaa1"
+    })
+    @GET("mmcs/cinema/v0/cinema.json")
+    Observable<CinemaInfoBean> getCinemaInfo(@QueryMap Map<String, Object> queryMap);
+
+    //获取影院评论
+    @GET("dianying/v1/comments/cinema/{cinemaId}.json")
+    Observable<CinemaCommentBean> getCinemaComment(@Path("cinemaId") int cinemaId, @QueryMap Map<String, Object> map);
 
 
 }

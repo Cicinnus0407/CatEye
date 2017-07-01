@@ -62,6 +62,9 @@ public interface BaseConstant {
     int TYPE_MOVIE_TOPIC_MULTI_IMG= 1;
     int TYPE_MOVIE_TOPIC_NO_IMG =2;
 
+    //影院tag
+    int TYPE_CINEMA_FEATURE_URL = 0;
+    int TYPE_CINEMA_FEATURE_ONE= 1;
 
 
 }

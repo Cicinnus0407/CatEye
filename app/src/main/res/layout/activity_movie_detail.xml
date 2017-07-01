@@ -42,8 +42,7 @@
                         android:background="@color/white"
                         android:padding="@dimen/dp_14"
                         app:maxLine="3"
-                        app:textColor="@color/text_primary"
-                        app:textSize="@dimen/sp_14" />
+                        app:textColor="@color/text_primary"/>
 
                     <View
                         android:layout_width="match_parent"

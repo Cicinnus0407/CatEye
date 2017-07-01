@@ -7,8 +7,11 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentCountPostBean;
 import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentPostBean;
 import com.cicinnus.cateye.view.ProgressLayout;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -16,10 +19,10 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by Administrator on 2017/2/15.
+ *
  */
 
-public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.BaseMVPFragment<VideoCommentListMVPPresenter> implements VideoCommentListContract.IVideoCommentListView {
+public class VideoCommentListFragment extends com.cicinnus.retrofitlib.base.BaseMVPFragment<VideoCommentListPresenter> implements VideoCommentListContract.IVideoCommentListView {
 
     @BindView(R.id.rv_video_comment)
     RecyclerView rvVideoComment;
@@ -34,11 +37,11 @@ public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.B
     private static final String VIDEO_ID = "video_id";
     private int mVideoId;
 
-    public static VideoCommentListMVPFragment newInstance(int videoId) {
+    public static VideoCommentListFragment newInstance(int videoId) {
 
         Bundle args = new Bundle();
         args.putInt(VIDEO_ID, videoId);
-        VideoCommentListMVPFragment fragment = new VideoCommentListMVPFragment();
+        VideoCommentListFragment fragment = new VideoCommentListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,12 +52,13 @@ public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.B
     }
 
     @Override
-    protected VideoCommentListMVPPresenter getPresenter() {
-        return new VideoCommentListMVPPresenter(mContext, this);
+    protected VideoCommentListPresenter getPresenter() {
+        return new VideoCommentListPresenter(mContext, this);
     }
 
     @Override
     protected void initEventAndData() {
+        RxBus.get().register(this);
         mVideoId = getArguments().getInt(VIDEO_ID, 0);
 
         videoCommentAdapter = new VideoCommentAdapter();
@@ -74,7 +78,7 @@ public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.B
 
     }
 
-    //TODO 修改评论列表
+    @Subscribe
     public void changedCommentList(CommentPostBean postBean) {
         mVideoId = postBean.getVideoId();
         offset = 0;
@@ -90,8 +94,7 @@ public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.B
 
     @Override
     public void addVideoCommentCount(int total) {
-        //TODO 获取总数
-//        RxBus.get().post(new CommentCountPostBean(total));
+        RxBus.get().post(new CommentCountPostBean(total));
     }
 
     @Override
@@ -139,5 +142,6 @@ public class VideoCommentListMVPFragment extends com.cicinnus.retrofitlib.base.B
     @Override
     public void onDestroy() {
         super.onDestroy();
+        RxBus.get().unregister(this);
     }
 }

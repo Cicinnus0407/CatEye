@@ -13,11 +13,11 @@ import io.reactivex.functions.Consumer;
  * Created by Cicinnus on 2017/2/5.
  */
 
-public class TopHundredMovieMVPPresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<TopHundredMovieContract.ITopHundredMovieView> implements TopHundredMovieContract.ITopHUndredMoviePresenter {
+public class TopHundredMoviePresenter extends com.cicinnus.retrofitlib.base.BaseMVPPresenter<TopHundredMovieContract.ITopHundredMovieView> implements TopHundredMovieContract.ITopHUndredMoviePresenter {
 
     private final TopHundredMovieManager topHundredMovieManager;
 
-    public TopHundredMovieMVPPresenter(Activity activity, TopHundredMovieContract.ITopHundredMovieView view) {
+    public TopHundredMoviePresenter(Activity activity, TopHundredMovieContract.ITopHundredMovieView view) {
         super(activity, view);
         topHundredMovieManager = new TopHundredMovieManager();
     }

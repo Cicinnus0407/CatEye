@@ -129,10 +129,12 @@
             android:theme="@style/FullScreenTheme" />
         <!--选择城市-->
         <activity android:name=".module.movie.pick_city.PickCityActivity" />
-        <!--影院详情-->
+        <!--影院放映详情-->
         <activity android:name=".module.cinema.cinema_detail.CinemaDetailActivity" >
 
         </activity>
+        <!--影院详情-->
+        <activity android:name=".module.cinema.cinema_detail.cinema_info_detail.CinemaInfoDetailActivity" />
 
 
         <!--高德定位-->

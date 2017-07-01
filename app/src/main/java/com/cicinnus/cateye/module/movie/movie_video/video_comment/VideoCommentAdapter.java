@@ -11,7 +11,7 @@ import com.cicinnus.cateye.tools.UserUtils;
 import com.cicinnus.cateye.view.ExpandTextView;
 
 /**
- * Created by Administrator on 2017/2/17.
+ *
  */
 
 public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<VideoCommentListBean.DataBean.CommentsBean,BaseViewHolder> {

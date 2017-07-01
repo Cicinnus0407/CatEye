@@ -13,10 +13,13 @@ import android.widget.TextView;
 import com.cicinnus.cateye.R;
 import com.cicinnus.cateye.base.BaseActivity;
 import com.cicinnus.cateye.module.movie.movie_detail.movie_soundtrack.bean.MovieMusicBean;
+import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.CommentCountPostBean;
 import com.cicinnus.cateye.module.movie.movie_video.RxBusPostBean.VideoPostBean;
-import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListMVPFragment;
-import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListMVPFragment;
+import com.cicinnus.cateye.module.movie.movie_video.video_comment.VideoCommentListFragment;
+import com.cicinnus.cateye.module.movie.movie_video.video_list.VideoListFragment;
 import com.cicinnus.cateye.tools.UiUtils;
+import com.hwangjr.rxbus.RxBus;
+import com.hwangjr.rxbus.annotation.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +93,7 @@ public class MovieVideoActivity extends BaseActivity {
 
     @Override
     protected void initEventAndData() {
+        RxBus.get().register(this);
         String videoUrl = getIntent().getStringExtra(VIDEO_URL);
         String videoName = getIntent().getStringExtra(VIDEO_NAME);
         videoId = getIntent().getIntExtra(VIDEO_ID,0);
@@ -111,8 +115,8 @@ public class MovieVideoActivity extends BaseActivity {
         view.setLayoutParams(params);
 
         final List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(VideoListMVPFragment.newInstance(movieId,mIsMv,videoBean));
-        fragmentList.add(VideoCommentListMVPFragment.newInstance(videoId));
+        fragmentList.add(VideoListFragment.newInstance(movieId,mIsMv,videoBean));
+        fragmentList.add(VideoCommentListFragment.newInstance(videoId));
 
 
 
@@ -184,19 +188,20 @@ public class MovieVideoActivity extends BaseActivity {
         }
     }
 
-    //TODO 接切换影片
+    //修改播放影片
+    @Subscribe
     public void ChangeVideo(VideoPostBean videoPostBean){
         videoplayer.setUp(videoPostBean.getVideoUrl(), JCVideoPlayer.SCREEN_LAYOUT_NORMAL, videoPostBean.getVideoName());
         videoplayer.startVideo();
 
     }
 
-    //TODO 接收
-//    @Subscribe
-//    public void CommentCount(CommentCountPostBean count){
-//        tvVideoCommentCount.setVisibility(View.VISIBLE);
-//        tvVideoCommentCount.setText(String.format("%s",count.getCommentCount()));
-//    }
+    //评论数量
+    @Subscribe
+    public void CommentCount(CommentCountPostBean count){
+        tvVideoCommentCount.setVisibility(View.VISIBLE);
+        tvVideoCommentCount.setText(String.format("%s",count.getCommentCount()));
+    }
 
     @Override
     public void onBackPressed() {
@@ -215,5 +220,6 @@ public class MovieVideoActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RxBus.get().unregister(this);
     }
 }

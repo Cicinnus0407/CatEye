@@ -68,6 +68,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -962,7 +963,7 @@ public class MovieDetailActivity extends BaseActivity<MovieDetailPresenter> impl
                 .map(new Function<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap apply(Bitmap bitmap) {
-                         return  BlurUtils.with(mContext)
+                         return  BlurUtils.with(new WeakReference<Context>(mContext))
                                 .bitmap(bitmap)
                                 .radius(14)
                                 .blur();

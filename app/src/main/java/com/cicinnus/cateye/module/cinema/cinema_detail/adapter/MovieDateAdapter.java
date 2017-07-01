@@ -1,6 +1,7 @@
 package com.cicinnus.cateye.module.cinema.cinema_detail.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import com.cicinnus.cateye.module.cinema.cinema_detail.bean.CinemaMovieBean;
 import com.cicinnus.retrofitlib.utils.TimeUtil;
 import com.cicinnus.retrofitlib.utils.UIUtils;
 
+import java.util.List;
+
 /**
  * Created by Cicinnus on 2017/6/22.
  */
@@ -18,9 +21,22 @@ import com.cicinnus.retrofitlib.utils.UIUtils;
 public class MovieDateAdapter extends BaseQuickAdapter<CinemaMovieBean.DataBean.MoviesBean.ShowsBean, BaseViewHolder> {
 
     private int selectedPos = 0;
-    private  OnMovieDateClickListener onMovieDateClickListener;
+    private OnMovieDateClickListener onMovieDateClickListener;
+
     public MovieDateAdapter() {
         super(R.layout.item_movie_date);
+    }
+
+    @Override
+    public void setNewData(@Nullable List<CinemaMovieBean.DataBean.MoviesBean.ShowsBean> data) {
+        super.setNewData(data);
+        if (data != null) {
+            data.get(0).isSelect = true;
+            for (int i = 1; i < data.size(); i++) {
+                data.get(i).isSelect = false;
+            }
+            selectedPos = 0;
+        }
     }
 
     @Override
@@ -85,8 +101,8 @@ public class MovieDateAdapter extends BaseQuickAdapter<CinemaMovieBean.DataBean.
         this.onMovieDateClickListener = onMovieDateClickListener;
     }
 
-    public interface OnMovieDateClickListener{
-        void onClick( CinemaMovieBean.DataBean.MoviesBean.ShowsBean item);
+    public interface OnMovieDateClickListener {
+        void onClick(CinemaMovieBean.DataBean.MoviesBean.ShowsBean item);
     }
 
 }

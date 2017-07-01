@@ -30,6 +30,7 @@ import com.cicinnus.retrofitlib.utils.BlurUtils;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -361,7 +362,7 @@ public class AwardsMovieActivity extends BaseActivity<AwardsMovieMVPPresenter> i
                 .map(new Function<Bitmap, Bitmap>() {
                     @Override
                     public Bitmap apply(Bitmap bitmap) {
-                        return BlurUtils.with(mContext).radius(14)
+                        return BlurUtils.with(new WeakReference<Context>(mContext)).radius(14)
                                 .bitmap(bitmap)
                                 .blur();
                     }

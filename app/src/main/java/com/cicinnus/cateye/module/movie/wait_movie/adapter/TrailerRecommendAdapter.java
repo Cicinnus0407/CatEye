@@ -1,11 +1,13 @@
 package com.cicinnus.cateye.module.movie.wait_movie.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.cicinnus.cateye.R;
+import com.cicinnus.cateye.module.movie.movie_video.MovieVideoActivity;
 import com.cicinnus.cateye.module.movie.wait_movie.bean.TrailerRecommendBean;
 import com.cicinnus.cateye.tools.GlideManager;
 
@@ -28,6 +30,13 @@ public class TrailerRecommendAdapter extends BaseQuickAdapter<TrailerRecommendBe
         GlideManager.loadImage(mContext,item.getImg()+".webp@405w_225h_1e_1c_1l", (ImageView) helper.getView(R.id.iv_trailer_recommend));
         helper.setText(R.id.tv_trailer_movie_title,item.getMovieName())
                 .setText(R.id.tv_trailer_movie_desc,item.getName());
+
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MovieVideoActivity.start(mContext,item.getMovieId(),item.getVideoId(),item.getName(),item.getUrl());
+            }
+        });
 
     }
 }

@@ -20,9 +20,10 @@
         android:layout_marginBottom="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_12"
         android:textColor="@color/text_gray"
-        tools:text="今天场次已映完" />
+        android:text="今天暂无场次" />
 
     <TextView
+        android:visibility="gone"
         android:textColor="@color/text_yellow"
         android:layout_marginBottom="@dimen/dp_12"
         android:id="@+id/tv_show_next"

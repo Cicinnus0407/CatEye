@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -36,6 +35,7 @@ public class ExpandTextView extends LinearLayout {
     public int defaultTextColor = Color.BLACK;
     public int defaultTextSize = 14;
     public int defaultLine = 1;
+    private int orientation = 1;
 
 
     public ExpandTextView(Context context) {
@@ -50,27 +50,24 @@ public class ExpandTextView extends LinearLayout {
     }
 
 
-
-
     public ExpandTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     private void init() {
-        setOrientation(VERTICAL); //设置垂直布局
         setGravity(Gravity.CENTER); //中间对齐
         //初始化textView并添加
         contentView = new TextView(getContext());
         //添加行距
-        contentView.setLineSpacing(1f,1.3f);
-        addView(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        contentView.setLineSpacing(1f, 1.3f);
+        addView(contentView);
         //初始化ImageView并添加
         expandView = new ImageView(getContext());
         int padding = UiUtils.dp2px(getContext(), 5);
         expandView.setPadding(padding, padding, padding, padding);
         expandView.setImageResource(R.drawable.ic_arrow_down);
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        addView(expandView, llp);
+//        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        addView(expandView);
     }
 
 
@@ -79,18 +76,22 @@ public class ExpandTextView extends LinearLayout {
                 R.styleable.ExpandTextView);
         int textColor = a.getColor(R.styleable.ExpandTextView_textColor,
                 defaultTextColor);  //取颜色值，默认defaultTextColor
-        textSize = a.getDimensionPixelSize(R.styleable.ExpandTextView_textSize, defaultTextSize);//取颜字体大小，默认defaultTextSize
-        maxLine = a.getInt(R.styleable.ExpandTextView_maxLine, defaultLine);//取颜显示行数，默认defaultLine
+        textSize = a.getDimensionPixelSize(R.styleable.ExpandTextView_textSize, defaultTextSize);//取字体大小，默认defaultTextSize
+        maxLine = a.getInt(R.styleable.ExpandTextView_maxLine, defaultLine);//取显示行数，默认defaultLine
         text = a.getString(R.styleable.ExpandTextView_text);//取文本内容
+        orientation = a.getInteger(R.styleable.ExpandTextView_tv_orientation, 1);        //图标和文字方向,默认为垂直
+        setOrientation(orientation == 0 ? HORIZONTAL : VERTICAL);//设置布局
+
 
         //绑定到textView   bindTextView(textColor,textSize,maxLine,text);
-        bindTextView(textColor,textSize,maxLine,text);
+        bindTextView(textColor, textSize, maxLine, text);
         a.recycle();//回收释放
     }
 
+
     private void bindTextView(int textColor, float textSize, final int maxLine, String text) {
         contentView.setTextColor(textColor);
-        contentView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+        contentView.setTextSize(textSize);
         contentView.setText(text);
         contentView.setHeight(contentView.getLineHeight() * maxLine);
     }
@@ -131,11 +132,11 @@ public class ExpandTextView extends LinearLayout {
         });
     }
 
-    public TextView getTextView(){
+    public TextView getTextView() {
         return contentView;
     }
 
-    public void setText(CharSequence charSequence){
+    public void setText(CharSequence charSequence) {
         contentView.setText(charSequence);
     }
 
