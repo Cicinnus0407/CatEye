@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Cicinnus on 2017/6/21.
+ * 对ViewPager的拓展,点击两侧都能改变滑动
  */
 
 public class ClipViewPager extends ViewPager {

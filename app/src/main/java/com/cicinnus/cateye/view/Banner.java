@@ -25,7 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
- * Created by Cicinnus on 2017/6/20.
+ * 基于RxJava2时间的Banner
  */
 
 public class Banner extends FrameLayout implements View.OnClickListener {
