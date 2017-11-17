@@ -83,9 +83,9 @@ public class HotMovieListAdapter extends BaseMultiItemQuickAdapter<HotMovieListB
         switch (helper.getItemViewType()) {
             case BaseConstant.TYPE_HOT_HEADLINE:
                 helper.setText(R.id.tv_hot_type1, String.format("%s", item.getHeadLinesVO().get(0).getType()))
-                        .setText(R.id.tv_hot_type2, String.format("%s", item.getHeadLinesVO().get(1).getType()))
-                        .setText(R.id.tv_hot_headline_title1, String.format("%s", item.getHeadLinesVO().get(0).getTitle()))
-                        .setText(R.id.tv_hot_headline_title2, String.format("%s", item.getHeadLinesVO().get(1).getTitle()));
+//                        .setText(R.id.tv_hot_type2, String.format("%s", item.getHeadLinesVO().get(1).getType()))
+                        .setText(R.id.tv_hot_headline_title1, String.format("%s", item.getHeadLinesVO().get(0).getTitle()));
+//                        .setText(R.id.tv_hot_headline_title2, String.format("%s", item.getHeadLinesVO().get(1).getTitle()));
 
                 helper.getView(R.id.tv_hot_headline_title1).setOnClickListener(new View.OnClickListener() {
                     @Override
