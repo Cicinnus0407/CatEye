@@ -1,6 +1,10 @@
 # CatEye v3
+## 高仿猫眼App(8.x) 2017-11-18
+
+
+# CatEye v2
 ## ~~高仿猫眼App(7.9.1)~~
-## 高仿猫眼App(8.x)
+
 
 ### 项目初衷
 一直以来看到很多开源项目都是什么MaterialDesign(后面简称MD),但是真的是这样吗,个人觉得这些项目只是为了MD而MD,用几个控件就说自己的是MD风格,写了几个XML就觉得把MD的控件用熟了,如果是这样,我宁愿不用!对于真正是MD的App我只在Google市场和一些真正优秀的开源项目看到过,至于国内的目前我只看到了B站.
@@ -10,7 +14,7 @@
 ### 
    - NOTICE: 又开始更新了..
 ### 主要使用技术：
-  - RxJava2+Retrofit+MVP
+  - RxJava2+Retrofit2+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
   - Glide
   - [JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer)
@@ -19,7 +23,7 @@
 ### 能从项目中学到什么?
   - [x] RxJava2+Retrofit2+MVP的封装
   - [x] RxJava2与Retrofit结合的操作符使用
-  - [x] OkHttp添加全局请求参数
+  - [x] Retrofit添加全局请求参数
   - [x] RecyclerView悬浮头部(选择城市,待映列表)
   - [x] 高斯模糊工具类实现
   - [x] 非入侵的自定义下拉刷新实现
