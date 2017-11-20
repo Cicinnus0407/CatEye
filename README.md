@@ -9,7 +9,7 @@
 ### 为什么不参照一些设计和交互都不错的应用?学习优秀的界面和交互设计,所以就有了高仿猫眼电影App,项目磕磕碰碰完成了大部分的UI界面,其中涉及用户的界面全都没有做,
 
 ### 
-   - NOTICE: 又开始更新了..
+   - NOTICE实现过程中UI发生的较大变化,实现的是7.9.1版本,最新应该是8.x
 ### 主要使用技术：
   - RxJava2+Retrofit2+MVP
   - [BaseQuickAdapter](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
